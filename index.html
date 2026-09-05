@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蒙特克里斯府 · montecristiao</title>
+<meta name="description" content="montecristiao 伯爵的府邸。理论、影像、日记与手稿——访客的书房永远开着。">
+<meta property="og:title" content="蒙特克里斯府">
+<meta property="og:description" content="晚上好。伯爵今日不见客——但府上的书房，对愿意读字的人，永远开着。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/count-study-1.webp">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>">
+<style>
+  :root {
+    --candle: #d0aa70; --candle-dim: #8a7340;
+    --parchment: #e6d9bd; --parchment-dim: #a8977a; --wood: #4a3a22;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+  html, body { height: 100%; overflow: hidden; background: #000; }
+  body { font-family: "Noto Serif SC", "Songti SC", "SimSun", serif; }
+
+  .scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 1.1s ease; background-size: cover; background-position: center; }
+  .scene.active { opacity: 1; pointer-events: auto; }
+  .hotspot { cursor: pointer; transition: box-shadow .4s, border-color .4s, filter .4s; position: absolute; }
+  .hotspot:hover { box-shadow: 0 0 42px rgba(208,170,112,.28); }
+  .tag {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 13px; letter-spacing: .3em; color: var(--parchment-dim); white-space: nowrap;
+    text-shadow: 0 1px 6px #000, 0 0 12px #000;
+  }
+  .flame {
+    position: absolute; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--candle); pointer-events: none;
+    box-shadow: 0 0 30px 12px rgba(208,170,112,.3);
+    animation: flicker 3s ease-in-out infinite;
+  }
+  @keyframes flicker { 0%,100%{opacity:1} 40%{opacity:.7} 65%{opacity:.95} 82%{opacity:.75} }
+
+  /* ============ 前院（夜） ============ */
+  #court { background: linear-gradient(180deg, #05070d 0%, #0a0d14 45%, #0d0a07 100%); }
+  #court .stars { position: absolute; inset: 0 0 55% 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 30%, #e6d9bd66, transparent),
+      radial-gradient(1px 1px at 32% 12%, #e6d9bd55, transparent),
+      radial-gradient(1.5px 1.5px at 55% 26%, #e6d9bd77, transparent),
+      radial-gradient(1px 1px at 74% 18%, #e6d9bd55, transparent),
+      radial-gradient(1px 1px at 88% 38%, #e6d9bd66, transparent),
+      radial-gradient(1.5px 1.5px at 44% 42%, #e6d9bd44, transparent);
+  }
+  #facade {
+    position: absolute; left: 50%; bottom: 18%; transform: translateX(-50%);
+    width: 62%; height: 52%;
+    background: linear-gradient(180deg, #191410 0%, #14100b 100%);
+    border: 2px solid #2c2318; border-bottom: none;
+  }
+  #facade::before {
+    content: ""; position: absolute; left: -2%; right: -2%; top: -9%;
+    height: 9%; background: #0d0a07; border: 2px solid #2c2318; border-bottom: none;
+  }
+  .facade-win {
+    position: absolute; width: 9%; height: 20%;
+    background: linear-gradient(180deg, #d0aa7033, #d0aa7011);
+    border: 1px solid #4a3a22;
+  }
+  .facade-win.dark { background: #0d0a07; }
+  #frontDoor {
+    position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 14%; height: 34%;
+    background: linear-gradient(180deg, #241a0e, #140e07);
+    border: 3px solid var(--wood); border-bottom: none;
+    box-shadow: 0 0 46px rgba(208,170,112,.22);
+  }
+  #frontDoor::after {
+    content: ""; position: absolute; left: 50%; top: -40%;
+    width: 160%; height: 30%; transform: translateX(-50%);
+    background: radial-gradient(ellipse at 50% 100%, rgba(208,170,112,.35), transparent 70%);
+  }
+  #court .gravel { position: absolute; left: 0; right: 0; bottom: 0; height: 18%;
+    background: linear-gradient(180deg, #191310, #0d0906); }
+  #court .gate-note { top: 6%; }
+
+  /* ============ 穿堂 ============ */
+  #vestibule {
+    background:
+      radial-gradient(ellipse 65% 50% at 50% 14%, rgba(208,170,112,.24), transparent 62%),
+      linear-gradient(180deg, #0d0a07 0%, #17110b 50%, #1e150c 82%, #100c08 100%);
+  }
+  #staircase {
+    position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 46%; height: 62%;
+    clip-path: polygon(31% 0, 69% 0, 100% 100%, 0 100%);
+    background:
+      repeating-linear-gradient(180deg, transparent 0 34px, rgba(208,170,112,.16) 34px 37px),
+      linear-gradient(180deg, #2c2010 0%, #1a130a 70%, #120d07 100%);
+  }
+  #staircase:hover { box-shadow: inset 0 0 80px rgba(208,170,112,.22); }
+  .rail { position: absolute; bottom: 0; width: 3px; height: 62%; background: linear-gradient(180deg, #4a3a22, #2c2318); pointer-events: none; }
+  #rail-l { left: 27%; transform: rotate(16deg); transform-origin: bottom; }
+  #rail-r { right: 27%; transform: rotate(-16deg); transform-origin: bottom; }
+  .stair-tag { bottom: 64.5%; }
+  .door {
+    position: absolute; top: 30%; width: 13%; height: 46%;
+    background: linear-gradient(180deg, #1e150c, #120d07);
+    border: 2px solid var(--wood); border-bottom: none;
+  }
+  .door .knob { position: absolute; top: 55%; right: 12%; width: 8px; height: 8px; border-radius: 50%; background: var(--candle-dim); }
+  #door-gallery { left: 7%; } #door-salon { right: 7%; }
+  .door .tag { top: 103%; }
+  #cellar { position: absolute; left: 29.5%; bottom: 3%; width: 8%; height: 16%;
+    background: #0d0906; border: 1px solid #332814; }
+  #cellar .tag { top: 108%; font-size: 11px; }
+  #desk {
+    position: absolute; right: 4%; bottom: 12%; width: 15%; height: 11%;
+    background: linear-gradient(180deg, rgba(51,36,20,.45), #1a120a);
+    border: 1px solid var(--wood); border-radius: 4px 4px 0 0;
+  }
+  #desk::before {
+    content: ""; position: absolute; left: 50%; top: 16%; width: 56%; height: 58%;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #e6d9bd, #c8b48c);
+    border-radius: 2px; box-shadow: 0 2px 10px rgba(0,0,0,.6);
+  }
+  #desk .tag { top: 112%; }
+  #planDesk { position: absolute; left: 4%; bottom: 12%; width: 15%; height: 11%;
+    background: rgba(0,0,0,.35); border: 1px dashed #4a3a22; }
+  #planDesk .tag { top: 112%; }
+
+  /* ============ 二楼平台 ============ */
+  #landing {
+    background:
+      radial-gradient(ellipse 55% 42% at 50% 20%, rgba(208,170,112,.2), transparent 60%),
+      linear-gradient(180deg, #0f0b07 0%, #1a1309 55%, #0d0906 100%);
+  }
+  #landing .corridor {
+    position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+    width: 40%; height: 100%;
+    clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%);
+    background: linear-gradient(180deg, #17110a 0%, #120d07 100%);
+    border-left: 2px solid #332814; border-right: 2px solid #332814;
+  }
+  #door-study2 {
+    position: absolute; left: 50%; top: 14%; transform: translateX(-50%);
+    width: 20%; height: 52%;
+    background:
+      linear-gradient(90deg, transparent 49.4%, #4a3a22 49.4% 50.6%, transparent 50.6%),
+      linear-gradient(180deg, rgba(208,170,112,.16), transparent 45%),
+      linear-gradient(180deg, #241a0e, #140e07);
+    border: 3px solid var(--wood); border-bottom: none;
+    box-shadow: 0 0 56px rgba(208,170,112,.14);
+  }
+  #door-study2 .tag { top: 103%; }
+  #door-parlor { position: absolute; left: 6%; top: 30%; width: 12%; height: 42%;
+    background: linear-gradient(180deg, #1e150c, #120d07); border: 2px solid var(--wood); border-bottom: none; }
+  #door-parlor .tag { top: 103%; }
+  #stairs-up { position: absolute; right: 6%; top: 26%; width: 14%; height: 46%;
+    background:
+      repeating-linear-gradient(180deg, transparent 0 22px, rgba(208,170,112,.08) 22px 24px),
+      linear-gradient(180deg, #120d07, #0d0906);
+    border: 1px solid #332814; }
+  #stairs-up .tag { top: 103%; }
+  #stairs-down { position: absolute; left: 50%; bottom: 3%; transform: translateX(-50%);
+    font-size: 13px; letter-spacing: .3em; color: var(--parchment-dim);
+    border: 1px solid var(--wood); padding: 8px 26px; background: rgba(0,0,0,.4); }
+
+  /* ============ 书房（真油画） ============ */
+  #study { background-color: #0d0906; }
+  #study::after { /* 底部压暗，保证对话框可读 */
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.65)); pointer-events: none;
+  }
+  /* 热区：茶桌（文稿） */
+  #hs-papers { right: 6%; bottom: 14%; width: 22%; height: 22%; border-radius: 50%; }
+  #hs-papers .tag { top: 104%; }
+  /* 热区：书架（藏书批注，锁） */
+  #hs-shelf { left: 30%; top: 8%; width: 16%; height: 46%; }
+  #hs-shelf .tag { top: -8%; }
+  /* 热区：伯爵本人 */
+  #hs-count { left: 47%; top: 18%; width: 15%; height: 44%; border-radius: 40%; }
+
+  /* ============ 对话框 ============ */
+  #dialogue {
+    position: absolute; left: 50%; bottom: 3.5%; transform: translateX(-50%);
+    width: min(860px, 92%);
+    background: rgba(10, 7, 4, .88);
+    border: 1px solid var(--wood); border-top: 2px solid var(--candle-dim);
+    padding: 18px 30px 20px; backdrop-filter: blur(3px); z-index: 10;
+  }
+  #speaker { font-size: 13px; letter-spacing: .35em; color: var(--candle); margin-bottom: 8px; }
+  #line { font-size: 17px; line-height: 2; color: var(--parchment); min-height: 34px; }
+
+  /* ============ 覆盖层 ============ */
+  .overlay { position: absolute; inset: 0; z-index: 20; background: rgba(0,0,0,.72); display: none; align-items: center; justify-content: center; }
+  .overlay.show { display: flex; }
+  .book {
+    width: min(520px, 88%);
+    background: linear-gradient(160deg, #e6d9bd, #c4b088);
+    color: #3a2c18; padding: 40px 44px;
+    box-shadow: 0 20px 80px rgba(0,0,0,.8); border-radius: 3px;
+  }
+  .book h3 { font-size: 20px; letter-spacing: .4em; margin-bottom: 20px; font-weight: 600; }
+  .book .rule { font-size: 13px; color: #6d5a3a; margin-bottom: 26px; line-height: 1.9; }
+  .book input {
+    width: 100%; background: transparent; border: none; border-bottom: 1px solid #8a7340;
+    font-family: inherit; font-size: 20px; color: #2c1f0e; padding: 6px 2px; outline: none; letter-spacing: .15em;
+  }
+  .book .row { margin-top: 28px; display: flex; gap: 14px; }
+  .book button {
+    font-family: inherit; font-size: 14px; letter-spacing: .25em; cursor: pointer;
+    padding: 9px 24px; background: transparent; border: 1px solid #8a7340; color: #4a3a22;
+  }
+  .book button:hover { background: rgba(138,115,64,.12); }
+
+  /* 文稿清单覆盖层 */
+  #papersOverlay .book { width: min(620px, 92%); }
+  .doc-item {
+    display: block; width: 100%; text-align: left; margin-bottom: 14px;
+    padding: 14px 18px; border: 1px solid #b09a6a; background: rgba(255,252,240,.5);
+    cursor: pointer; font-family: inherit; transition: background .3s;
+  }
+  .doc-item:hover { background: rgba(255,252,240,.9); }
+  .doc-item .t { font-size: 16px; color: #2c1f0e; letter-spacing: .1em; margin-bottom: 4px; }
+  .doc-item .d { font-size: 12px; color: #6d5a3a; }
+
+  #readerOverlay { background: #0d0a07; overflow-y: auto; display: none; }
+  #readerOverlay.show { display: block; }
+  .reader { max-width: 680px; margin: 0 auto; padding: 64px 32px 96px; }
+  .reader h2 { color: var(--parchment); font-size: 28px; letter-spacing: .15em; margin-bottom: 8px; font-weight: 600; }
+  .reader .meta { color: var(--candle-dim); font-size: 13px; letter-spacing: .2em; margin-bottom: 40px; }
+  .reader p { color: var(--parchment); font-size: 17px; line-height: 2.2; margin-bottom: 26px; user-select: text; }
+  .reader .close { margin-top: 40px; display: inline-block; cursor: pointer; color: var(--parchment-dim); border: 1px solid var(--wood); padding: 8px 26px; font-size: 13px; letter-spacing: .3em; }
+  .reader .close:hover { color: var(--candle); }
+</style>
+</head>
+<body>
+
+<!-- 前院 -->
+<div class="scene active" id="court">
+  <div class="stars"></div>
+  <div class="tag gate-note">蒙特克里斯府 · 夜</div>
+  <div id="facade">
+    <div class="facade-win" style="left:12%; top:18%;"></div>
+    <div class="facade-win dark" style="left:30%; top:18%;"></div>
+    <div class="facade-win dark" style="left:61%; top:18%;"></div>
+    <div class="facade-win" style="left:79%; top:18%;"></div>
+    <div class="facade-win" style="left:21%; top:52%;"></div>
+    <div class="facade-win dark" style="left:70%; top:52%;"></div>
+    <div class="hotspot" id="frontDoor"></div>
+  </div>
+  <div class="gravel"></div>
+</div>
+
+<!-- 穿堂 -->
+<div class="scene" id="vestibule">
+  <div class="flame" style="left:49.6%; top:10%;"></div>
+  <div class="flame" style="left:14%; top:24%; animation-delay:1.1s;"></div>
+  <div class="flame" style="right:14%; top:24%; animation-delay:.5s;"></div>
+  <div class="hotspot" id="staircase"></div>
+  <div class="rail" id="rail-l"></div>
+  <div class="rail" id="rail-r"></div>
+  <div class="tag stair-tag" style="left:50%;">大楼梯 · 通往贵族层</div>
+  <div class="hotspot door" id="door-gallery"><div class="knob"></div><div class="tag">画 廊</div></div>
+  <div class="hotspot door" id="door-salon"><div class="knob"></div><div class="tag">沙 龙</div></div>
+  <div class="hotspot" id="cellar"><div class="tag">暗门</div></div>
+  <div class="hotspot" id="desk"><div class="tag">访客簿</div></div>
+  <div class="hotspot" id="planDesk"><div class="tag">府邸平面图</div></div>
+</div>
+
+<!-- 二楼平台 -->
+<div class="scene" id="landing">
+  <div class="corridor"></div>
+  <div class="flame" style="left:50%; top:8%;"></div>
+  <div class="hotspot" id="door-study2"><div class="tag">书 房</div></div>
+  <div class="hotspot" id="door-parlor"><div class="tag">大客厅</div></div>
+  <div class="hotspot" id="stairs-up"><div class="tag">三楼 · 私人楼层</div></div>
+  <div class="hotspot" id="stairs-down">回穿堂</div>
+</div>
+
+<!-- 书房（真油画，热区叠在画上） -->
+<div class="scene" id="study">
+  <div class="hotspot" id="hs-shelf"><div class="tag">藏书批注</div></div>
+  <div class="hotspot" id="hs-count"></div>
+  <div class="hotspot" id="hs-papers"><div class="tag">案上文稿</div></div>
+  <div class="hotspot" id="backToLanding" style="left:50%; bottom:3%; transform:translateX(-50%);
+    font-size:13px; letter-spacing:.3em; color:var(--parchment-dim);
+    border:1px solid var(--wood); padding:8px 26px; background:rgba(0,0,0,.5); z-index:5;">退回楼梯平台</div>
+</div>
+
+<!-- 对话框 -->
+<div id="dialogue">
+  <div id="speaker">管家 · 巴蒂斯坦</div>
+  <div id="line"></div>
+</div>
+
+<!-- 访客簿 -->
+<div class="overlay" id="bookOverlay">
+  <div class="book">
+    <h3>访 客 簿</h3>
+    <div class="rule">留个称呼即可。不必是真名——府上不问来路。<br>也可以合上簿子直接进去，开放的房间，不登记一样能进。</div>
+    <input id="visitorName" type="text" placeholder="您的称呼" maxlength="20">
+    <div class="row">
+      <button id="signBtn">留名</button>
+      <button id="closeBook">合上簿子</button>
+    </div>
+  </div>
+</div>
+
+<!-- 平面图 -->
+<div class="overlay" id="planOverlay">
+  <div class="book">
+    <h3>府邸平面图</h3>
+    <div class="rule" style="line-height: 2.1;">
+      前院 → 穿堂（您在此）→ 大楼梯 → 贵族层<br>
+      地面层：画廊 · 沙龙 · 地窖藏宝室（皆未开放）<br>
+      贵族层：书房（开放）· 大客厅（未开放）<br>
+      三楼：私人楼层（未开放）· 屋后：花园（未开放）<br>
+      ——<br>
+      montecristiao.com · 蒙特克里斯府
+    </div>
+    <div class="row"><button id="closePlan">放下图纸</button></div>
+  </div>
+</div>
+
+<!-- 案上文稿清单 -->
+<div class="overlay" id="papersOverlay">
+  <div class="book">
+    <h3>案上文稿</h3>
+    <div class="rule">伯爵近些年的笔耕。按卷取用，读完放回原处即可。</div>
+    <button class="doc-item" data-title="景观社会：我们已经看完了，问题是看完以后" data-meta="书房 · 第一卷 · 自视频文稿 · 正文迁入中">
+      <div class="t">景观社会：我们已经看完了，问题是看完以后</div>
+      <div class="d">第一卷 · 自视频文稿</div>
+    </button>
+    <button class="doc-item" data-title="彩礼：一笔被双方同时低估的账" data-meta="书房 · 第二卷 · 自视频文稿 · 正文迁入中">
+      <div class="t">彩礼：一笔被双方同时低估的账</div>
+      <div class="d">第二卷 · 自视频文稿</div>
+    </button>
+    <div class="row"><button id="closePapers">放回原处</button></div>
+  </div>
+</div>
+
+<!-- 阅读器 -->
+<div class="overlay" id="readerOverlay">
+  <div class="reader">
+    <h2 id="readerTitle"></h2>
+    <div class="meta" id="readerMeta"></div>
+    <p>（正文迁入中——这一卷还在从影像文稿转写为文字版。架子是真的，书也是真的，只是这一页还没誊完。）</p>
+    <div class="close" id="closeReader">合上，放回原处</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var KEY = "montecristiao-visitor";
+  var line = document.getElementById("line");
+  var name = null;
+  try { name = localStorage.getItem(KEY); } catch (e) {}
+  function say(t) { line.textContent = t; }
+  function go(id) {
+    document.querySelectorAll(".scene").forEach(function (s) { s.classList.remove("active"); });
+    document.getElementById(id).classList.add("active");
+  }
+
+  // 书房真油画：每次进入随机一幅（同一房间，伯爵不同姿态）
+  var studyImgs = [1,2,3,4,5,6].map(function (i) { return "assets/count-study-" + i + ".webp"; });
+  var studyEl = document.getElementById("study");
+  function setStudyImg() {
+    var pick = studyImgs[Math.floor(Math.random() * studyImgs.length)];
+    studyEl.style.backgroundImage = "url('" + pick + "')";
+  }
+  setStudyImg();
+
+  say(name
+    ? "您回来了，" + name + "。门没锁——请进，穿堂里生着火。"
+    : "到了。亮灯的那扇是正门，请进。");
+
+  document.getElementById("frontDoor").addEventListener("click", function () {
+    go("vestibule");
+    say(name
+      ? "晚上好，" + name + "。书房在楼上——正中大楼梯，请。"
+      : "晚上好，欢迎来到蒙特克里斯府。我是管家巴蒂斯坦。案上有访客簿，随您意；正事在楼上——大楼梯上去，书房。");
+  });
+
+  document.getElementById("staircase").addEventListener("click", function () {
+    go("landing");
+    say("这一层是贵族层——府上最隆重的房间都在这儿。正前方是书房，伯爵说了，您可以直接进。");
+  });
+  document.getElementById("stairs-down").addEventListener("click", function () {
+    go("vestibule"); say("穿堂。要出去透口气，或者再翻翻访客簿，都随您。");
+  });
+
+  document.getElementById("door-study2").addEventListener("click", function () {
+    setStudyImg();
+    go("study");
+    say("请。伯爵在里面——案上是他的文稿，您可以自取。架子上的批注，他暂时还不让人碰。");
+  });
+  document.getElementById("door-parlor").addEventListener("click", function () {
+    say("大客厅锁着。府上不轻易宴客——一旦开宴，伯爵希望每件银器都在它该在的位置。");
+  });
+  document.getElementById("stairs-up").addEventListener("click", function () {
+    say("楼上是伯爵的私人楼层——写字间、手稿室，都在那儿。请原谅，这一段楼梯，现在只有伯爵自己走。");
+  });
+  document.getElementById("door-gallery").addEventListener("click", function () {
+    say("画廊？……锁着。伯爵的影像收藏还在整理，挂画这种事，他不让别人插手。");
+  });
+  document.getElementById("door-salon").addEventListener("click", function () {
+    say("沙龙还没到会客的日子。等伯爵开始回访客的信，这扇门自然就开了。");
+  });
+  document.getElementById("cellar").addEventListener("click", function () {
+    say("那是通地窖的暗门。藏宝室不轻易示人——有些东西，伯爵花了十四年才算清点完。");
+  });
+
+  // 书房热区
+  document.getElementById("hs-count").addEventListener("click", function () {
+    say("伯爵朝您微微颔首，没有起身——在这里，熟客不必多礼。");
+  });
+  document.getElementById("hs-shelf").addEventListener("click", function () {
+    say("那些批注是伯爵读书时写下的。他说：等誊清了，自然放到案上。");
+  });
+  document.getElementById("hs-papers").addEventListener("click", function () {
+    document.getElementById("papersOverlay").classList.add("show");
+  });
+  document.getElementById("backToLanding").addEventListener("click", function () {
+    go("landing"); say("楼梯平台。下楼回穿堂，或者再看看别的门。");
+  });
+
+  // 访客簿
+  var bookOverlay = document.getElementById("bookOverlay");
+  document.getElementById("desk").addEventListener("click", function () { bookOverlay.classList.add("show"); });
+  document.getElementById("closeBook").addEventListener("click", function () {
+    bookOverlay.classList.remove("show"); say("留白也是一种回答。府上不勉强。");
+  });
+  document.getElementById("signBtn").addEventListener("click", function () {
+    var v = document.getElementById("visitorName").value.trim();
+    bookOverlay.classList.remove("show");
+    if (!v) { say("留白也是一种回答。府上不勉强。"); return; }
+    name = v;
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+    say("记下了，" + v + "。下次您来，不必再通报。");
+  });
+
+  // 平面图
+  var planOverlay = document.getElementById("planOverlay");
+  document.getElementById("planDesk").addEventListener("click", function () { planOverlay.classList.add("show"); });
+  document.getElementById("closePlan").addEventListener("click", function () { planOverlay.classList.remove("show"); });
+
+  // 文稿清单 → 阅读器
+  var papersOverlay = document.getElementById("papersOverlay");
+  var readerOverlay = document.getElementById("readerOverlay");
+  document.getElementById("closePapers").addEventListener("click", function () {
+    papersOverlay.classList.remove("show");
+  });
+  document.querySelectorAll(".doc-item").forEach(function (p) {
+    p.addEventListener("click", function () {
+      papersOverlay.classList.remove("show");
+      document.getElementById("readerTitle").textContent = p.dataset.title;
+      document.getElementById("readerMeta").textContent = p.dataset.meta;
+      readerOverlay.classList.add("show");
+    });
+  });
+  document.getElementById("closeReader").addEventListener("click", function () {
+    readerOverlay.classList.remove("show"); say("读完不急着走——架子还满着。");
+  });
+})();
+</script>
+</body>
+</html>
