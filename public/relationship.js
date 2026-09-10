@@ -25,7 +25,7 @@
   async function meet(state) {
     const uid = owner,
       version = epoch;
-    if (!uid || !data?.enabled) return null;
+    if (state?.world?.preview || !uid || !data?.enabled) return null;
     try {
       const result = await api("/meet", { room: state.room });
       if (version !== epoch || Reception.user?.id !== uid) return null;
@@ -70,7 +70,7 @@
     return { ...page, text, choices };
   }
   async function painting(choice, state) {
-    if (!data?.enabled || !owner) return;
+    if (state?.world?.preview || !data?.enabled || !owner) return;
     const uid = owner,
       version = epoch;
     if (!ticket) await meet(state);

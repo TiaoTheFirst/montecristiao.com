@@ -461,6 +461,7 @@
     const st = Manor.state(clock.date, clock.minute),
       text = rooms[st.room][0] + " · " + st.text;
     q("#clock-label").textContent =
+      (ManorWorld.snapshot().preview ? "预览 · " : "") +
       Manor.time(clock.minute) +
       " · " +
       (Manor.light(clock.minute) === "day" ? "日间" : "夜访");
@@ -493,9 +494,11 @@
       return;
     }
     q("#clock-status").textContent =
-      (ManorWorld.snapshot().ready
-        ? "府邸当前时间"
-        : "尚未校时，人物互动暂停") +
+      (ManorWorld.snapshot().preview
+        ? "正在预览 " + Manor.time(clock.minute)
+        : ManorWorld.snapshot().ready
+          ? "府邸当前时间"
+          : "尚未校时，人物互动暂停") +
       (st.unknown ? " · " : " · 伯爵在") +
       rooms[st.room][0] +
       "，" +
@@ -820,7 +823,23 @@
   };
   q("#map-home").onclick = () => open("map");
   q("#live-clock").onclick = () => {
-    ManorWorld.sync();
+    ManorWorld.resumeLive();
+    closePanel(q("#clock-dialog"));
+  };
+  function previewTime(minute) {
+    ManorWorld.setPreview(minute);
+    q("#preview-clock-time").value = Manor.time(minute);
+    closePanel(q("#clock-dialog"));
+  }
+  document.querySelectorAll("[data-preview-minute]").forEach((button) => {
+    button.onclick = () => previewTime(Number(button.dataset.previewMinute));
+  });
+  q("#preview-clock-form").onsubmit = (event) => {
+    event.preventDefault();
+    const value = q("#preview-clock-time").value;
+    if (!/^\d{2}:\d{2}$/.test(value)) return;
+    const [hour, minute] = value.split(":").map(Number);
+    if (hour < 24 && minute < 60) previewTime(hour * 60 + minute);
   };
   q("#clear-journal").onclick = () => {
     journal.clear();
@@ -845,7 +864,7 @@
       q("#scene-image").alt =
         rooms[id][0] +
         "，" +
-        (src.includes("-day.") ? "日间" : "夜间") +
+        (/-day(?:[.-])/.test(src) ? "日间" : "夜间") +
         "油画场景";
       q("#scene-image").classList.remove("loading");
       q("#image-notice").hidden = true;

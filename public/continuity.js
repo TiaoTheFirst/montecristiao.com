@@ -10,6 +10,10 @@ var ManorContinuity = (() => {
     );
   }
   function endReason(pinned, state) {
+    if (
+      (pinned?.world?.clockRevision || 0) !== (state?.world?.clockRevision || 0)
+    )
+      return "elapsed";
     if (state?.count?.unknown) return "unknown";
     if (!present(state, pinned?.room) || state.room !== pinned?.room)
       return "departed";

@@ -1459,6 +1459,38 @@ dialog::backdrop {
     font-size: 16px;
   }
 }
+.clock-presets {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 18px 0;
+}
+.clock-presets button,
+.clock-custom input {
+  min-height: 44px;
+  border: 1px solid var(--line);
+  padding: 10px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+}
+.clock-presets button:hover {
+  background: #b29a6920;
+}
+.clock-custom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 18px 0;
+}
+.clock-custom input {
+  color-scheme: dark;
+  min-width: 0;
+}
+.clock-custom .solid {
+  flex-basis: 100%;
+}
 .map-mobile-picker {
   display: none;
 }
