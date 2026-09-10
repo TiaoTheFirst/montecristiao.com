@@ -1,0 +1,124 @@
+@font-face {
+  font-family: "Manor Hand";
+  src: url("assets/fonts/ManorHand-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  --hand: "Manor Hand", "KaiTi", var(--serif);
+}
+.diary-folio {
+  width: min(780px, 94vw);
+  max-height: 92dvh;
+  padding: 0;
+  border: 1px solid #ac976c;
+  background: #eae2cc;
+  color: #29372d;
+}
+.diary-folio::backdrop {
+  background: #07110cbd;
+  backdrop-filter: blur(5px);
+}
+.diary-folio header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1.4rem;
+  background: #eae2cc;
+  border-bottom: 1px solid #b4a78666;
+}
+.diary-folio header span {
+  font-family: var(--display);
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+}
+.diary-sheet {
+  padding: clamp(24px, 5vw, 64px);
+  border-left: 4px solid #8e765f;
+  margin-left: 12px;
+}
+.diary-kicker {
+  color: #756447;
+  font-size: 0.9rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.4rem;
+}
+.diary-folio h2 {
+  font-family: var(--hand);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 400;
+  margin: 0 0 1.4rem;
+}
+.diary-folio button {
+  font: inherit;
+  color: inherit;
+  padding: 0.55rem 0.25rem;
+  min-height: 44px;
+  border: 0;
+  border-bottom: 1px solid #ac976c;
+  background: transparent;
+  cursor: pointer;
+}
+.diary-folio button:focus-visible {
+  outline: 2px solid #795c32;
+  outline-offset: 3px;
+}
+.diary-tabs {
+  display: flex;
+  gap: 1.8rem;
+  border-bottom: 1px solid #ac976c66;
+}
+.diary-tabs button[aria-pressed="true"] {
+  border-bottom: 2px solid #785c31;
+}
+.diary-body {
+  min-height: 230px;
+  padding: 2.2rem 0;
+  font-family: var(--hand);
+  font-size: 20px;
+  line-height: 2;
+  letter-spacing: 0.035em;
+}
+[data-face="book"] .diary-body {
+  font-family: var(--serif);
+  letter-spacing: 0.015em;
+}
+.diary-body p {
+  margin: 0 0 1.1em;
+}
+.diary-entry {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+.diary-type {
+  display: flex;
+  gap: 1.1rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #716754;
+}
+.diary-type button[aria-pressed="true"] {
+  color: #29372d;
+  border-bottom: 2px solid #785c31;
+}
+#speech-text,
+.magic-response {
+  font-family: var(--hand);
+}
+@media (max-width: 600px) {
+  .diary-sheet {
+    padding: 24px 20px;
+    margin-left: 6px;
+  }
+  .diary-body {
+    font-size: 19px;
+    min-height: 220px;
+  }
+  .diary-folio header {
+    padding: 0.4rem 1rem;
+  }
+}

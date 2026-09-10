@@ -1,0 +1,72 @@
+/* Quiet company has a smaller action dock; the full actor/prop framing survives. */
+#encounter-rest {
+  color: #d8c49a;
+  min-height: 44px;
+  font-size: 14px;
+  border-bottom: 1px solid #c9ae7950;
+}
+#encounter-rest[hidden],
+#encounter-rest-dock[hidden],
+#encounter .speech[hidden] {
+  display: none;
+}
+#encounter[open][data-resting="true"] {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+#encounter-rest-dock {
+  width: min(1060px, 100%);
+  margin: 0 auto;
+  padding: 14px 32px 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  color: #bfb89f;
+  font-size: 14px;
+  background: #111a14;
+}
+#encounter-rest-dock p {
+  margin: 0;
+  line-height: 1.8;
+}
+#encounter-rest-dock button {
+  flex-shrink: 0;
+  min-height: 44px;
+  color: #ead6ae;
+  border-bottom: 1px solid #c9ae7970;
+}
+#encounter button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+@media (max-width: 700px) {
+  /* Tall portrait crops used to hide supported hands and the shared object. */
+  #encounter[open] {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  #encounter .encounter-shot {
+    aspect-ratio: 1672 / 941;
+  }
+  #encounter .encounter-shot img {
+    object-fit: contain;
+    object-position: center;
+  }
+  #encounter-rest {
+    text-align: left;
+  }
+  #encounter-rest-dock {
+    padding: 12px 18px max(18px, env(safe-area-inset-bottom));
+    gap: 12px;
+  }
+  #encounter[open][data-resting="true"] .encounter-shot {
+    aspect-ratio: auto;
+  }
+  #encounter[open][data-resting="true"] {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+  #encounter #shot-caption {
+    top: 58px;
+    right: 12px;
+    font-size: 11px;
+  }
+}

@@ -1,8 +1,8 @@
-# 系统杂物
+node_modules/
+.wrangler/
+.build/
+.env*
+.dev.vars*
+*.log
 .DS_Store
 Thumbs.db
-desktop.ini
-
-# 编辑器
-.vscode/
-.idea/

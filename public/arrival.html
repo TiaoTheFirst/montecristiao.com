@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    
+    <title>初次登门 · 蒙特克里斯条府</title>
+    <link rel="icon" href="emblem.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="arrival.css" />
+    <script src="arrival-state.js"></script>
+    <script src="architecture.js" defer></script>
+    <script src="manor.js" defer></script>
+    <script src="world.js" defer></script>
+    <script src="motion.js" defer></script>
+    <script src="arrival-data.js" defer></script>
+    <script src="arrival.js" defer></script>
+  </head>
+  <body>
+    <main class="arrival" aria-label="初次登门">
+      <div class="arrival-art">
+        <img
+          id="arrival-image"
+          alt="沿河老街上的废墟正门，旁边有一条小路"
+          width="1672"
+          height="941"
+        />
+        <div class="arrival-shade"></div>
+      </div>
+      <header class="arrival-header">
+        <a class="arrival-name" href="index.html">montecristiao<span>初次登门</span></a>
+        <div class="arrival-tools">
+          <button id="arrival-sound" aria-pressed="false">声音：关</button
+          ><button id="arrival-skip">跳过，直接入府 ↗</button>
+        </div>
+      </header>
+      <section class="arrival-copy" aria-live="polite" aria-atomic="true">
+        <p id="arrival-place" class="arrival-place">河街 · 赴约</p>
+        <h1 id="arrival-title" tabindex="-1">过桥，沿河。</h1>
+        <p id="arrival-text">正在准备来访画面……</p>
+        <div id="arrival-actions" class="arrival-actions"></div>
+        <p id="arrival-error" role="status"></p>
+      </section>
+      <div class="arrival-bottom">
+        <button id="arrival-back" hidden>← 退回上一步</button
+        ><span id="arrival-note">初次登门只引导一次；随时可以跳过。</span>
+      </div>
+    </main>
+    <noscript
+      ><p class="arrival-noscript">
+        这段入府体验需要 JavaScript。您仍可<a href="about.html">查看府邸说明</a
+        >。
+      </p></noscript
+    >
+  </body>
+</html>

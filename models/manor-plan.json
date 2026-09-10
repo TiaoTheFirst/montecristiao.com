@@ -1,0 +1,269 @@
+{
+  "version": "1.1",
+  "program": {
+    "music": {
+      "label": "小会客厅",
+      "purpose": "平日弹琴、小坐；需要安静交谈时，在这里关门会客。",
+      "access": "visitor",
+      "functions": ["少量来客", "私谈", "音乐"],
+      "continuity": {
+        "north": "两扇窗朝向露台与后花园；不设通往露台的门",
+        "east": "通大客厅的门，门旁放琴",
+        "south": "通画廊的门；日夜远景机位位于这侧",
+        "west": "壁炉与挂画，不开门",
+        "seating": "两把扶手椅与矮茶桌，来路不穿过座位之间",
+        "screen": "壁炉旁为装饰屏风；魔法白板效果另行制作，不把屏风当成已完成白板"
+      }
+    },
+    "salon": {
+      "access": "visitor",
+      "purpose": "日常接待与社交。私谈可到西侧的小会客厅。"
+    },
+    "library": {
+      "access": "visitor",
+      "purpose": "藏书与阅读；伯爵自己的手稿放在隔壁书房。"
+    },
+    "study": {
+      "access": "visitor",
+      "purpose": "伯爵阅读、写作与推演的地方。通信小室要经楼上回廊前往。"
+    },
+    "letter": {
+      "access": "visitor",
+      "purpose": "写信、取信。出门经楼上回廊可回书房与藏书室。"
+    },
+    "privatehall": {
+      "label": "楼上回廊",
+      "access": "visitor",
+      "purpose": "连接阅读与通信的房间；卧室、客房的门不向普通访客开放。"
+    },
+    "bedroom": {
+      "access": "private",
+      "purpose": "伯爵的私人起居处，含卧室、更衣与盥洗空间。",
+      "functions": ["睡眠", "更衣", "盥洗"]
+    },
+    "guest": {
+      "access": "private",
+      "purpose": "留宿客人的套间，含休息、更衣与盥洗空间。",
+      "functions": ["留宿", "更衣", "盥洗"]
+    },
+    "workshop": {
+      "access": "private",
+      "purpose": "书房旁的实验小室，暂不接待访客。"
+    },
+    "pantry": {
+      "label": "厨房与备餐间",
+      "access": "service",
+      "purpose": "厨房与备餐区相接；从这里送餐到餐厅，经服务楼梯联系楼上。",
+      "functions": ["烹饪", "备餐", "洗涤", "餐具收存"]
+    },
+    "office": {
+      "access": "service",
+      "purpose": "管事处理采买、账目与府内事务的地方。"
+    },
+    "attic": {
+      "label": "阁楼",
+      "access": "service",
+      "purpose": "分区收存档案与旧物，另留仆役起居处。",
+      "functions": ["档案", "储藏", "仆役起居"]
+    },
+    "cellar": {
+      "access": "service",
+      "purpose": "酒食与日用物资分区储存，经厨房一侧的楼梯出入。"
+    },
+    "backstair": {
+      "access": "service",
+      "purpose": "联系后勤配楼、楼上与阁楼的服务楼梯。"
+    },
+    "coach": { "access": "service", "purpose": "车房与马厩，面向前院的车道。" },
+    "gatehouse": { "access": "service", "purpose": "照看府门与出入车马。" },
+    "yard": {
+      "access": "service",
+      "purpose": "服务侧门内的小院，供后勤出入。"
+    },
+    "sidegate": { "access": "service", "purpose": "后勤人员与物资由此出入。" }
+  },
+  "units": "metres",
+  "bounds": [-1, -1, 44, 64],
+  "floorHeight": 4.6,
+  "wallThickness": 0.28,
+  "floors": {
+    "site": 0,
+    "ground": 0.18,
+    "upper": 4.78,
+    "service": 0.18,
+    "basement": -3,
+    "attic": 9.38,
+    "outside": 0
+  },
+  "rooms": {
+    "garden": { "rect": [8, 0, 24, 18], "floor": "site", "kind": "garden" },
+    "orangery": { "rect": [0, 3, 8, 10], "floor": "site", "kind": "pavilion" },
+    "pavilion": { "rect": [32, 3, 8, 10], "floor": "site", "kind": "pavilion" },
+    "westpath": { "rect": [4, 13, 4, 9], "floor": "site", "kind": "path" },
+    "eastpath": { "rect": [32, 13, 4, 9], "floor": "site", "kind": "path" },
+    "terrace": { "rect": [8, 18, 24, 4], "floor": "site", "kind": "terrace" },
+    "music": {
+      "rect": [8, 22, 8, 8],
+      "floor": "ground",
+      "kind": "room",
+      "furniture": "music"
+    },
+    "salon": {
+      "rect": [16, 22, 8, 8],
+      "floor": "ground",
+      "kind": "room",
+      "furniture": "salon"
+    },
+    "dining": {
+      "rect": [24, 22, 8, 8],
+      "floor": "ground",
+      "kind": "room",
+      "furniture": "dining"
+    },
+    "gallery": {
+      "rect": [8, 30, 8, 12],
+      "floor": "ground",
+      "kind": "room",
+      "furniture": "gallery"
+    },
+    "foyer": {
+      "rect": [16, 30, 8, 12],
+      "floor": "ground",
+      "kind": "room",
+      "furniture": "foyer"
+    },
+    "ante": { "rect": [24, 30, 4, 12], "floor": "ground", "kind": "hall" },
+    "stair": {
+      "rect": [28, 34, 4, 8],
+      "floor": "ground",
+      "kind": "stair",
+      "extra": [28, 30, 4, 4]
+    },
+    "court": { "rect": [8, 42, 24, 14], "floor": "site", "kind": "court" },
+    "gate": { "rect": [17, 56, 6, 3], "floor": "site", "kind": "gate" },
+    "library": {
+      "rect": [8, 22, 8, 10],
+      "floor": "upper",
+      "kind": "room",
+      "furniture": "library"
+    },
+    "study": {
+      "rect": [16, 22, 8, 10],
+      "floor": "upper",
+      "kind": "room",
+      "furniture": "study"
+    },
+    "workshop": {
+      "rect": [24, 22, 8, 10],
+      "floor": "upper",
+      "kind": "room",
+      "furniture": "workshop"
+    },
+    "privatehall": { "rect": [8, 32, 20, 2], "floor": "upper", "kind": "hall" },
+    "landing": { "rect": [28, 32, 4, 2], "floor": "upper", "kind": "hall" },
+    "guest": {
+      "rect": [8, 34, 8, 8],
+      "floor": "upper",
+      "kind": "room",
+      "furniture": "bedroom"
+    },
+    "letter": {
+      "rect": [16, 34, 8, 8],
+      "floor": "upper",
+      "kind": "room",
+      "furniture": "letter"
+    },
+    "bedroom": {
+      "rect": [24, 34, 4, 8],
+      "floor": "upper",
+      "kind": "room",
+      "furniture": "bedroom"
+    },
+    "coach": { "rect": [0, 42, 8, 10], "floor": "service", "kind": "room" },
+    "gatehouse": { "rect": [0, 52, 8, 4], "floor": "service", "kind": "room" },
+    "pantry": {
+      "rect": [32, 22, 8, 8],
+      "floor": "service",
+      "kind": "room",
+      "furniture": "pantry"
+    },
+    "office": {
+      "rect": [36, 30, 4, 8],
+      "floor": "service",
+      "kind": "room",
+      "furniture": "study"
+    },
+    "backstair": {
+      "rect": [32, 30, 4, 8],
+      "floor": "service",
+      "kind": "stair"
+    },
+    "yard": { "rect": [32, 38, 8, 18], "floor": "site", "kind": "court" },
+    "sidegate": { "rect": [40, 46, 2, 4], "floor": "site", "kind": "gate" },
+    "cellar": { "rect": [32, 22, 8, 8], "floor": "basement", "kind": "room" },
+    "attic": { "rect": [8, 22, 24, 20], "floor": "attic", "kind": "room" },
+    "outside": { "rect": [16, 59, 8, 4], "floor": "outside", "kind": "outside" }
+  },
+  "portals": [
+    { "a": "gate", "b": "court", "at": [20, 56], "kind": "path" },
+    {
+      "a": "gate",
+      "b": "gatehouse",
+      "at": [8, 54],
+      "via": [[20, 54]],
+      "kind": "path"
+    },
+    { "a": "gate", "b": "outside", "at": [20, 59], "kind": "path" },
+    { "a": "court", "b": "coach", "at": [8, 47], "kind": "door" },
+    { "a": "court", "b": "foyer", "at": [20, 42], "kind": "door" },
+    { "a": "foyer", "b": "gallery", "at": [16, 36], "kind": "door" },
+    { "a": "gallery", "b": "music", "at": [12, 30], "kind": "door" },
+    { "a": "music", "b": "salon", "at": [16, 26], "kind": "door" },
+    { "a": "salon", "b": "dining", "at": [24, 26], "kind": "door" },
+    { "a": "dining", "b": "ante", "at": [26, 30], "kind": "door" },
+    { "a": "ante", "b": "foyer", "at": [24, 36], "kind": "door" },
+    { "a": "foyer", "b": "salon", "at": [20, 30], "kind": "door" },
+    { "a": "ante", "b": "stair", "at": [28, 36], "kind": "door" },
+    { "a": "salon", "b": "terrace", "at": [20, 22], "kind": "door" },
+    { "a": "terrace", "b": "garden", "at": [20, 18], "kind": "path" },
+    { "a": "garden", "b": "westpath", "at": [8, 16], "kind": "path" },
+    { "a": "westpath", "b": "orangery", "at": [6, 13], "kind": "path" },
+    { "a": "orangery", "b": "garden", "at": [8, 8], "kind": "door" },
+    { "a": "garden", "b": "pavilion", "at": [32, 8], "kind": "door" },
+    { "a": "pavilion", "b": "eastpath", "at": [34, 13], "kind": "path" },
+    { "a": "eastpath", "b": "garden", "at": [32, 16], "kind": "path" },
+    { "a": "westpath", "b": "terrace", "at": [8, 20], "kind": "path" },
+    { "a": "eastpath", "b": "terrace", "at": [32, 20], "kind": "path" },
+    { "a": "stair", "b": "landing", "at": [30, 34], "kind": "stairs" },
+    { "a": "landing", "b": "privatehall", "at": [28, 33], "kind": "door" },
+    { "a": "privatehall", "b": "library", "at": [12, 32], "kind": "door" },
+    { "a": "library", "b": "study", "at": [16, 27], "kind": "door" },
+    { "a": "privatehall", "b": "study", "at": [20, 32], "kind": "door" },
+    { "a": "privatehall", "b": "letter", "at": [20, 34], "kind": "door" },
+    { "a": "privatehall", "b": "guest", "at": [12, 34], "kind": "door" },
+    { "a": "privatehall", "b": "bedroom", "at": [26, 34], "kind": "door" },
+    { "a": "study", "b": "workshop", "at": [24, 27], "kind": "door" },
+    { "a": "landing", "b": "backstair", "at": [32, 33], "kind": "stairs" },
+    { "a": "backstair", "b": "attic", "at": [34, 33], "kind": "stairs" },
+    { "a": "sidegate", "b": "yard", "at": [40, 48], "kind": "path" },
+    { "a": "yard", "b": "backstair", "at": [34, 38], "kind": "door" },
+    { "a": "yard", "b": "office", "at": [38, 38], "kind": "door" },
+    { "a": "office", "b": "pantry", "at": [38, 30], "kind": "door" },
+    { "a": "office", "b": "backstair", "at": [36, 34], "kind": "door" },
+    { "a": "pantry", "b": "dining", "at": [32, 26], "kind": "door" },
+    { "a": "pantry", "b": "backstair", "at": [34, 30], "kind": "door" },
+    { "a": "backstair", "b": "stair", "at": [32, 36], "kind": "door" },
+    { "a": "pantry", "b": "cellar", "at": [38, 26], "kind": "stairs" }
+  ],
+  "cameras": {
+    "music-wide": { "position": [12, 29.4, 1.6], "lookAt": [12, 23.5, 1.35] },
+    "dining-wide": { "position": [25, 29, 1.7], "lookAt": [28, 25, 1.2] },
+    "dining-approach": { "position": [27, 27, 1.65], "lookAt": [29, 26, 1.25] },
+    "dining-seated": {
+      "position": [27.2, 26.8, 1.18],
+      "lookAt": [29, 26, 1.3]
+    },
+    "salon-wide": { "position": [20, 29, 1.65], "lookAt": [20, 24, 1.2] },
+    "garden-wide": { "position": [20, 20, 1.7], "lookAt": [20, 4, 1.0] }
+  }
+}

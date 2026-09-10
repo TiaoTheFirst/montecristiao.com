@@ -1,0 +1,55 @@
+@font-face {
+  font-family: "Manor Song";
+  src: url("assets/fonts/ManorSong-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("assets/fonts/CormorantGaramond-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  --serif:
+    "Manor Song", "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun",
+    serif;
+  --display: "Cormorant Garamond", "Manor Song", "Songti SC", serif;
+}
+.wordmark,
+.scene-copy,
+.room-dock,
+.speech,
+.folio-dialog {
+  font-family: var(--serif);
+}
+.magic-folio,
+.daily-dialog,
+#object-content,
+#player-dialog .dialog-body {
+  font-family: var(--serif);
+  font-synthesis: none;
+}
+.magic-response,
+#speech-text,
+#object-content p {
+  letter-spacing: 0.025em;
+  line-height: 1.95;
+}
+.wordmark > span {
+  letter-spacing: 0.09em;
+}
+.wordmark small,
+.eyebrow,
+.daily-kicker,
+.atlas-detail-kicker {
+  font-family: var(--display);
+}
+.scene-copy h1 {
+  letter-spacing: 0.13em;
+  font-weight: 400;
+}
+.speech p,
+.folio-dialog p {
+  line-height: 1.95;
+}

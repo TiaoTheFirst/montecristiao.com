@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script src="arrival-state.js"></script>
+    <script src="arrival-boot.js"></script>
+    <script src="arrival-account.js" defer></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    
+    <meta
+      name="description"
+      content="探索蒙特克里斯条府的客厅、画廊、藏书室与后花园。伯爵的手稿还在写，您可以先在府里坐坐。"
+    />
+    <title>蒙特克里斯条府 · 来访</title>
+    <link rel="icon" href="emblem.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="estate.css" />
+    <script src="architecture.js" defer></script>
+    <script src="availability.js" defer></script>
+    <script src="manor.js" defer></script>
+    <script src="world.js" defer></script>
+    <script src="painted-art.js" defer></script>
+    <script src="staging.js" defer></script>
+    <link rel="stylesheet" href="reception.css" />
+    <script src="motion.js" defer></script>
+    <script src="continuity.js" defer></script>
+    <script src="performance-art.js" defer></script>
+    <script src="performance.js" defer></script>
+    <script src="reception.js" defer></script>
+    <script src="relationship.js" defer></script>
+    <script src="atlas-preview.js" defer></script>
+    <script src="atlas-motion.js" defer></script>
+    <script src="atlas-ui.js" defer></script>
+    <script src="objects-data.js" defer></script>
+    <script src="spatial-anchors.js" defer></script>
+    <script src="estate.js" defer></script>
+    <link rel="stylesheet" href="living.css" />
+    <script src="dialogues.js" defer></script>
+    <script src="cast.js" defer></script>
+    <script src="music.js" defer></script>
+    <script src="living.js" defer></script>
+    <script src="objects.js" defer></script>
+    <script src="magic-journey.js" defer></script>
+    <script src="magic-surface.js" defer></script>
+    <script src="magic.js" defer></script>
+    <link rel="stylesheet" href="first-visit.css" />
+    <link rel="stylesheet" href="objects.css" />
+    <link rel="stylesheet" href="painted.css" />
+    <link rel="stylesheet" href="performance.css" />
+    <link rel="stylesheet" href="atlas.css" />
+    <link rel="stylesheet" href="feedback.css" />
+    <script src="feedback.js" defer></script>
+    <link rel="stylesheet" href="daily.css" />
+    <script src="memory.js" defer></script>
+    <script src="daily-data.js" defer></script>
+    <script src="daily-stories.js" defer></script>
+    <script src="daily.js" defer></script>
+    <link rel="stylesheet" href="diary.css" />
+    <script src="diary.js" defer></script>
+  </head>
+  <body class="living-estate">
+    <a class="skip" href="#room-title">跳到房间内容</a>
+    <header class="masthead">
+      <a class="wordmark" href="#court" aria-label="蒙特克里斯条府，返回前院"
+        ><span class="monogram" aria-hidden="true">M</span
+        ><span>蒙特克里斯条府<small>MONTECRISTIAO</small></span></a
+      >
+      <nav class="quick-nav" aria-label="内容直达">
+        <a href="#study">伯爵书房</a
+        ><a href="letters.html">我的通信 <span>↗</span></a>
+      </nav>
+      <button class="map-trigger" data-dialog="map">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2Zm6-2v16m6-14v16" /></svg
+        ><span>全屋地图</span>
+      </button>
+    </header>
+    <main id="main">
+      <section class="stage" data-initializing aria-labelledby="room-title">
+        <div class="scene-frame">
+          <img
+            id="scene-image"
+            src="assets/court-day.webp"
+            width="1672"
+            height="941"
+            alt="荣誉前院"
+            fetchpriority="high"
+          />
+          <div class="scene-shade"></div>
+          <div class="specks" aria-hidden="true"></div>
+          <div
+            id="hotspots"
+            class="hotspots"
+            aria-label="场景中的门与物件"
+          ></div>
+        </div>
+        <div class="scene-topline">
+          <button id="room-back" aria-label="返回上一间房">← 返回</button>
+          <span id="location">场地 / 荣誉前院</span
+          ><button
+            id="clock-open"
+            data-dialog="clock"
+            aria-label="打开府邸时钟"
+          >
+            <span class="clock-face" aria-hidden="true">◷</span
+            ><span id="clock-label">府邸时间</span
+            ><span class="clock-edit">调整时间 ↗</span>
+          </button>
+        </div>
+        <div class="scene-copy">
+          <p class="eyebrow" id="scene-en">COUR D’HONNEUR</p>
+          <h1 id="room-title" tabindex="-1">蒙特克里斯条府</h1>
+          <p id="room-line">车道在这里回转。主楼后面，还有一座花园。</p>
+          <a id="enter" class="enter" href="#foyer">进入主楼 <span>→</span></a>
+        </div>
+        <button
+          id="count-presence"
+          class="count-presence"
+          data-dialog="count"
+          hidden
+        >
+          <img
+            src="assets/count.webp"
+            alt="戴象牙色半面具的伯爵"
+            width="72"
+            height="72"
+          /><span
+            ><small>伯爵在场 · 预写导览</small
+            ><strong id="presence-verb">整理手稿</strong
+            ><em>走近问候 ↗</em></span
+          >
+        </button>
+        <div class="stage-bottom">
+          <span id="view-label">I / VIII</span
+          ><span class="stage-hint">选择门上的路标，继续走走</span
+          ><button id="markers" aria-pressed="true">隐藏标记</button>
+        </div>
+      </section>
+      <section class="room-dock" aria-label="房间行动">
+        <div class="wayfinding">
+          <p class="eyebrow">此处相连</p>
+          <nav id="door-list" aria-label="相连房间"></nav>
+        </div>
+        <div class="discoveries">
+          <p class="eyebrow">可查看的物件</p>
+          <div id="object-list"></div>
+        </div>
+      </section>
+      <section class="house-note">
+        <div>
+          <span class="little-star" aria-hidden="true">✧</span>
+          <p id="room-hint">从正门进入主楼，或先在前院停留。</p>
+        </div>
+        <button data-dialog="journal">
+          随身札记 <span id="journal-count">0</span>
+        </button>
+      </section>
+    </main>
+    <footer>
+      <a class="feedback-link" href="feedback.html" data-feedback="footer"
+        >来访意见</a
+      >
+      <button id="count-status" data-dialog="count">伯爵行踪</button
+      ><span>蒙特克里斯条府</span><a href="about.html">府邸说明 ↗</a>
+    </footer>
+    <p
+      id="walk-notice"
+      class="walk-notice"
+      role="status"
+      aria-live="polite"
+    ></p>
+    <p id="image-notice" class="image-notice" role="alert" hidden></p>
+    <dialog id="map-dialog" class="map-dialog" aria-labelledby="map-title">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">PLAN DE LA MAISON</p>
+          <h2 id="map-title">府邸图册</h2>
+        </div>
+        <button data-close aria-label="关闭全屋地图">关闭 ×</button>
+      </div>
+      <div class="map-intro">
+        <p id="map-you">北侧是花园，南侧通街道。点房间查看路线。</p>
+        <span id="map-count"></span>
+        <button id="map-home">◎ 定位我所在的房间</button>
+      </div>
+      <div class="map-shortcuts">
+        <nav aria-label="常用去处">
+          <span>常用去处</span>
+          <a href="#foyer">穿堂 <span aria-hidden="true">↗</span></a>
+          <a href="#letter">通信小室 <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+      <div class="map-tabs" role="tablist" aria-label="地图楼层">
+        <button
+          role="tab"
+          id="ground-tab"
+          data-floor="ground"
+          aria-selected="true"
+          aria-controls="map-panel"
+        >
+          一层与花园</button
+        ><button
+          role="tab"
+          id="upper-tab"
+          data-floor="upper"
+          aria-selected="false"
+          aria-controls="map-panel"
+          tabindex="-1"
+        >
+          二层</button
+        ><button
+          role="tab"
+          id="service-tab"
+          data-floor="service"
+          aria-selected="false"
+          aria-controls="map-panel"
+          tabindex="-1"
+        >
+          配楼与地下
+        </button>
+      </div>
+      <div id="map-panel" role="tabpanel" aria-labelledby="ground-tab">
+        <div class="map-compass">N <span>↑</span></div>
+        <div id="floorplan" class="floorplan"></div>
+      </div>
+      <div class="map-legend">
+        <span><i class="open-key"></i>已有场景</span
+        ><span><i class="transit-key"></i>经过区域</span
+        ><span><i class="future-key"></i>暂未开放</span
+        ><span><i class="count-key"></i>伯爵所在</span>
+      </div>
+      <section
+        id="map-detail"
+        class="map-detail"
+        aria-label="房间预览"
+      ></section>
+      <p class="fine-print">
+        原创宅邸设计。淡色房间尚未开放；图册与立体模型共用房间、门与楼梯的位置。
+      </p>
+    </dialog>
+    <dialog
+      id="clock-dialog"
+      class="small-dialog"
+      aria-labelledby="clock-title"
+    >
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">L’HORLOGE DE LA MAISON</p>
+          <h2 id="clock-title">府邸时钟</h2>
+        </div>
+        <button data-close aria-label="关闭府邸时钟">关闭 ×</button>
+      </div>
+      <div class="dialog-body">
+        <p>
+          府里有自己的作息。伯爵会沿走廊换房间，也会外出。您可以去找他，或留在喜欢的地方。
+        </p>
+        <p id="clock-status" class="clock-status"></p>
+        <button id="live-clock" class="solid">重新校时 →</button>
+        <p class="fine-print">
+          由本地服务统一校时（UTC+8）。这是角色日程，不表示真人在线；刷新、换房间、修改链接都不会替伯爵改行程。断线超过九十秒时暂停人物互动，房间仍可参观。
+        </p>
+      </div>
+    </dialog>
+    <dialog
+      id="object-dialog"
+      class="small-dialog"
+      aria-labelledby="object-title"
+    >
+      <div class="dialog-heading">
+        <p class="eyebrow" id="object-kind">府邸中的物件</p>
+        <button data-close aria-label="关闭物件">关闭 ×</button>
+      </div>
+      <div id="object-content" class="dialog-body"></div>
+    </dialog>
+    <dialog
+      id="count-dialog"
+      class="small-dialog"
+      aria-labelledby="count-title"
+    >
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">LE COMTE</p>
+          <h2 id="count-title">伯爵的行踪</h2>
+        </div>
+        <button data-close aria-label="关闭伯爵行踪">关闭 ×</button>
+      </div>
+      <div class="dialog-body">
+        <div class="count-card">
+          <img
+            src="assets/count.webp"
+            alt="伯爵肖像"
+            width="120"
+            height="120"
+          />
+          <div>
+            <p id="count-where"></p>
+            <p id="count-activity"></p>
+          </div>
+        </div>
+        <p id="count-note"></p>
+        <div id="count-actions" class="dialog-actions"></div>
+        <p class="fine-print">
+          角色日程与预写导览，不是即时聊天或真人在线状态。
+        </p>
+      </div>
+    </dialog>
+    <dialog
+      id="journal-dialog"
+      class="small-dialog"
+      aria-labelledby="journal-title"
+    >
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">CARNET DE VISITE</p>
+          <h2 id="journal-title">随身札记</h2>
+        </div>
+        <button data-close aria-label="关闭随身札记">关闭 ×</button>
+      </div>
+      <div class="dialog-body">
+        <p>本次看过的物件留在这里。刷新或离开页面后清空，不上传。</p>
+        <ul id="journal-items" class="journal-items"></ul>
+        <button id="clear-journal" class="text-button">清空札记</button>
+      </div>
+    </dialog>
+    <noscript
+      ><div class="noscript">
+        探索需要 JavaScript。您仍可查看<a href="manuscripts.html">伯爵手稿</a
+        >的进度，或查看<a href="letters.html">关系信箱</a>。
+      </div></noscript
+    >
+  </body>
+</html>

@@ -1,0 +1,73 @@
+.manuscript-pending {
+  width: min(1320px, 91%);
+  margin: 64px auto 80px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+}
+.pending-desk {
+  margin: 0;
+}
+.pending-desk img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.pending-note {
+  margin: 0 0 0 -28px;
+  position: relative;
+  padding: clamp(28px, 4vw, 64px);
+  background: #efeada;
+  border: 1px solid #927c5040;
+  box-shadow: 0 14px 44px #352b1610;
+}
+.pending-note h1 {
+  font-size: clamp(30px, 3vw, 44px);
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+}
+.pending-note p {
+  font-size: 16px;
+}
+.pending-note .eyebrow {
+  font-size: 14px;
+}
+.pending-observation {
+  color: #676959;
+}
+.pending-note .pending-book {
+  margin-top: 32px;
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: 24px;
+}
+.pending-note blockquote {
+  margin: 32px 0 12px;
+  padding-left: 18px;
+  border-left: 1px solid #8e7854;
+  font: 18px/1.9 var(--serif);
+}
+.pending-sign {
+  text-align: right;
+  color: #676959;
+}
+.pending-actions {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.pending-actions a {
+  font-size: 16px;
+  min-height: 44px;
+}
+@media (max-width: 820px) {
+  .manuscript-pending {
+    display: block;
+    margin: 24px auto 40px;
+  }
+  .pending-note {
+    margin: 0;
+  }
+}

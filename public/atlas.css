@@ -1,0 +1,851 @@
+/* Architectural folio: stable grid, semantic directory, one selected room. */
+.living-estate #map-dialog {
+  --atlas-line: #ab99704a;
+  --atlas-paper: #f3eedf;
+  width: min(1440px, 96vw);
+  max-width: 96vw;
+  height: min(960px, 94svh);
+  max-height: 94svh;
+  padding: 0;
+  color: #333d35;
+  color-scheme: light;
+  background: var(--atlas-paper);
+  border: 1px solid #b8a577;
+  box-shadow: 0 30px 100px #0009;
+  font: 1rem/1.8 var(--serif);
+  overflow: auto;
+}
+.living-estate #map-dialog[open] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(310px, 34vw, 430px);
+  grid-template-rows: 80px 54px 46px 58px minmax(280px, 1fr) 42px 30px;
+  grid-template-areas: "heading heading" "intro shortcuts" "tabs detail" "tools detail" "plan detail" "legend detail" "fine fine";
+}
+.living-estate #map-dialog::backdrop {
+  background: #07110edd;
+  backdrop-filter: blur(8px);
+}
+.living-estate #map-dialog[data-atlas-motion="opening"]::backdrop {
+  animation: atlas-backdrop-in 420ms ease both;
+}
+.living-estate #map-dialog[data-atlas-motion="closing"]::backdrop {
+  animation: atlas-backdrop-out 260ms ease both;
+}
+@keyframes atlas-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes atlas-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.living-estate #map-dialog button,
+.living-estate #map-dialog a {
+  font-family: inherit;
+}
+.living-estate #map-dialog :focus-visible {
+  outline: 2px solid #94723a;
+  outline-offset: 3px;
+}
+.living-estate #map-dialog .dialog-heading {
+  grid-area: heading;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 32px;
+  border: 0;
+  border-bottom: 1px solid var(--atlas-line);
+  background: none;
+}
+.living-estate #map-dialog .dialog-heading h2 {
+  font: 400 1.8rem/1.4 var(--serif);
+  letter-spacing: 0.18em;
+  margin: 0;
+}
+.living-estate #map-dialog .eyebrow {
+  font: 400 0.85rem/1.4 var(--display);
+  letter-spacing: 0.2em;
+  color: #846e47;
+  margin: 0 0 3px;
+}
+.living-estate #map-dialog .dialog-heading > button {
+  min-height: 44px;
+  padding: 0 8px;
+  font-size: 0.9rem;
+}
+.living-estate #map-dialog .map-intro {
+  grid-area: intro;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 0.875rem;
+}
+#map-you {
+  margin: 0;
+  white-space: nowrap;
+}
+#map-you::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: #42624b;
+}
+#map-count {
+  color: #846e47;
+}
+.living-estate #map-dialog #map-home {
+  margin-left: auto;
+  min-height: 44px;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+.living-estate #map-dialog .map-shortcuts {
+  grid-area: shortcuts;
+  padding: 0 24px 0 16px;
+  display: block;
+}
+.map-shortcuts nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  height: 100%;
+}
+.map-shortcuts nav > span {
+  font-size: 0.75rem;
+  color: #85795f;
+  white-space: nowrap;
+}
+.living-estate #map-dialog .map-shortcuts a {
+  padding: 8px 0;
+  border: 0;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.map-shortcuts a span {
+  color: #9b8050;
+}
+.living-estate #map-dialog .map-tabs {
+  grid-area: tabs;
+  margin: 0 28px;
+  gap: 30px;
+  border-bottom: 1px solid var(--atlas-line);
+}
+.living-estate #map-dialog .map-tabs button {
+  padding: 8px 0;
+  min-height: 44px;
+  font-size: 0.95rem;
+}
+.living-estate #map-dialog .map-tabs button[aria-selected="true"] {
+  color: #816030;
+  border-bottom-color: #816030;
+}
+.atlas-tools {
+  grid-area: tools;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 7px 28px;
+  position: relative;
+  z-index: 10;
+}
+.atlas-fold {
+  padding: 8px 16px;
+  min-height: 44px;
+  border: 1px solid #8f7347;
+  color: #f6eed9;
+  background: #344738;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+.living-estate #map-dialog .atlas-fold:hover {
+  color: #fff5dc;
+  background: #263a2d;
+}
+.atlas-reset {
+  min-height: 44px;
+  padding: 5px 0;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.atlas-state {
+  font-size: 0.75rem;
+  color: #7f735d;
+  position: absolute;
+  right: 28px;
+  top: 100%;
+  pointer-events: none;
+}
+.atlas-state:empty {
+  display: none;
+}
+.atlas-directory {
+  margin-right: auto;
+  min-width: 0;
+}
+.atlas-picker {
+  min-height: 44px;
+  font-size: 0.875rem;
+  padding: 6px 0;
+  text-align: left;
+}
+.atlas-directory-sheet {
+  position: absolute;
+  left: 28px;
+  top: calc(100% - 2px);
+  width: min(440px, calc(100vw - 48px));
+  max-height: 56svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 16px 22px;
+  border: 1px solid #b6a277;
+  background: #faf5e8;
+  box-shadow: 0 18px 38px #26261930;
+  scrollbar-width: thin;
+  scrollbar-color: #b5a47e transparent;
+}
+.atlas-directory-sheet[hidden] {
+  display: none;
+}
+.atlas-directory-sheet:not([hidden]) {
+  animation: atlas-directory-in 180ms ease-out;
+}
+@keyframes atlas-directory-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.atlas-directory-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  padding: 8px 0 14px;
+}
+.atlas-directory-group + .atlas-directory-group {
+  border-top: 1px solid var(--atlas-line);
+}
+.atlas-directory-group p {
+  grid-column: 1/-1;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: #8e7751;
+  margin: 0 0 8px;
+}
+.atlas-directory-group button {
+  min-height: 44px;
+  text-align: left;
+  padding: 8px 10px;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #b4a17b22;
+}
+.atlas-directory-group button[aria-pressed="true"] {
+  background: #e5e9dc;
+  color: #294b35;
+}
+.atlas-directory-group button:hover {
+  background: #ece3cf;
+  color: #735426;
+}
+.living-estate #map-dialog #map-panel {
+  grid-area: plan;
+  position: relative;
+  min-height: 0;
+  margin: 0 18px 0 22px;
+  padding: 0;
+  background: none;
+  border: 0;
+  overflow: hidden;
+}
+.living-estate #map-dialog .map-compass {
+  display: none;
+}
+.atlas-surface {
+  position: relative;
+  height: 100%;
+  min-height: 280px;
+  width: 100%;
+  isolation: isolate;
+  background: radial-gradient(ellipse at center, #faf6eb, #f3eedf 75%);
+}
+.atlas-surface > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 380ms ease 550ms;
+  z-index: 2;
+  overflow: visible;
+}
+.atlas-canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 300ms ease 550ms;
+  z-index: 3;
+  pointer-events: none;
+  touch-action: pan-y;
+}
+.atlas-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.atlas-surface.is-expanded > svg {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 420ms ease,
+    visibility 0s 420ms;
+}
+.atlas-surface.is-expanded .atlas-canvas {
+  opacity: 1;
+  z-index: 3;
+  pointer-events: auto;
+  transition: opacity 320ms ease;
+}
+.atlas-room > rect:first-child {
+  fill: #f7f1e1;
+  stroke: #676c58;
+  stroke-width: 0.22;
+  cursor: pointer;
+}
+.atlas-room.room > rect:first-child,
+.atlas-room.hall > rect:first-child,
+.atlas-room.stair > rect:first-child {
+  stroke-width: 0.32;
+}
+.atlas-room.is-closed > rect:first-child {
+  fill: #e9e3d3;
+  stroke: #a29c85;
+}
+.atlas-room.is-current > rect:first-child {
+  fill: #e0e8d7;
+}
+.atlas-room.is-selected > rect:first-child {
+  stroke: #886535;
+  stroke-width: 0.4;
+  fill: #eee2c5;
+}
+.atlas-room.is-previewed > rect:first-child,
+.atlas-room:hover > rect:first-child,
+.atlas-room:focus-visible > rect:first-child {
+  fill: #e9dcb9;
+  stroke: #74552d;
+  stroke-width: 0.42;
+}
+.living-estate #map-dialog .atlas-room:focus,
+.living-estate #map-dialog .atlas-room:focus-visible {
+  /* Native SVG focus outlines scale in map units, including mouse focus. */
+  outline: none;
+  outline-offset: 0;
+  filter: none;
+}
+.living-estate #map-dialog .atlas-room:focus-visible > rect:first-child {
+  /* Keep keyboard location visible at every map zoom, without covering rooms. */
+  fill: #e9dcb9;
+  stroke: #74552d;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+.atlas-floor-finish {
+  stroke: #aaa080;
+  stroke-width: 0.06;
+  opacity: 0.65;
+  pointer-events: none;
+}
+.atlas-room > rect:not(:first-child):not([class]) {
+  fill: #f7f1e1;
+  stroke: #676c58;
+  stroke-width: 0.2;
+}
+.atlas-room.garden > rect:first-child {
+  fill: #e0e5d0;
+  stroke: #94a180;
+  stroke-width: 0.12;
+}
+.atlas-room.path > rect:first-child,
+.atlas-room.terrace > rect:first-child,
+.atlas-room.court > rect:first-child {
+  fill: #ede5d0;
+  stroke: #b1a47f;
+  stroke-width: 0.12;
+}
+.garden-bed {
+  fill: #b4c098;
+  stroke: #7f936c;
+  stroke-width: 0.13;
+  pointer-events: none;
+}
+.garden-bed-inner {
+  fill: #cbd4b7;
+  stroke: #8c9e79;
+  stroke-width: 0.08;
+  pointer-events: none;
+}
+.garden-bed-axes {
+  fill: none;
+  stroke: #94a57d;
+  stroke-width: 0.11;
+  pointer-events: none;
+}
+.garden-boundary {
+  fill: none;
+  stroke: #99a77f;
+  stroke-width: 0.075;
+  pointer-events: none;
+}
+.garden-pool {
+  fill: #b9caca;
+  stroke: #7f9690;
+  stroke-width: 0.13;
+  pointer-events: none;
+}
+.pool-ring {
+  fill: none;
+  stroke: #799d99;
+  stroke-width: 0.06;
+  pointer-events: none;
+}
+.garden-path {
+  stroke: #f2ecd8;
+  stroke-width: 1.2;
+  fill: none;
+  pointer-events: none;
+}
+.furniture {
+  fill: #d8cbad;
+  stroke: #948362;
+  stroke-width: 0.085;
+  pointer-events: none;
+}
+.stair-tread,
+.cabinet-rule {
+  stroke: #958c70;
+  stroke-width: 0.07;
+  pointer-events: none;
+}
+.atlas-room-name {
+  font: 400 1.55px var(--serif);
+  fill: #394333;
+  pointer-events: none;
+  stroke: none;
+  letter-spacing: 0.02px;
+}
+.atlas-surface[data-floor="ground"] .atlas-room-name {
+  font-size: 2px;
+}
+.atlas-label-plate {
+  fill: #f7f2e4ed;
+  stroke: #bbaa7e66;
+  stroke-width: 0.035;
+  pointer-events: none;
+}
+.atlas-route {
+  fill: none;
+  stroke: #a67838;
+  stroke-width: 0.17;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 0.45 0.35;
+  pointer-events: none;
+}
+.door-cut {
+  fill: none;
+  stroke: #f6efdc;
+  stroke-width: 0.64;
+  pointer-events: none;
+}
+.door-swing {
+  fill: none;
+  stroke: #918364;
+  stroke-width: 0.07;
+  pointer-events: none;
+}
+.you-dot {
+  fill: #42614a;
+  stroke: #f8f3e4;
+  stroke-width: 0.14;
+}
+.count-dot {
+  fill: #a77943;
+  stroke: #f8f3e4;
+  stroke-width: 0.14;
+}
+.you-dot,
+.count-dot {
+  pointer-events: none;
+}
+.atlas-north {
+  font: 1px var(--display);
+  fill: #80693f;
+}
+.north-arrow,
+.atlas-scale {
+  stroke: #80693f;
+  stroke-width: 0.08;
+  fill: none;
+}
+.atlas-scale-label {
+  font: 0.65px var(--serif);
+  fill: #88764f;
+}
+.living-estate #map-dialog .map-legend {
+  grid-area: legend;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 24px;
+  gap: 8px 20px;
+  font-size: 0.75rem;
+  color: #7a735e;
+}
+.living-estate #map-dialog .map-detail {
+  grid-area: detail;
+  margin: 0 24px 0 4px;
+  padding: 24px 0 16px 24px;
+  border: 0;
+  border-left: 1px solid var(--atlas-line);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #c6b99b transparent;
+}
+.atlas-preview-frame {
+  position: relative;
+  flex-shrink: 0;
+  aspect-ratio: 16/9;
+  padding: 5px;
+  border: 1px solid #b4a27966;
+  background: #e7dfcc;
+  box-shadow: 0 4px 10px #68553415;
+  overflow: hidden;
+}
+.atlas-room-preview {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.atlas-preview-frame.is-ready .atlas-room-preview {
+  opacity: 1;
+}
+.atlas-preview-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  padding: 24px;
+  font-size: 0.85rem;
+  color: #746851;
+}
+.atlas-preview-fallback[hidden],
+.atlas-room-preview[hidden] {
+  display: none;
+}
+.atlas-preview-empty {
+  padding: 36px 20px;
+  border-block: 1px solid var(--atlas-line);
+  color: #7c735f;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.atlas-inventory h4 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  color: #897047;
+  margin: 0 0 6px;
+}
+.atlas-inventory ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #3d4b3b;
+}
+.atlas-inventory li {
+  padding: 4px 0 4px 15px;
+  position: relative;
+}
+.atlas-inventory li::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: #9a7c45;
+}
+.atlas-inventory + .atlas-inventory {
+  border-top: 1px solid var(--atlas-line);
+  padding-top: 12px;
+}
+.living-estate #map-dialog .atlas-presence {
+  font-size: 0.8rem;
+  color: #7e602c;
+  margin: 0;
+}
+.living-estate #map-dialog .atlas-inspect-help {
+  font-size: 0.75rem;
+  color: #877b63;
+  margin: 8px 0 0;
+  border-top: 1px solid var(--atlas-line);
+  padding-top: 12px;
+}
+.atlas-detail-kicker {
+  font-size: 0.8rem;
+  color: #8a744f;
+  margin: 4px 0 0 !important;
+  letter-spacing: 0.12em;
+}
+.living-estate #map-dialog .map-detail h3 {
+  font: 400 1.8rem/1.5 var(--serif);
+  margin: 0 0 4px;
+  letter-spacing: 0.08em;
+  white-space: normal;
+}
+.atlas-room-description {
+  font-size: 0.95rem;
+  line-height: 1.95;
+  color: #586250;
+  margin: 0;
+}
+.living-estate #map-dialog .atlas-route-copy {
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: #85765c;
+  margin: 0;
+}
+.living-estate #map-dialog .map-detail .solid {
+  font-size: 0.95rem;
+  padding: 12px 14px;
+  white-space: normal;
+  text-align: center;
+  margin-top: 4px;
+  min-height: 44px;
+}
+.atlas-nearby-title {
+  font-size: 0.75rem;
+  color: #8c7753;
+  letter-spacing: 0.1em;
+  margin: 8px 0 -8px;
+}
+.atlas-nearby {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 14px;
+  font-size: 0.875rem;
+}
+.atlas-nearby button {
+  text-align: left;
+  min-height: 44px;
+  border-bottom: 1px solid var(--atlas-line);
+  padding: 5px 0;
+}
+.living-estate #map-dialog > .fine-print {
+  grid-area: fine;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  margin: 0 28px;
+  align-self: center;
+  color: #8a806a;
+}
+.atlas-model-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  background: #f7f2e6eb;
+  border: 1px solid #a8966e88;
+  color: #34432e;
+  padding: 4px 9px;
+  font: 0.875rem var(--serif);
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 3px 12px #3a342216;
+}
+@media (max-width: 1050px) and (min-width: 761px) {
+  .living-estate #map-dialog[open] {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+  .living-estate #map-dialog .map-intro {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 10px;
+    padding: 0 22px;
+  }
+  #map-count {
+    display: block;
+    grid-column: 1;
+    font-size: 0.75rem;
+  }
+  .living-estate #map-dialog #map-home {
+    grid-column: 2;
+    grid-row: 1/3;
+  }
+  .atlas-tools {
+    gap: 10px;
+    padding-inline: 22px;
+  }
+  .atlas-fold {
+    padding: 8px 12px;
+  }
+  .atlas-picker {
+    max-width: 150px;
+  }
+  .map-shortcuts nav {
+    gap: 14px;
+  }
+  .map-shortcuts nav > span {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .living-estate #map-dialog,
+  .living-estate #map-dialog[open] {
+    display: block;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100svh;
+    max-height: 100svh;
+    margin: 0;
+    border: 0;
+  }
+  .living-estate #map-dialog:not([open]) {
+    display: none;
+  }
+  .living-estate #map-dialog .dialog-heading {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 12px 20px;
+    background: var(--atlas-paper);
+  }
+  .living-estate #map-dialog .dialog-heading h2 {
+    font-size: 1.5rem;
+  }
+  .living-estate #map-dialog .map-intro {
+    padding: 12px 20px 0;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .living-estate #map-dialog #map-home {
+    font-size: 0.875rem;
+  }
+  #map-count {
+    width: 100%;
+    order: 3;
+    font-size: 0.8rem;
+  }
+  .living-estate #map-dialog .map-shortcuts {
+    padding: 4px 20px;
+    border-bottom: 1px solid var(--atlas-line);
+  }
+  .map-shortcuts nav {
+    gap: 24px;
+  }
+  .living-estate #map-dialog .map-shortcuts a:first-of-type {
+    display: block;
+  }
+  .living-estate #map-dialog .map-tabs {
+    margin: 6px 20px 0;
+    gap: 24px;
+  }
+  .living-estate #map-dialog .map-tabs button {
+    font-size: 0.875rem;
+  }
+  .atlas-tools {
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+  }
+  .atlas-directory {
+    order: -1;
+    width: 100%;
+  }
+  .atlas-picker {
+    width: 100%;
+    border-bottom: 1px solid var(--atlas-line);
+  }
+  .atlas-directory-sheet {
+    left: 16px;
+    width: calc(100vw - 32px);
+    max-height: 50svh;
+  }
+  .atlas-state {
+    position: static;
+    width: 100%;
+    order: 4;
+  }
+  .atlas-reset,
+  .atlas-fold {
+    font-size: 0.875rem;
+  }
+  .living-estate #map-dialog #map-panel {
+    height: max(470px, 65svh);
+    margin: 0 12px;
+  }
+  .atlas-surface {
+    height: 100%;
+  }
+  .living-estate #map-dialog .map-legend {
+    padding: 12px 0;
+    gap: 8px 14px;
+  }
+  .living-estate #map-dialog .map-detail {
+    overflow: visible;
+    margin: 8px 24px;
+    padding: 24px 0 16px;
+    border-left: 0;
+    border-top: 1px solid var(--atlas-line);
+    scroll-margin-top: 90px;
+  }
+  .atlas-preview-frame {
+    max-width: 620px;
+  }
+  .living-estate #map-dialog > .fine-print {
+    margin: 0 24px 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-surface > svg,
+  .atlas-canvas,
+  .atlas-room-preview {
+    transition: none;
+  }
+  .living-estate #map-dialog::backdrop,
+  .atlas-directory-sheet:not([hidden]) {
+    animation: none !important;
+  }
+}
+[data-motion="reduce"] .atlas-surface > svg,
+[data-motion="reduce"] .atlas-canvas,
+[data-motion="reduce"] .atlas-room-preview {
+  transition: none;
+}
+[data-motion="reduce"] .living-estate #map-dialog::backdrop,
+[data-motion="reduce"] .atlas-directory-sheet:not([hidden]) {
+  animation: none !important;
+}
