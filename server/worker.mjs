@@ -1,4 +1,5 @@
 import { worldAt } from './world.mjs';
+import { household } from './household.mjs';
 const reply = (data, status = 200, head = false) => new Response(head ? null : JSON.stringify(data), {
   status, headers: {'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff'}
 });
@@ -7,6 +8,7 @@ export default {
     const url = new URL(req.url), head = req.method === 'HEAD';
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(req);
     if (!['GET','HEAD'].includes(req.method)) return reply({error:'SERVICE_NOT_OPEN'},503);
+    if (url.pathname === '/api/daily') return reply({edition:household().current},200,head);
     if (url.pathname === '/api/world') {
       if (url.search) return reply({error:'TIME_OVERRIDE_NOT_ALLOWED'},400,head);
       return reply(worldAt(),200,head);

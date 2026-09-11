@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>独粒棋 · 蒙特克里斯条府</title>
+    <link rel="icon" href="emblem.svg" />
+    <link rel="stylesheet" href="household.css" />
+    <link rel="stylesheet" href="solitaire.css" />
+    <script src="solitaire.js" type="module"></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="index.html#court">M <span>蒙特克里斯条府</span></a
+      ><a href="household.html">收起棋盘，回到近况 →</a>
+    </header>
+    <main>
+      <p class="eyebrow">A LITTLE DIVERSION</p>
+      <h1>独粒棋</h1>
+      <p class="lead">最后只留一枚。可以慢慢试。</p>
+      <div class="game-layout">
+        <section aria-label="独粒棋棋盘">
+          <p id="game-status" role="status" aria-live="polite"></p>
+          <div
+            id="board"
+            class="board"
+            role="group"
+            aria-label="33 孔十字棋盘"
+          ></div>
+          <div class="game-actions">
+            <button id="undo" disabled>退回一步</button
+            ><button id="hint">看一步提示</button
+            ><button id="restart">重新摆棋</button>
+          </div>
+          <p id="game-help" class="meta" role="status">
+            选中一枚棋子，再选亮起的空位。键盘可用 Tab、方向键及回车操作。
+          </p>
+        </section>
+        <aside>
+          <h2>如何落子</h2>
+          <p>
+            一枚棋子沿横线或竖线，跳过相邻的一枚棋子，落进后面的空孔。取走被跳过的那一枚。不能斜跳。
+          </p>
+          <p>
+            若没有可走的步数，便试着退回几步。提示只指出合法的一步，不保证能走到终局。
+          </p>
+          <h2>它从哪里来</h2>
+          <p>
+            1697 年的《Mercure Galant》已有独粒棋的记载。这一盘采用 33
+            孔十字盘，是本站适配的玩法。
+          </p>
+          <a
+            href="https://jsbeasley.co.uk/solitairemercure.htm"
+            target="_blank"
+            rel="noopener noreferrer"
+            >翻看原刊记录与转录 ↗</a
+          >
+          <p class="meta">这一局只留在当前页面，刷新会重新摆棋。</p>
+          <p><a href="index.html#salon">收起棋盘，回大客厅 →</a></p>
+        </aside>
+      </div>
+    </main>
+    <footer>一人即可开始 · 无需登录</footer>
+  </body>
+</html>

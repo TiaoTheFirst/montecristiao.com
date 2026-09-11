@@ -279,6 +279,16 @@
     q("#speaker").textContent = page.speaker;
     q("#speech-direction").textContent = page.direction;
     q("#speech-text").textContent = page.text;
+    q("#speech-source")?.remove();
+    if (page.source?.url?.startsWith("https://")) {
+      const source = document.createElement("a");
+      source.id = "speech-source";
+      source.href = page.source.url;
+      source.textContent = `来源：${page.source.title} · ${page.source.date} ↗`;
+      source.target = "_blank";
+      source.rel = "noopener noreferrer";
+      q("#speech-text").after(source);
+    }
     q("#speech-choices").replaceChildren();
     for (const c of page.choices) {
       const b = document.createElement("button");
@@ -531,6 +541,11 @@
     if (action === "map") {
       await close();
       ManorView.open("map");
+      return;
+    }
+    if (action === "meal-feedback") {
+      await close();
+      window.ManorFeedback?.open("butler");
       return;
     }
     if (action === "call-butler") {

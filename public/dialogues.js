@@ -1,6 +1,7 @@
 /* Original staging candidates. No generative chat, relationship scoring or hidden memory. */
 var ManorDialogue = (() => {
   const choice = (label, action) => ({ label, action });
+  const eveningMeal = (state) => (state.clock?.minute ?? 0) >= 17 * 60;
   const butler = (state, name) => ({
     speaker: "巴蒂斯坦",
     direction: "管家走到您面前，略一欠身。",
@@ -33,7 +34,9 @@ var ManorDialogue = (() => {
       return {
         speaker: "伯爵",
         direction: "餐具搁在盘旁。伯爵身边留着一个席位。",
-        text: `${address}来得正好。还没用餐的话，就坐这儿。厨房总会多留一份。`,
+        text: eveningMeal(state)
+          ? `${address}晚上好。晚餐刚开始，您若还没吃，就在这儿坐吧。`
+          : `${address}午安。还没吃午饭的话，坐这儿一起用吧。`,
         choices: [
           choice("那我就不客气了。", "accept-meal"),
           choice("您先用餐，我改日再来。", "decline-meal"),
@@ -84,6 +87,25 @@ var ManorDialogue = (() => {
     };
   }
   const pages = {
+    "meal-paper": {
+      speaker: "伯爵",
+      direction: "伯爵暂时放下餐具。",
+      text: "今天的消息我还没核实，先不拿来谈。",
+      choices: [
+        choice("继续用餐。", "quiet"),
+        choice("留下对这段餐叙的意见。", "meal-feedback"),
+      ],
+    },
+    "lunch-afternoon": {
+      speaker: "伯爵",
+      direction: "伯爵放下餐具，答道。",
+      text: "午后我通常留在府里。您若想逛逛，花园从客厅那边过去。",
+      choices: [
+        choice("那我饭后去花园看看。", "go-garden"),
+        choice("我想先问您一件事。", "question"),
+        choice("先继续吃饭。", "quiet"),
+      ],
+    },
     "garden-walk": {
       speaker: "伯爵",
       direction: "园径就在露台下，水池后面还有一段路。",
@@ -352,6 +374,60 @@ var ManorDialogue = (() => {
     if (id === "smalltalk" && pages["chat-" + state.room])
       id = "chat-" + state.room;
     const p = { ...pages[id] };
+    if (id === "lunch-afternoon" && typeof Manor === "object" && Manor.validDate(state.clock?.date)) {
+      const next = Manor.state(state.clock.date, 960);
+      const plans = {
+        garden: "我下午打算去花园走走。您若想去，从客厅那边过去就是露台。",
+        salon: "我下午会在客厅坐一会儿。您若不赶时间，到时过来喝杯茶。",
+        library: "我下午想在藏书室看一会儿书。您若有事找我，可以到那边来。",
+      };
+      p.text = plans[next.destination || next.room] || p.text;
+    }
+    if (id === "accept-meal") {
+      p.text = eveningMeal(state)
+        ? "请用。您想聊几句，还是安静吃顿饭？"
+        : "请用。您下午还有安排吗？不必陪我坐到散席。";
+      p.choices = eveningMeal(state)
+        ? [
+            choice("今天有什么值得聊的消息？", "meal-paper"),
+            choice("这屋子平时也这么安静吗？", "dinner-talk"),
+            choice("先安静地吃一会儿。", "quiet"),
+          ]
+        : [
+            choice("您下午打算做什么？", "lunch-afternoon"),
+            choice("今天报上有什么消息？", "meal-paper"),
+            choice("我先用餐，一会儿还得走。", "quiet"),
+          ];
+    }
+    if (id === "meal-paper") {
+      const edition =
+        typeof window !== "undefined"
+          ? window.ManorDailyPaper?.current(state)
+          : null;
+      p.text = edition
+        ? eveningMeal(state)
+          ? edition.dinner
+          : edition.lunch
+        : eveningMeal(state)
+          ? "今晚先不谈新闻了。您若有想谈的事，可以从头说给我听。"
+          : "今天的消息我还没核实，先不拿来谈。您下午有什么安排？";
+      if (edition)
+        p.source = {
+          url: edition.source_url,
+          title: edition.title,
+          date: edition.source_date,
+        };
+      else
+        p.choices = eveningMeal(state)
+          ? [
+              choice("我带来了一个问题。", "question"),
+              choice("那就先吃饭。", "quiet"),
+            ]
+          : [
+              choice("您下午打算做什么？", "lunch-afternoon"),
+              choice("我先用餐。", "quiet"),
+            ];
+    }
     const visit =
       typeof window !== "undefined"
         ? window.ManorVisitSession?.context()

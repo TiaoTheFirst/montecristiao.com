@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>府邸近况 · 蒙特克里斯条府</title>
+    <link rel="icon" href="emblem.svg" />
+    <link rel="stylesheet" href="household.css" />
+    <script src="household.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="index.html#court">M <span>蒙特克里斯条府</span></a
+      ><a href="index.html#dining">回到餐厅 →</a>
+    </header>
+    <main>
+      <p class="eyebrow">THE HOUSE PAPER</p>
+      <h1>府邸近况</h1>
+      <p class="lead">一份报，一点闲谈，还有没下完的棋。</p>
+      <p id="paper-status" class="meta" role="status">正在取报……</p>
+      <label class="archive"
+        >翻阅日期
+        <select id="edition-date" aria-label="翻阅日期"></select
+      ></label>
+      <div id="paper" hidden>
+        <div class="paper-grid">
+          <article class="news">
+            <p class="eyebrow">报上所见</p>
+            <h2 id="news-title"></h2>
+            <p id="news"></p>
+            <a id="source" target="_blank" rel="noopener noreferrer"></a>
+          </article>
+          <article>
+            <p class="eyebrow">一件旧趣事</p>
+            <h2 id="curiosity-title"></h2>
+            <p id="curiosity"></p>
+            <a
+              id="curiosity-source"
+              target="_blank"
+              rel="noopener noreferrer"
+            ></a>
+            <p><a class="button" href="solitaire.html">摆一盘独粒棋 →</a></p>
+          </article>
+        </div>
+        <section class="life">
+          <p class="eyebrow">府里的一小段日常</p>
+          <h2 id="life-title"></h2>
+          <p id="life"></p>
+          <p id="life-note" class="meta"></p>
+        </section>
+        <section>
+          <p class="eyebrow">餐桌旁</p>
+          <h2>午间与入夜，说些不同的事</h2>
+          <div class="paper-grid">
+            <article>
+              <h3>午餐</h3>
+              <p id="lunch"></p>
+            </article>
+            <article>
+              <h3>晚餐</h3>
+              <p id="dinner"></p>
+            </article>
+          </div>
+          <a href="index.html#dining">去餐厅走走 →</a>
+        </section>
+      </div>
+    </main>
+    <footer>
+      新闻依来源整理；人物日常与餐叙为原创虚构场景。<a href="about.html"
+        >府邸说明</a
+      >
+    </footer>
+  </body>
+</html>
