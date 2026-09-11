@@ -2,11 +2,11 @@
    Enabling a capability also requires reviewed content and a release decision. */
 var ManorAvailability = Object.freeze({
   manuscripts: false,
-  visits: false,
+  visits: true,
   guidedReading: false,
   canRead(resource) {
     return resource === "introduction"
       ? this.manuscripts
-      : ["friendship", "reply"].includes(resource) && this.visits;
+      : resource === "dinner-division" && this.visits;
   },
 });

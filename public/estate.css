@@ -1459,6 +1459,45 @@ dialog::backdrop {
     font-size: 16px;
   }
 }
+/* The reading entry belongs to the room, without inventing a painted prop. */
+.visit-reading-entry {
+  display: none;
+  gap: 28px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px max(22px, 4.5vw);
+  border-top: 1px solid var(--line);
+  background: #19231c;
+}
+.stage[data-room="music"] ~ .visit-reading-entry {
+  display: flex;
+}
+.visit-reading-entry h2 {
+  margin: 10px 0;
+  font: 24px/1.5 var(--serif);
+}
+.visit-reading-entry p { margin: 0; }
+.visit-reading-entry > a {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--gold);
+}
+@media (max-width: 700px) {
+  .stage[data-room="music"] ~ .visit-reading-entry {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+html[data-motion="reduce"]::view-transition-old(root),
+html[data-motion="reduce"]::view-transition-new(root) { animation: none; }
 .clock-presets {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
