@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="zh-CN" data-game-access="closed">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>七张暗牌 · 蒙特克里斯条府</title>
+    <link rel="icon" href="emblem.svg" />
+    <link rel="stylesheet" href="seven-cards.css" />
+    <link rel="stylesheet" href="seven-table.css" />
+    <script src="architecture.js" defer></script>
+    <script src="manor.js" defer></script>
+    <script src="world.js" defer></script>
+    <script type="module" src="seven-cards.js"></script>
+    <script type="module" src="seven-table.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html#court"
+        ><i>M</i><span>蒙特克里斯条府</span></a
+      ><a href="index.html#salon">收起纸牌，回到大客厅 ↗</a>
+    </header>
+    <main>
+      <div class="heading">
+        <div>
+          <p class="eyebrow">THE COUNT’S CARD TABLE</p>
+          <h1>七张暗牌<span>一张落下，便不能收回。</span></h1>
+        </div>
+        <button id="rules-open" class="quiet">玩法与约定</button>
+      </div>
+      <section
+        id="game-access"
+        class="welcome"
+        tabindex="-1"
+        aria-labelledby="game-access-title"
+      >
+        <div>
+          <p class="eyebrow">大客厅的纸牌桌</p>
+          <h2 id="game-access-title">邀请，要等他有空。</h2>
+          <p id="game-access-message" role="status">正在确认伯爵的行踪…</p>
+          <p class="fine">
+            若这一局尚未结束，牌局会保留在当前标签页。下次有空时再续。
+          </p>
+        </div>
+        <nav class="night-services" aria-label="此刻仍可做的事">
+          <a href="index.html#salon">回大客厅 · 查看行踪 →</a
+          ><a id="after-hours-chess" href="solitaire.html?from=garden"
+            >去花园独自摆棋 →</a
+          ><a href="reading/dinner-division.html">读一次来访对话 →</a
+          ><a href="household.html">读府邸近况 →</a>
+        </nav>
+      </section>
+      <section id="welcome" class="welcome" aria-labelledby="welcome-title">
+        <div>
+          <p class="eyebrow">一场关于取舍的小较量</p>
+          <h2 id="welcome-title">最大的牌，<br />要留给哪一轮？</h2>
+          <p>
+            你与伯爵各持 1—7，双方同时揭牌。<br />拿下眼前的分数，也要给后面留一手。
+          </p>
+        </div>
+        <div class="welcome-choices">
+          <label for="mode">这一局，怎样玩？</label
+          ><select id="mode">
+            <option value="casual">随便玩一局</option>
+            <option value="lesson">请教一局 · 可看提示</option>
+            <option value="challenge">认真较量</option>
+          </select>
+          <p id="mode-description" class="muted">
+            先熟悉取舍与揭牌的节奏，整局强度保持一致。
+          </p>
+          <button id="start" class="primary">坐下，发牌 <span>→</span></button>
+          <p class="fine">七轮结束 · 无需登录 · 没有倒计时</p>
+        </div>
+      </section>
+      <section id="play-area" hidden aria-label="七张暗牌牌桌">
+        <div class="game-grid">
+          <div class="table-column">
+            <div class="table-top">
+              <p id="round-label">第一轮</p>
+              <p id="mode-label" class="muted"></p>
+              <button id="restart" class="quiet">重新开局</button>
+            </div>
+            <div class="felt">
+              <div class="opponent">
+                <div class="seal" aria-hidden="true">M</div>
+                <div>
+                  <h2>伯爵</h2>
+                  <p id="opponent-status" class="muted">正在选牌</p>
+                </div>
+                <div class="score">
+                  <b id="bot-score">0</b><small>分</small>
+                </div>
+              </div>
+              <div
+                id="bot-hand"
+                class="remaining"
+                aria-label="伯爵尚未使用的牌"
+              ></div>
+              <div class="count-tableau" id="count-tableau">
+                <button
+                  id="table-next"
+                  class="quiet table-next"
+                  type="button"
+                  hidden
+                >
+                  下一轮 →
+                </button>
+                <img
+                  class="count-rest"
+                  src="assets/games/count-table-rest-v1.webp"
+                  alt="伯爵坐在木桌对面，窗外月光照进大客厅"
+                  width="1536"
+                  height="1024"
+                />
+                <img
+                  class="count-turn"
+                  src="assets/games/count-table-turn-v1.webp"
+                  alt=""
+                  aria-hidden="true"
+                  width="1536"
+                  height="1024"
+                />
+                <img
+                  class="count-expression count-smile"
+                  src="assets/games/count-table-smile-v1.webp"
+                  alt=""
+                  aria-hidden="true"
+                  width="1536"
+                  height="1024"
+                />
+                <img
+                  class="count-expression count-attentive"
+                  src="assets/games/count-table-attentive-v1.webp"
+                  alt=""
+                  aria-hidden="true"
+                  width="1536"
+                  height="1024"
+                />
+                <div class="arena" id="arena">
+                  <div class="played">
+                    <div id="bot-bid" class="card-back" aria-label="伯爵的暗牌">
+                      M
+                    </div>
+                    <span>伯爵出牌</span>
+                  </div>
+                  <div class="prize">
+                    <span id="prize-caption">本轮争夺</span
+                    ><strong id="pot">0</strong><span>分</span>
+                    <p id="carry-note"></p>
+                  </div>
+                  <div class="played">
+                    <div id="player-bid" class="empty-card">待选</div>
+                    <span>你的出牌</span>
+                  </div>
+                </div>
+              </div>
+              <p
+                id="status"
+                tabindex="-1"
+                class="status"
+                role="status"
+                aria-live="polite"
+              ></p>
+              <div class="player-meta">
+                <span>你的手牌 <small id="hand-count"></small></span
+                ><span>你已得到 <b id="player-score">0</b> 分</span>
+              </div>
+              <div id="hand" class="hand" aria-label="选择你的手牌"></div>
+              <div class="action-row">
+                <button id="hint" class="quiet" hidden>请教一步</button
+                ><button id="commit" class="primary" disabled>选一张牌</button
+                ><button id="next" class="primary" hidden>下一轮 →</button
+                ><button id="retry" class="primary" hidden>重新连接牌桌</button>
+              </div>
+              <p id="hint-text" class="hint-text" role="status"></p>
+            </div>
+            <div class="future">
+              <span>后面还有</span>
+              <div id="future-prizes"></div>
+              <small>分值公开，出现顺序未知</small>
+            </div>
+          </div>
+          <aside class="ledger">
+            <p class="eyebrow">ON THE TABLE</p>
+            <h2>这一局的记录</h2>
+            <p class="muted ledger-intro">
+              每张牌只能出一次。<br />初次平局留分，连续平局平分。
+            </p>
+            <ol id="history"></ol>
+            <p id="empty-history" class="empty-history">第一张牌还未揭开。</p>
+            <div id="summary" hidden>
+              <h2 id="outcome"></h2>
+              <p id="outcome-detail"></p>
+              <button id="review-open" class="secondary">回看一处转折</button
+              ><button id="again" class="primary">再来一局 →</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+      <p class="page-note" id="save-note">
+        对手由程序驱动，按府邸作息接受邀请；不代表作者真人在线。
+      </p>
+      <noscript
+        ><p>
+          请启用 JavaScript 后入座。<a href="games.html">返回消遣室</a>
+        </p></noscript
+      >
+    </main>
+    <dialog id="rules" aria-labelledby="rules-title">
+      <form method="dialog">
+        <button class="close" aria-label="关闭玩法">×</button>
+      </form>
+      <p class="eyebrow">THE RULES</p>
+      <h2 id="rules-title">一分钟，认识这副牌</h2>
+      <ol>
+        <li>双方各有 1—7 七张牌，每张只能用一次。</li>
+        <li>
+          每轮亮出一个分值，各自暗选一张牌，再同时揭开。数字大的一方拿走本轮全部分数。
+        </li>
+        <li>
+          出牌相同，分数留到下一轮；若连续第二次平局，双方平分奖池。最后一轮平局，也平分剩下的分数。
+        </li>
+        <li>共 28 分，七轮结束后得分高者获胜。最后一张牌自动揭开。</li>
+      </ol>
+      <p>
+        伯爵会在你选牌前锁定暗牌；双方都不知道后续分值的出现顺序。“请教一局”的提示也不会透露他的暗牌。
+      </p>
+      <p class="muted">
+        当前为单人练习。刷新可续接当前标签页的牌局；关闭标签页后不保留。玩法借鉴
+        Goofspiel 的同时竞价结构，采用七牌、平局留分及连续平局平分的本站规则。
+      </p>
+    </dialog>
+    <dialog id="review" aria-labelledby="review-title">
+      <form method="dialog">
+        <button class="close" aria-label="关闭复盘">×</button>
+      </form>
+      <p class="eyebrow">A SECOND LOOK</p>
+      <h2 id="review-title">换一张牌，会怎样？</h2>
+      <label for="review-round">回看哪一轮</label
+      ><select id="review-round"></select>
+      <p id="review-fact"></p>
+      <div id="review-hand" class="review-hand"></div>
+      <p id="review-result" role="status"></p>
+      <p id="review-estimate" class="muted"></p>
+      <p class="fine">
+        这是揭牌后的单轮对照，不改变原局。不能用已知暗牌证明当时的判断必然错误；后续胜负仍取决于双方余下的选择。
+      </p>
+    </dialog>
+    <dialog id="reset-dialog" aria-labelledby="reset-title">
+      <p class="eyebrow">A NEW DEAL</p>
+      <h2 id="reset-title">收起这一局？</h2>
+      <p>当前牌局将结束，随后可以重新选择玩法。</p>
+      <button id="reset-confirm" class="primary" type="button">
+        收牌，重新入座
+      </button>
+      <form method="dialog">
+        <button class="secondary" style="margin-top: 12px">继续这一局</button>
+      </form>
+    </dialog>
+  </body>
+</html>

@@ -28,6 +28,7 @@
     <script src="reception.js" defer></script>
     <script src="relationship.js" defer></script>
     <script src="atlas-preview.js" defer></script>
+    <script src="room-activities-data.js" defer></script>
     <script src="atlas-motion.js" defer></script>
     <script src="atlas-ui.js" defer></script>
     <script src="objects-data.js" defer></script>
@@ -57,6 +58,8 @@
     <script src="daily.js" defer></script>
     <link rel="stylesheet" href="diary.css" />
     <script src="diary.js" defer></script>
+    <link rel="stylesheet" href="room-activities.css" />
+    <script type="module" src="room-activities.js"></script>
   </head>
   <body class="living-estate">
     <a class="skip" href="#room-title">跳到房间内容</a>
@@ -66,8 +69,7 @@
         ><span>蒙特克里斯条府<small>MONTECRISTIAO</small></span></a
       >
       <nav class="quick-nav" aria-label="内容直达">
-        <a href="visits.html">来访对话</a
-        ><a href="#study">伯爵书房</a
+        <a href="visits.html">来访对话</a><a href="#study">伯爵书房</a
         ><a href="letters.html">我的通信 <span>↗</span></a>
       </nav>
       <button class="map-trigger" data-dialog="map">
@@ -147,6 +149,12 @@
           <div id="object-list"></div>
         </div>
       </section>
+      <section
+        id="room-activities"
+        class="room-activities"
+        aria-label="在这里可以做的事"
+        hidden
+      ></section>
       <section class="visit-reading-entry" aria-label="小会客厅的来访对话">
         <div>
           <p class="eyebrow">来访对话 · 家庭分工</p>
@@ -156,7 +164,10 @@
         <a href="reading/dinner-division.html">阅读完整对话 →</a>
       </section>
       <section class="house-note">
-        <nav aria-label="府邸近况与消遣"><a href="household.html">府邸近况</a> · <a href="solitaire.html">摆一盘独粒棋</a></nav>
+        <nav aria-label="府邸近况与消遣">
+          <a href="household.html">府邸近况</a> ·
+          <a href="games.html">与伯爵玩些小游戏</a>
+        </nav>
         <div>
           <span class="little-star" aria-hidden="true">✧</span>
           <p id="room-hint">从正门进入主楼，或先在前院停留。</p>
@@ -167,6 +178,10 @@
       </section>
     </main>
     <footer>
+      <nav class="room-shortcuts" aria-label="府邸近况与小游戏">
+        <a href="household.html">府邸近况</a
+        ><a href="games.html">与伯爵玩些小游戏</a>
+      </nav>
       <a class="feedback-link" href="feedback.html" data-feedback="footer"
         >来访意见</a
       >
@@ -344,6 +359,28 @@
         <p>本次看过的物件留在这里。刷新或离开页面后清空，不上传。</p>
         <ul id="journal-items" class="journal-items"></ul>
         <button id="clear-journal" class="text-button">清空札记</button>
+      </div>
+    </dialog>
+    <dialog
+      id="garden-sit"
+      class="garden-sit"
+      aria-labelledby="garden-puzzle-title"
+    >
+      <form method="dialog">
+        <button aria-label="回到花园">回到花园 ×</button>
+      </form>
+      <img id="garden-sit-image" alt="从露台望向水池与园径" />
+      <div class="garden-sit-content">
+        <p class="eyebrow">露台边的小坐</p>
+        <h2 id="garden-puzzle-title"></h2>
+        <p id="garden-puzzle-question"></p>
+        <div id="garden-puzzle-choices" class="garden-choices"></div>
+        <p id="garden-puzzle-result" role="status"></p>
+        <p class="fine-print">
+          园中小题每三天轮换一次。随时可以放下，不必答对才去摆棋。
+        </p>
+        <div id="garden-sit-links"></div>
+        <p id="garden-presence" class="fine-print"></p>
       </div>
     </dialog>
     <noscript

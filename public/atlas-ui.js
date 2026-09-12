@@ -736,6 +736,11 @@ window.ManorAtlas = (() => {
         pane.append(section);
       }
       pane.append(el("p", "atlas-room-description", scene.hint));
+      const activity = window.ManorRoomActivities?.[selected];
+      if (activity)
+        pane.append(
+          el("p", "atlas-room-description", "可在这里：" + activity.map),
+        );
     } else {
       pane.append(
         el(

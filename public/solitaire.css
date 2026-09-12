@@ -3,6 +3,50 @@
   grid-template-columns: 1.2fr 1fr;
   gap: 48px;
 }
+.garden-table {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ac946064;
+  border-radius: 8px;
+  padding: 145px 24px 22px;
+  background: repeating-linear-gradient(4deg, #493425 0 3px, #443022 3px 6px);
+  box-shadow: 0 18px 38px #0006;
+}
+.garden-outlook {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 240px;
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 52%;
+  mask-image: linear-gradient(#000 0 72%, transparent);
+}
+.garden-table .board {
+  position: relative;
+  margin: 0 auto;
+  transform: perspective(1000px) rotateX(8deg);
+  box-shadow:
+    0 24px 25px #120a0980,
+    inset 0 0 0 5px #8b6b3a55;
+}
+.garden-table + .game-actions {
+  margin-top: 22px;
+}
+html[data-garden-light="day"] .garden-table {
+  background-color: #755336;
+}
+@media (max-width: 480px) {
+  .garden-table {
+    padding: 112px 10px 20px;
+  }
+  .garden-outlook {
+    height: 190px;
+  }
+  .garden-table .board {
+    padding: 12px;
+    gap: 6px;
+  }
+}
 .board {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

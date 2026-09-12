@@ -33,8 +33,8 @@ var ManorSpatial = (() => {
     "study-night": { books: [36, 65] },
     "painted/study-occupied-day-80d8b971": { books: [35, 70] },
     "painted/study-occupied-night-71142954": { books: [35, 70] },
-    "letter-day": { seal: [80, 91] },
-    "letter-night": { seal: [80, 91] },
+    "letter-day": { letterbox: [73, 82], seal: [80, 91] },
+    "letter-night": { letterbox: [73, 82], seal: [80, 91] },
     "garden-day": { pool: [50, 61], orangery: [18, 46], pavilion: [82, 47] },
     "painted/garden-occupied-day-bd6cfbd3": {
       pool: [50, 61],

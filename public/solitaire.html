@@ -8,25 +8,36 @@
     <link rel="stylesheet" href="household.css" />
     <link rel="stylesheet" href="solitaire.css" />
     <script src="solitaire.js" type="module"></script>
+    <script src="solitaire-scene.js" type="module"></script>
   </head>
   <body>
     <header>
       <a class="brand" href="index.html#court">M <span>蒙特克里斯条府</span></a
-      ><a href="household.html">收起棋盘，回到近况 →</a>
+      ><a href="index.html#garden">收起棋盘，回到花园 →</a>
     </header>
     <main>
-      <p class="eyebrow">A LITTLE DIVERSION</p>
+      <p class="eyebrow">花园 · 露台棋桌</p>
       <h1>独粒棋</h1>
       <p class="lead">最后只留一枚。可以慢慢试。</p>
       <div class="game-layout">
         <section aria-label="独粒棋棋盘">
           <p id="game-status" role="status" aria-live="polite"></p>
-          <div
-            id="board"
-            class="board"
-            role="group"
-            aria-label="33 孔十字棋盘"
-          ></div>
+          <div class="garden-table">
+            <img
+              id="solitaire-garden"
+              class="garden-outlook"
+              src="assets/garden-day.webp"
+              alt="露台外的花园与水池"
+              width="1536"
+              height="1024"
+            />
+            <div
+              id="board"
+              class="board"
+              role="group"
+              aria-label="33 孔十字棋盘"
+            ></div>
+          </div>
           <div class="game-actions">
             <button id="undo" disabled>退回一步</button
             ><button id="hint">看一步提示</button
@@ -56,7 +67,7 @@
             >翻看原刊记录与转录 ↗</a
           >
           <p class="meta">这一局只留在当前页面，刷新会重新摆棋。</p>
-          <p><a href="index.html#salon">收起棋盘，回大客厅 →</a></p>
+          <p><a href="index.html#garden">收起棋盘，回到花园 →</a></p>
         </aside>
       </div>
     </main>

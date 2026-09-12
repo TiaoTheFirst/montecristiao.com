@@ -1,0 +1,219 @@
+body {
+  background-color: #18130f;
+  --muted: #bbb1a0;
+}
+html:not([data-game-access="open"]) #welcome,
+html:not([data-game-access="open"]) #play-area {
+  display: none !important;
+}
+#game-access {
+  background: #1e241c;
+}
+.night-services {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+.night-services a {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.welcome {
+  background:
+    linear-gradient(90deg, #171a17ee, #171a17d9),
+    url("assets/games/count-table-rest-v1.webp") center 38% / cover;
+}
+.felt {
+  padding: 0 0 14px;
+  border-color: #a6875866;
+  border-radius: 4px;
+  overflow: hidden;
+  background:
+    linear-gradient(105deg, #442918aa, #281b15dd),
+    repeating-linear-gradient(2deg, #412a1b 0 2px, #3b251a 2px 5px);
+  box-shadow: 0 18px 48px #0007;
+}
+.opponent {
+  padding: 16px 24px 4px;
+}
+.remaining {
+  margin: 6px 0 14px;
+}
+.count-tableau {
+  position: relative;
+  aspect-ratio: 3/2;
+  isolation: isolate;
+  background: #342219;
+}
+.count-tableau > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.table-next {
+  position: absolute;
+  right: 3%;
+  bottom: 3%;
+  z-index: 4;
+  background: #211a13ed;
+  border-color: #ddbe7e88;
+  box-shadow: 0 3px 15px #0006;
+}
+.count-turn {
+  opacity: 0;
+  transition: opacity 160ms ease;
+  clip-path: polygon(24% 36%, 44% 36%, 44% 70%, 23% 70%);
+}
+.turning .count-turn {
+  opacity: 1;
+}
+.count-expression {
+  opacity: 0;
+  transition: opacity 360ms ease;
+  mask-image: radial-gradient(
+    ellipse 10% 12% at 50% 20%,
+    #000 68%,
+    transparent 98%
+  );
+}
+[data-expression="smile"] .count-smile,
+[data-expression="attentive"] .count-attentive {
+  opacity: 1;
+}
+.count-tableau .arena {
+  position: absolute;
+  width: 46%;
+  max-width: none;
+  left: 30%;
+  top: 65%;
+  margin: 0;
+  gap: 4%;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.count-tableau .card-back,
+.count-tableau .empty-card,
+.count-tableau .face-card {
+  width: clamp(40px, 5.5vw, 68px);
+  height: clamp(56px, 7.5vw, 94px);
+  transform: perspective(480px) rotateX(20deg) rotateZ(-5deg);
+  box-shadow: 5px 10px 10px #160c0990;
+  font-size: clamp(26px, 3.5vw, 42px);
+}
+.count-tableau .empty-card {
+  font-size: 12px;
+  color: #e5d8bd;
+  background: #2b201b77;
+  border-color: #c8ae79;
+}
+.count-tableau .played:last-child > div {
+  transform: perspective(480px) rotateX(20deg) rotateZ(5deg);
+}
+.count-tableau .played > span {
+  color: #f0dfbd;
+  text-shadow: 0 1px 5px #000;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+.count-tableau .prize {
+  padding: 8px 3px;
+  background: #1d1710c9;
+  border: 1px solid #bea27077;
+  border-radius: 50%;
+  box-shadow: 0 8px 18px #11090066;
+}
+.count-tableau .prize strong {
+  font-size: clamp(25px, 3.5vw, 43px);
+}
+.count-tableau .prize > span {
+  font-size: 10px;
+  letter-spacing: 0;
+}
+.count-tableau .prize p:empty {
+  display: none;
+}
+.count-tableau .prize p {
+  font-size: 10px;
+  margin: 4px -20px 0;
+  min-height: 0;
+}
+.felt > .status {
+  padding: 0 20px;
+  margin: 16px 0;
+}
+.felt > .player-meta,
+.felt > .hand,
+.felt > .action-row,
+.felt > .hint-text {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+.felt > .hand {
+  max-width: none;
+}
+@media (min-width: 950px) {
+  .game-grid {
+    grid-template-columns: minmax(0, 1fr) 245px;
+    gap: 24px;
+  }
+}
+@media (max-width: 949px) {
+  .game-grid {
+    grid-template-columns: 1fr;
+  }
+  .ledger {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 22px 0 0;
+  }
+  .ledger ol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 20px;
+  }
+}
+@media (max-width: 600px) {
+  .opponent {
+    padding: 12px 16px 0;
+  }
+  .count-tableau .arena {
+    width: 58%;
+    left: 24%;
+    top: 64%;
+  }
+  .count-tableau .prize {
+    padding: 5px 2px;
+  }
+  .count-tableau .card-back,
+  .count-tableau .empty-card,
+  .count-tableau .face-card {
+    width: 38px;
+    height: 53px;
+  }
+  .count-tableau .played {
+    gap: 3px;
+  }
+  .count-tableau .played > span {
+    font-size: 9px;
+  }
+  .felt > .player-meta,
+  .felt > .hand,
+  .felt > .action-row,
+  .felt > .hint-text {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .count-turn,
+  .count-expression {
+    transition: none;
+  }
+}
+html[data-motion="reduce"] .count-turn,
+html[data-motion="reduce"] .count-expression {
+  transition: none;
+}
