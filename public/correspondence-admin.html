@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>伯爵的回信案 · 蒙特克里斯条府</title>
+    <link rel="icon" href="emblem.svg" />
+    <link rel="stylesheet" href="estate.css" />
+    <link rel="stylesheet" href="reception.css" />
+    <link rel="stylesheet" href="correspondence-admin.css" />
+    <script src="motion.js" defer></script>
+    <script src="reception.js" defer></script>
+    <script src="correspondence-admin.js" defer></script>
+  </head>
+  <body class="correspondence-page">
+    <a class="skip" href="#main">跳到回信案</a>
+    <header class="masthead">
+      <a class="wordmark" href="index.html#study"
+        ><span class="monogram">M</span
+        ><span>蒙特克里斯条府<small>MONTECRISTIAO</small></span></a
+      >
+      <nav class="quick-nav" aria-label="主要导航">
+        <a href="letters.html">我的通信</a><a href="index.html#study">回书房</a>
+      </nav>
+    </header>
+    <main class="correspondence-main" id="main">
+      <section class="correspondence-intro">
+        <div>
+          <p class="eyebrow">LE BUREAU DU COMTE</p>
+          <h1>伯爵的回信案</h1>
+          <p>
+            已递交的来信放在信匣里。回信先收作草稿，确认后才放进来访者的私函匣。
+          </p>
+        </div>
+        <button id="admin-refresh">刷新来信</button>
+      </section>
+      <p id="admin-status" role="status" aria-live="polite">正在核对名片……</p>
+      <div class="correspondence-layout">
+        <aside class="cabinet-panel" aria-label="待处理来信">
+          <div id="admin-list" class="cabinet-list"></div>
+          <button id="admin-more" hidden>再取一叠来信</button>
+        </aside>
+        <article id="admin-sheet" class="letter-sheet">
+          <h2>请用府主的邮箱登录</h2>
+          <p>回信案只向获得权限的账号开放。</p>
+          <button class="primary" data-reception="register">递上名片 →</button>
+        </article>
+      </div>
+    </main>
+    <footer>
+      <span>蒙特克里斯条府 · 私人通信</span><a href="privacy.html">隐私说明</a>
+    </footer>
+  </body>
+</html>

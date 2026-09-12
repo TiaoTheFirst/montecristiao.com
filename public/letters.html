@@ -1,1 +1,82 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>私人通信 · 蒙特克里斯条府</title><link rel="icon" href="emblem.svg"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="reception.css"></head><body class="paper"><header class="header"><a class="brand" href="index.html">蒙特克里斯条府</a><a href="index.html">返回前院 →</a></header><main class="page-hero note-list"><h1>私人通信</h1><p>私人通信与名片登记尚未开放。您可以先在府里走走，日后再来。</p><p><a href="index.html#court">回到前院 →</a></p></main></body></html>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <script src="arrival-state.js"></script>
+    <script src="arrival-boot.js"></script>
+    <script src="arrival-account.js" defer></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>我的通信 · 蒙特克里斯条府</title>
+    <link rel="icon" href="emblem.svg" />
+    <link rel="stylesheet" href="estate.css" />
+    <link rel="stylesheet" href="reception.css" />
+    <link rel="stylesheet" href="first-visit.css" />
+    <script src="painted-art.js" defer></script>
+    <script src="motion.js" defer></script>
+    <script src="reception.js" defer></script>
+    <script src="relationship.js" defer></script>
+    <script src="correspondence.js" defer></script>
+    <link rel="stylesheet" href="feedback.css" />
+    <script src="feedback.js" defer></script>
+  </head>
+  <body class="correspondence-page">
+    <a class="skip" href="#main">跳到通信正文</a>
+    <header class="masthead">
+      <a class="wordmark" href="index.html#letter"
+        ><span class="monogram">M</span
+        ><span>蒙特克里斯条府<small>MONTECRISTIAO</small></span></a
+      >
+      <nav class="quick-nav" aria-label="主要导航">
+        <a href="index.html#letter">回通信小室</a
+        ><a href="index.html#study">伯爵书房</a
+        ><a href="letters.html" aria-current="page">我的通信</a>
+      </nav>
+    </header>
+    <main class="correspondence-main" id="main">
+      <section class="correspondence-intro">
+        <div>
+          <p class="eyebrow">LA CORRESPONDANCE</p>
+          <h1>您的私函匣</h1>
+          <p>写到一半的信，与收到的回信，都放在这里。</p>
+        </div>
+        <button class="cabinet-new" id="new-letter">铺开一张信纸 →</button>
+      </section>
+      <div class="correspondence-layout">
+        <aside class="cabinet-panel" aria-label="我的来信">
+          <img
+            class="cabinet-image"
+            src="assets/letter-desk.webp"
+            alt="窗边书桌上的信纸"
+            width="1672"
+            height="941"
+          />
+          <div class="cabinet-name" id="cabinet-name">尚未登记</div>
+          <div id="cabinet-list" class="cabinet-list"></div>
+          <button id="cabinet-retry" type="button">刷新信匣</button>
+          <p class="fine-print">
+            寄出后由作者本人阅读与回信。这里没有自动分析；暂不收费，也不保证每封信都能在固定时间内得到回复。请勿填写身份证号、住址或他人的可识别隐私。
+          </p>
+        </aside>
+        <article class="letter-sheet" id="letter-sheet" aria-live="polite">
+          <div class="empty-letter">
+            <p class="eyebrow">CORRESPONDANCE PRIVÉE</p>
+            <h2>请先登录，打开私函匣。</h2>
+            <p>完成邮箱验证后，才能打开属于自己的来信与回信。</p>
+            <button class="primary" data-reception="register">
+              递上名片 →
+            </button>
+            <p class="fine-print">也可以不登记，继续探索府邸。</p>
+          </div>
+        </article>
+      </div>
+    </main>
+    <footer>
+      <a class="feedback-link" href="feedback.html" data-feedback="footer"
+        >来访意见</a
+      >
+      <span>蒙特克里斯条府</span><a href="privacy.html">隐私与通信说明</a
+      ><a href="index.html#letter">返回通信小室 ↗</a>
+    </footer>
+  </body>
+</html>

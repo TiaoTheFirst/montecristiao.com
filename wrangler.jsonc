@@ -1,7 +1,10 @@
 {
   "name": "montecristiao-com",
-  "main": "server/worker.mjs",
+  "main": "server/production.mjs",
   "compatibility_date": "2026-09-05",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
@@ -13,5 +16,27 @@
   },
   "observability": {
     "enabled": false
+  },
+  "vars": {
+    "APP_MODE": "production",
+    "APP_ORIGIN": "https://montecristiao.com",
+    "ACCOUNTS_OPEN": "true",
+    "MAIL_MODE": "resend",
+    "MAIL_ENABLED": "true",
+    "MAIL_FROM": "noreply@mail.montecristiao.com",
+    "MAIL_DAILY_LIMIT": "90",
+    "MAIL_MONTHLY_LIMIT": "2700"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "montecristiao-production",
+      "database_id": "71df6190-d966-437f-b80d-eac35544c009"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "17 20 * * *"
+    ]
   }
 }

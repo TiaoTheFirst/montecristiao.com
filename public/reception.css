@@ -948,3 +948,28 @@ html[data-motion="reduce"]::view-transition-old(root),
 html[data-motion="reduce"]::view-transition-new(root) {
   animation: none !important;
 }
+.manor-confirm {
+  max-width: calc(100vw - 32px);
+  width: 520px;
+  margin: auto;
+  padding: 32px;
+  background: #f0e7d4;
+  color: #28291f;
+  border: 1px solid #a89163;
+  box-shadow: 0 24px 100px #0009;
+}
+.manor-confirm::backdrop {
+  background: #0a110bc9;
+}
+.manor-confirm p {
+  line-height: 1.8;
+  margin-block: 1.5rem;
+}
+.manor-confirm button {
+  min-height: 44px;
+  padding: 10px 18px;
+  cursor: pointer;
+}
+.manor-confirm h2 {
+  font-size: 1.5rem;
+}
