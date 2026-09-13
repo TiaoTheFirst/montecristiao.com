@@ -721,6 +721,7 @@ function open(id) {
     );
   paint(state);
   panel.show();
+  dialog.scrollTop = 0;
   ManorMusic.duck("room-play", true);
   q(".play-back").focus({ preventScroll: true });
 }

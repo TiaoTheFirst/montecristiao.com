@@ -37,6 +37,10 @@ export function renderEstateNews(host, { go, stamp }) {
     if (focus) {
       window.ManorMotion?.reveal(article);
       title.focus({ preventScroll: true });
+      title.scrollIntoView({
+        block: "nearest",
+        behavior: window.ManorMotion?.reduced() ? "instant" : "smooth",
+      });
     }
   };
   pages.forEach((page, index) => {
