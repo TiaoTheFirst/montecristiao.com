@@ -12,6 +12,7 @@ var ManorDialogue = (() => {
       choice("我想找伯爵。", "where"),
       choice(name ? "看看我的名片。" : "这是我的名片。", "account"),
       choice("我的信放在哪里？", "letters-help"),
+      choice("府里有什么可以消遣的？", "games-help"),
       choice("我有些分不清方向了。", "directions"),
     ],
   });
@@ -87,6 +88,15 @@ var ManorDialogue = (() => {
     };
   }
   const pages = {
+    "games-help": {
+      speaker: "巴蒂斯坦",
+      direction: "管家指了指大客厅的方向。",
+      text: "两种消遣都在大客厅左侧沙发前的边桌上。走近桌子，可以自己摆独粒棋；伯爵在客厅闲坐时，也可以请他过来玩牌。花园适合散步，水池边可以停一会儿。",
+      choices: [
+        choice("带我去大客厅看牌。", "go-salon"),
+        choice("我想自己摆一局棋。", "go-salon"),
+      ],
+    },
     "meal-paper": {
       speaker: "伯爵",
       direction: "伯爵暂时放下餐具。",
@@ -374,7 +384,11 @@ var ManorDialogue = (() => {
     if (id === "smalltalk" && pages["chat-" + state.room])
       id = "chat-" + state.room;
     const p = { ...pages[id] };
-    if (id === "lunch-afternoon" && typeof Manor === "object" && Manor.validDate(state.clock?.date)) {
+    if (
+      id === "lunch-afternoon" &&
+      typeof Manor === "object" &&
+      Manor.validDate(state.clock?.date)
+    ) {
       const next = Manor.state(state.clock.date, 960);
       const plans = {
         garden: "我下午打算去花园走走。您若想去，从客厅那边过去就是露台。",

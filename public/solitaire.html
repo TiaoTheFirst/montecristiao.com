@@ -6,34 +6,53 @@
     <title>独粒棋 · 蒙特克里斯条府</title>
     <link rel="icon" href="emblem.svg" />
     <link rel="stylesheet" href="household.css" />
+    <link rel="stylesheet" href="peg-board.css" />
     <link rel="stylesheet" href="solitaire.css" />
     <script src="solitaire.js" type="module"></script>
+    <script src="motion.js" defer></script>
     <script src="solitaire-scene.js" type="module"></script>
   </head>
   <body>
     <header>
       <a class="brand" href="index.html#court">M <span>蒙特克里斯条府</span></a
-      ><a href="index.html#garden">收起棋盘，回到花园 →</a>
+      ><a href="index.html#salon">收起棋盘，回到大客厅 →</a>
     </header>
     <main>
-      <p class="eyebrow">花园 · 露台棋桌</p>
+      <p class="eyebrow">大客厅 · 沙发前的游戏桌</p>
       <h1>独粒棋</h1>
-      <p class="lead">最后只留一枚。可以慢慢试。</p>
+      <p class="lead" id="puzzle-goal">最后只留一枚。可以慢慢试。</p>
+      <div class="game-actions">
+        <button id="classic">经典十字盘</button
+        ><button id="edition">本期三日棋</button>
+      </div>
+      <p id="next-edition" class="meta"></p>
+      <section
+        id="change-board"
+        class="game-paper"
+        hidden
+        aria-label="更换棋局"
+      >
+        <p id="change-description"></p>
+        <button id="confirm-board">收起并换局</button>
+        <button id="cancel-board">继续当前棋局</button>
+      </section>
       <div class="game-layout">
         <section aria-label="独粒棋棋盘">
+          <h2 id="puzzle-title">经典十字盘</h2>
           <p id="game-status" role="status" aria-live="polite"></p>
-          <div class="garden-table">
+          <div class="salon-table">
             <img
-              id="solitaire-garden"
-              class="garden-outlook"
-              src="assets/garden-day.webp"
-              alt="露台外的花园与水池"
+              id="solitaire-room"
+              hidden
+              class="salon-outlook"
+              src="assets/props/salon-game-table-day-v2.webp"
+              alt="大客厅游戏桌对面的空椅与壁炉"
               width="1536"
               height="1024"
             />
             <div
               id="board"
-              class="board"
+              class="board peg-board"
               role="group"
               aria-label="33 孔十字棋盘"
             ></div>
@@ -42,10 +61,33 @@
             <button id="undo" disabled>退回一步</button
             ><button id="hint">看一步提示</button
             ><button id="restart">重新摆棋</button>
+            <button id="recover" hidden>退回最近有解的位置</button>
           </div>
           <p id="game-help" class="meta" role="status">
             选中一枚棋子，再选亮起的空位。键盘可用 Tab、方向键及回车操作。
           </p>
+          <section
+            id="victory"
+            class="game-paper victory"
+            hidden
+            aria-labelledby="victory-title"
+          >
+            <div class="keepsake-seal" aria-hidden="true">M</div>
+            <p class="eyebrow">棋匣里，留给解开这一局的人</p>
+            <h2 id="victory-title" tabindex="-1"></h2>
+            <p id="victory-detail"></p>
+            <blockquote id="victory-note"></blockquote>
+            <p class="meta">伯爵预先留下的短笺。收下纪念无需等待他在场。</p>
+            <div class="game-actions">
+              <button id="download-note">收下棋谱卡</button
+              ><button id="review-route">回看这一局</button
+              ><a href="index.html#salon">放回棋盘，回客厅 →</a>
+            </div>
+            <div id="route-review" hidden>
+              <h3>走过的棋路</h3>
+              <ol id="route-list"></ol>
+            </div>
+          </section>
         </section>
         <aside>
           <h2>如何落子</h2>
@@ -53,8 +95,22 @@
             一枚棋子沿横线或竖线，跳过相邻的一枚棋子，落进后面的空孔。取走被跳过的那一枚。不能斜跳。
           </p>
           <p>
-            若没有可走的步数，便试着退回几步。提示只指出合法的一步，不保证能走到终局。
+            提示只会给出经过完整解法验证的一步。若局面无解，会提示退回；搜索暂时无法确认时，也会明确说明。金圈孔只在指定落点的棋局中出现。
           </p>
+          <h2>棋匣里的纪念</h2>
+          <p id="keepsakes"></p>
+          <div id="theme-reward" class="game-paper" hidden>
+            <div class="keepsake-seal" aria-hidden="true">M</div>
+            <h3>三路棋客</h3>
+            <p>您已走过收束、归位与连通三类棋局。棋匣中多了一枚三路纪念章。</p>
+          </div>
+          <p id="storage-note" class="meta">
+            棋局与纪念保存在这个浏览器中，尚不随账号同步。重复完成同一局不会多发；使用提示也可以收下纪念。
+          </p>
+          <details>
+            <summary>翻看旧棋局 · 12 局</summary>
+            <div id="archive" class="puzzle-archive"></div>
+          </details>
           <h2>它从哪里来</h2>
           <p>
             1697 年的《Mercure Galant》已有独粒棋的记载。这一盘采用 33
@@ -66,8 +122,8 @@
             rel="noopener noreferrer"
             >翻看原刊记录与转录 ↗</a
           >
-          <p class="meta">这一局只留在当前页面，刷新会重新摆棋。</p>
-          <p><a href="index.html#garden">收起棋盘，回到花园 →</a></p>
+          <p class="meta">刷新后可继续当前棋局。时间预览不会改变本期推荐。</p>
+          <p><a href="index.html#salon">收起棋盘，回到大客厅 →</a></p>
         </aside>
       </div>
     </main>

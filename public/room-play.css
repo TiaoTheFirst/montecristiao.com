@@ -1,0 +1,256 @@
+.room-play {
+  width: min(1080px, 96vw);
+  max-height: 92dvh;
+  padding: 0;
+  border: 1px solid #9c8555;
+  color: #e8d9b5;
+  background: #12251e;
+}
+.room-play::backdrop {
+  background: #07100dda;
+}
+.room-play header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 22px;
+  background: #112119;
+  border-bottom: 1px solid #685c3e;
+}
+.room-play button {
+  min-height: 44px;
+  padding: 10px 16px;
+  font: inherit;
+  color: inherit;
+  background: #21382c;
+  border: 1px solid #9a8556;
+  cursor: pointer;
+}
+.room-play button:hover,
+.room-play button[aria-pressed="true"] {
+  background: #405138;
+}
+.room-play button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.play-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.play-photo {
+  position: relative;
+  overflow: hidden;
+  min-height: 480px;
+  background: #1b1d13;
+}
+.play-photo img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+.play-space {
+  scroll-margin-top: 90px;
+}
+.play-photo span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background: linear-gradient(transparent, #09140f);
+}
+.play-copy {
+  padding: 28px;
+  line-height: 1.85;
+}
+.play-copy h2 {
+  margin: 8px 0 16px;
+}
+.play-entry,
+.play-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+.play-response {
+  color: #edcf89;
+  min-height: 2em;
+}
+.play-finish {
+  border-top: 1px solid #75613c;
+  padding-top: 20px;
+}
+.play-finish button {
+  margin: 6px 8px 0 0;
+}
+.piano-keys {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  background: #25170e;
+  padding: 12px;
+  border: 4px ridge #674624;
+}
+.room-play .piano-key {
+  min-height: 145px;
+  padding-top: 95px;
+  color: #3e3023;
+  background: linear-gradient(#e3d7b7, #faf0cf);
+  border-radius: 0 0 5px 5px;
+}
+.room-play .piano-key.sounding {
+  background: #e6b954;
+  outline: 3px solid #f7e5a1;
+  opacity: 1;
+}
+.book-layout {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 12px 8px;
+  border-bottom: 12px ridge #68492c;
+  background: #20160f;
+}
+.book-layout button {
+  min-height: 130px;
+  padding: 8px;
+  writing-mode: vertical-rl;
+  justify-self: stretch;
+  background: #53402a;
+}
+.seat-layout {
+  display: grid;
+  grid-template: auto 64px auto / 1fr 1fr;
+  gap: 12px;
+}
+.seat-table {
+  grid-area: 2 / 1 / 3 / 3;
+  border-radius: 40%;
+  background: repeating-linear-gradient(
+    2deg,
+    #5a3822,
+    #69462a 8px,
+    #52321f 10px
+  );
+  display: grid;
+  place-items: center;
+}
+.voyage-chart {
+  background: #dfcfaa;
+  border: 6px ridge #8a6c3e;
+  color: #40351f;
+}
+.voyage-chart svg {
+  width: 100%;
+  display: block;
+}
+.voyage-chart line {
+  stroke: #765f36;
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+.voyage-chart circle {
+  fill: #6b4026;
+}
+.voyage-chart text {
+  font-size: 13px;
+  fill: #302618;
+}
+.visit-paper {
+  min-height: 210px;
+  padding: 25px;
+  color: #3c3020;
+  background: #dfcfaa;
+  box-shadow: 0 5px 15px #0004;
+}
+.visit-mark {
+  display: block;
+  margin: 24px auto;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #702a27;
+  color: #e7be80;
+  text-align: center;
+  line-height: 72px;
+  font-size: 38px;
+}
+.visit-paper[data-wax="green"] .visit-mark {
+  background: #284d3a;
+}
+.visit-paper[data-wax="gold"] .visit-mark {
+  background: #926c2e;
+}
+.is-stamped .visit-mark {
+  outline: 3px double #aa854e;
+  outline-offset: 3px;
+}
+.atlas-play-guide {
+  border: 1px solid #79663e;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+.atlas-play-guide nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.atlas-play-guide a {
+  display: block;
+  padding: 10px;
+  border: 1px solid #6e6344;
+  text-decoration: none;
+  font-size: 13px;
+}
+.atlas-play-guide small {
+  display: block;
+  color: #615840;
+  margin-top: 4px;
+}
+@media (max-width: 700px) {
+  .play-layout {
+    grid-template-columns: 1fr;
+  }
+  .play-photo {
+    min-height: 190px;
+    height: 190px;
+  }
+  .play-copy {
+    padding: 20px;
+  }
+  .room-play header {
+    padding: 10px;
+  }
+  .atlas-play-guide nav {
+    grid-template-columns: 1fr;
+  }
+  .book-layout {
+    gap: 4px;
+  }
+  .book-layout button {
+    font-size: 14px;
+  }
+  .room-play .piano-key {
+    min-height: 110px;
+    padding-top: 65px;
+  }
+}
+
+.room-play .play-controls[hidden] {
+  display: none;
+}
+.piano-sketch {
+  overflow-wrap: anywhere;
+  padding: 14px;
+  background: #dcc69b14;
+}

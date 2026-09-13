@@ -377,7 +377,9 @@
         : ManorDialogue.count(state, Reception.user?.name));
     paint(
       who === "count" && !page && window.ManorMagicJourney
-        ? ManorMagicJourney.decorate(introduction)
+        ? ManorMagicJourney.decorate(
+            window.ManorGameKeepsakes?.decorate(introduction) || introduction,
+          )
         : introduction,
     );
     if (!dialog.open) dialog.showModal();
@@ -394,9 +396,13 @@
           paint(
             window.ManorMagicJourney
               ? ManorMagicJourney.decorate(
-                  ManorRelationship.decorate(original, state, known),
+                  window.ManorGameKeepsakes?.decorate(
+                    ManorRelationship.decorate(original, state, known),
+                  ) || ManorRelationship.decorate(original, state, known),
                 )
-              : ManorRelationship.decorate(original, state, known),
+              : window.ManorGameKeepsakes?.decorate(
+                  ManorRelationship.decorate(original, state, known),
+                ) || ManorRelationship.decorate(original, state, known),
           );
       });
     }
@@ -470,6 +476,15 @@
     if (active === "count" && (departed || expired())) endEncounter();
     if (departed && action !== "call-butler") return;
     if (dialog.getAttribute("aria-busy") === "true") return;
+    if (active === "count" && action.startsWith("keepsake-")) {
+      const page = window.ManorGameKeepsakes?.respond(action);
+      if (page) {
+        paint(page);
+        ManorMotion.reveal?.(q(".speech"));
+        q("#speech-choices button")?.focus({ preventScroll: true });
+      }
+      return;
+    }
     if (active === "count" && action.startsWith("magic-")) {
       const page = window.ManorMagicJourney?.respond(action);
       if (page) {

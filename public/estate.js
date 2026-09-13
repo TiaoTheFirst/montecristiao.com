@@ -27,6 +27,12 @@
     history.replaceState(null, "", url);
   }
   const objects = {
+    ledger: { title: "府中近事与来访簿" },
+    piano: { title: "窗边的一段琴音" },
+    catalogue: { title: "书架的归位小题" },
+    globe: { title: "地球仪旁的航路" },
+    place: { title: "餐桌上的排席与用餐" },
+    games: { title: "沙发前的棋盘与牌具" },
     invitation: {
       title: "随身的请柬",
       kind: "一封请柬",
@@ -72,6 +78,8 @@
       links: [["#gallery", "回到画廊"]],
       note: "来访内容待完成并确认后再开放。",
     },
+    harbor: { title: "《归港灯火》" },
+    arch: { title: "《石拱之后》" },
     seascape: {
       title: "《远帆》",
     },
@@ -255,6 +263,16 @@
       toast("请先回到" + rooms[objectRoom][0] + "。");
       return;
     }
+    if (window.ManorRoomPlay?.has(id)) {
+      remember(id);
+      ManorRoomPlay.open(id);
+      return;
+    }
+    if (["games", "letterbox"].includes(id)) {
+      remember(id);
+      window.dispatchEvent(new CustomEvent("manor:prop", { detail: { id } }));
+      return;
+    }
     if (["pool", "seal"].includes(id) && window.ManorMagic) {
       remember(id);
       ManorMagic.open(id);
@@ -262,7 +280,10 @@
     }
     if (id === "tribute") return;
     if ((id === "books" || id === "board") && current !== "study") return;
-    if (["seascape", "books"].includes(id) && window.ManorObjects) {
+    if (
+      ["seascape", "harbor", "arch", "books"].includes(id) &&
+      window.ManorObjects
+    ) {
       remember(id);
       ManorObjects.open(id);
       return;
@@ -278,10 +299,6 @@
     remember(id);
     if (id === "registry") {
       window.dispatchEvent(new CustomEvent("manor:butler"));
-      return;
-    }
-    if (id === "letterbox") {
-      location.href = "letters.html";
       return;
     }
     const body = q("#object-content");
@@ -445,7 +462,7 @@
       b.style.setProperty("--x", x + "%");
       b.style.setProperty("--y", y + "%");
       b.setAttribute("aria-label", label);
-      b.append(el("i"), el("span", "", label));
+      b.append(el("i"), el("span", "", id === "games" ? "棋盘与牌具" : label));
       hot.append(b);
       const c = el("button", "", label);
       c.dataset.object = id;

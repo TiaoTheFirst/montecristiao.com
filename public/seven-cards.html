@@ -12,6 +12,7 @@
     <script src="world.js" defer></script>
     <script type="module" src="seven-cards.js"></script>
     <script type="module" src="seven-table.js"></script>
+    <script type="module" src="game-schedule.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -27,6 +28,9 @@
         </div>
         <button id="rules-open" class="quiet">玩法与约定</button>
       </div>
+      <p id="game-schedule" class="page-note" aria-live="polite">
+        正在确认今日牌桌时段……
+      </p>
       <section
         id="game-access"
         class="welcome"
@@ -43,8 +47,8 @@
         </div>
         <nav class="night-services" aria-label="此刻仍可做的事">
           <a href="index.html#salon">回大客厅 · 查看行踪 →</a
-          ><a id="after-hours-chess" href="solitaire.html?from=garden"
-            >去花园独自摆棋 →</a
+          ><a id="after-hours-chess" href="solitaire.html?from=salon"
+            >在客厅独自摆棋 →</a
           ><a href="reading/dinner-division.html">读一次来访对话 →</a
           ><a href="household.html">读府邸近况 →</a>
         </nav>

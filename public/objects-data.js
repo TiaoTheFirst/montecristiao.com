@@ -24,9 +24,25 @@ var ManorObjectStories = (() => {
           id: "dislike",
           label: "这幅不是我的趣味。",
           reply:
-            "我倒很喜欢，尤其是云边的光。别的画还没挂好，今天只有这一幅能细看。",
+            "我倒很喜欢，尤其是云边的光。再往前看看吧，港口和石拱那两幅也可以走近看。",
         },
       ],
+    },
+    harbor: {
+      room: "gallery",
+      title: "归港灯火",
+      eyebrow: "画廊 · 第二幅画",
+      src: "assets/painted/gallery-harbor-v1.webp",
+      alt: "落日下的石港，左侧停着系缆的帆船，右侧石塔的窄窗亮着灯",
+      note: "船系在岸边。天色还亮着，塔窗里已经有了灯。",
+    },
+    arch: {
+      room: "gallery",
+      title: "石拱之后",
+      eyebrow: "画廊 · 第三幅画",
+      src: "assets/painted/gallery-arch-v1.webp",
+      alt: "山路穿过破损的石拱，藤叶沿墙生长，远山和水面从拱下露出",
+      note: "路从残墙下穿过去。石拱没有门扇，拱后的山水便成了另一幅画。",
     },
     books: {
       // Retained object ID; this is the author's manuscript, never the collection.

@@ -10,7 +10,7 @@ function refresh() {
   const clock = window.ManorWorld?.clock();
   if (clock)
     document.getElementById("after-hours-chess").href =
-      `solitaire.html?from=garden&light=${Manor.light(clock.minute)}`;
+      `solitaire.html?from=salon&light=${Manor.light(clock.minute)}`;
   const visible = gate && !gate.hidden;
   document.documentElement.dataset.gameAccess = status.allowed
     ? "open"

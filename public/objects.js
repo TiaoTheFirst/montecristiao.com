@@ -1,4 +1,4 @@
-/* One reversible object-viewer; no account data, tracking or persistent preferences. */
+/* Reversible object viewer. Gallery observations stay in browser-local storage. */
 (() => {
   "use strict";
   const el = (tag, cls, text) => {
@@ -18,7 +18,8 @@
     request = 0,
     abort,
     state,
-    closing = false;
+    closing = false,
+    disposePainting;
   const button = (label, fn, cls = "folio-action") => {
     const node = el("button", cls, label);
     node.type = "button";
@@ -49,6 +50,8 @@
     closing = true;
     ++request;
     abort?.abort();
+    disposePainting?.();
+    disposePainting = null;
     if (!immediate)
       await ManorMotion.animate(dialog, [{ opacity: 1 }, { opacity: 0 }], 210);
     dialog.close();
@@ -56,6 +59,8 @@
   }
   dialog.addEventListener("close", () => {
     if (dialog.open) return;
+    disposePainting?.();
+    disposePainting = null;
     ++request;
     abort?.abort();
     ManorMusic.duck("folio", false);
@@ -76,7 +81,7 @@
     head.append(title);
     return head;
   };
-  function renderPainting(work, token) {
+  function renderPainting(work, token, episode) {
     const canvas = el("div", "folio-canvas");
     const image = el("img");
     image.alt = work.alt;
@@ -109,42 +114,10 @@
     const side = el("section", "folio-notes");
     side.append(heading(work));
     const note = el("blockquote", "folio-inscription", work.note);
-    side.append(note, el("p", "folio-sign", "—— 画旁短笺 · 伯爵"));
-    const exchange = el("div", "folio-exchange");
-    const here = ManorObjectStories.present(state, work.room);
-    exchange.append(el("p", "folio-kicker", here ? "伯爵在身旁" : "独自看画"));
-    const response = el(
-      "p",
-      "folio-response",
-      here ? work.opening : "伯爵此刻不在画廊。画旁的短笺留在这里。",
+    side.append(
+      note,
+      el("p", "folio-sign", work.choices ? "—— 画旁短笺 · 伯爵" : "画作简介"),
     );
-    response.setAttribute("aria-live", "polite");
-    exchange.append(response);
-    if (here) {
-      const choices = el("div", "folio-choices");
-      for (const item of work.choices) {
-        const b = button(item.label, () => {
-          const answer = ManorObjectStories.reply(
-            "seascape",
-            item.id,
-            ManorView.snapshot(),
-          );
-          if (!answer || window.ManorLiving?.available() === false) {
-            response.textContent =
-              "这段交谈已告一段落。您可以继续看画，或回房间看看伯爵的去向。";
-            return;
-          }
-          response.textContent = answer;
-          window.ManorRelationship?.painting(item.id, ManorView.snapshot());
-          for (const other of choices.children)
-            other.setAttribute("aria-pressed", String(other === b));
-        });
-        b.setAttribute("aria-pressed", "false");
-        choices.append(b);
-      }
-      exchange.append(choices);
-    }
-    side.append(exchange);
     const actions = el("div", "folio-links");
     actions.append(
       button("只看画", () => {
@@ -158,6 +131,32 @@
       el("p", "folio-provenance", "本站原创绘景 · AI 辅助制作"),
     );
     body.append(canvas, side);
+    const disposeGallery = window.ManorGallery?.mount({
+      id: dialog.dataset.folio,
+      canvas,
+      image,
+      side,
+      open,
+    });
+    window.ManorGalleryScenes?.arrange({ side, body, open });
+    const disposeScene = window.ManorGalleryScenes?.mount({
+      id: dialog.dataset.folio,
+      side,
+      body,
+      dialog,
+      pinned: state,
+      open,
+      episode,
+    });
+    const disposeMemory =
+      dialog.dataset.folio === "harbor"
+        ? window.ManorHarborMemory?.mount({ side, body, dialog, pinned: state })
+        : null;
+    disposePainting = () => {
+      disposeScene?.();
+      disposeMemory?.();
+      disposeGallery?.();
+    };
     load();
   }
   async function renderReading(work, token) {
@@ -261,7 +260,7 @@
     );
     body.append(paper);
   }
-  function open(id, pinnedState) {
+  function open(id, pinnedState, episodeId) {
     const work = ManorObjectStories.works[id];
     const currentState = ManorView.snapshot();
     if (
@@ -271,7 +270,12 @@
       currentState.room !== work.room
     )
       return false;
+    const date = new Date(Date.now() + 8 * 3600000).toISOString().slice(0, 10);
+    const episode = window.ManorGalleryProgram?.resolve(id, date, episodeId);
+    if (episodeId && !episode) return false;
     abort?.abort();
+    disposePainting?.();
+    disposePainting = null;
     const token = ++request;
     state = { ...(pinnedState || currentState), room: currentState.room };
     if (!dialog.open) {
@@ -291,7 +295,8 @@
     )
       ? "← 返回交谈"
       : "← 返回" + Manor.rooms[state.room][0];
-    if (id === "seascape") renderPainting(work, token);
+    if (["seascape", "harbor", "arch"].includes(id))
+      renderPainting(work, token, episode);
     else if (id === "books") renderReading(work, token);
     else renderTribute(work);
     const entering = !dialog.open;

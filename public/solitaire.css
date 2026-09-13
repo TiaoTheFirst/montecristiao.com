@@ -3,25 +3,24 @@
   grid-template-columns: 1.2fr 1fr;
   gap: 48px;
 }
-.garden-table {
+.salon-table {
   position: relative;
   overflow: hidden;
   border: 1px solid #ac946064;
   border-radius: 8px;
-  padding: 145px 24px 22px;
-  background: repeating-linear-gradient(4deg, #493425 0 3px, #443022 3px 6px);
+  padding: 185px 24px 30px;
+  background: #281b12;
   box-shadow: 0 18px 38px #0006;
 }
-.garden-outlook {
+.salon-outlook {
   position: absolute;
-  inset: 0 0 auto;
-  height: 240px;
+  inset: -65% 0 auto;
+  height: 165%;
   width: 100%;
   object-fit: cover;
-  object-position: 50% 52%;
-  mask-image: linear-gradient(#000 0 72%, transparent);
+  object-position: center;
 }
-.garden-table .board {
+.salon-table .board {
   position: relative;
   margin: 0 auto;
   transform: perspective(1000px) rotateX(8deg);
@@ -29,71 +28,20 @@
     0 24px 25px #120a0980,
     inset 0 0 0 5px #8b6b3a55;
 }
-.garden-table + .game-actions {
+.salon-table + .game-actions {
   margin-top: 22px;
 }
-html[data-garden-light="day"] .garden-table {
+html[data-salon-light="day"] .salon-table {
   background-color: #755336;
 }
 @media (max-width: 480px) {
-  .garden-table {
-    padding: 112px 10px 20px;
+  .salon-table {
+    padding: 140px 10px 24px;
   }
-  .garden-outlook {
-    height: 190px;
-  }
-  .garden-table .board {
+  .salon-table .board {
     padding: 12px;
     gap: 6px;
   }
-}
-.board {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 7px;
-  padding: 24px;
-  background: radial-gradient(ellipse at 45% 35%, #6a5336, #382d20);
-  border: 1px solid #a18d60;
-  border-radius: 26px;
-  box-shadow: 0 18px 60px #0005;
-  aspect-ratio: 1;
-  width: min(100%, 490px);
-  margin: 22px 0;
-}
-.board button {
-  padding: 0;
-  border-radius: 50%;
-  position: relative;
-  min-width: 0;
-  background: #221e18;
-  border: 1px solid #9b805445;
-  box-shadow: inset 0 3px 8px #0008;
-}
-.board button.peg::after {
-  content: "";
-  position: absolute;
-  inset: 13%;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 33% 28%,
-    #eee1af,
-    #b9a56d 50%,
-    #756341 95%
-  );
-  box-shadow: 0 3px 5px #0007;
-}
-.board button.selected {
-  outline: 3px solid #f6e9b4;
-  outline-offset: 2px;
-}
-.board button.destination {
-  background: #857747;
-  outline: 2px dashed #f6e9b4;
-  outline-offset: 1px;
-}
-.board button:focus-visible {
-  outline: 3px solid white;
-  outline-offset: 3px;
 }
 .game-actions {
   display: flex;
@@ -133,4 +81,84 @@ aside {
   .game-actions button {
     padding: 10px 12px;
   }
+}
+
+.salon-outlook[hidden] {
+  display: none;
+}
+/* The final peg and the letter in the case form the end of the game. */
+.game-paper {
+  padding: 24px;
+  margin: 20px 0;
+  color: #30291e;
+  background: #ddd0ae;
+  border: 1px solid #ab9360;
+  border-radius: 5px;
+}
+.game-paper button,
+.game-paper a {
+  color: #30291e;
+  border-color: #8b784e;
+}
+.game-paper button {
+  background: #eee0bc;
+}
+.game-paper button:hover {
+  background: #f8edcf;
+}
+.game-paper .meta,
+.game-paper .eyebrow {
+  color: #514634;
+}
+.game-paper blockquote {
+  margin: 24px 0;
+  line-height: 1.9;
+}
+.keepsake-seal {
+  display: grid;
+  place-items: center;
+  border: 2px double #9e7634;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  font-size: 32px;
+  font-style: italic;
+}
+.puzzle-archive {
+  display: grid;
+  gap: 8px;
+  padding-top: 15px;
+}
+.target-hole {
+  outline: 2px solid #d8b05b;
+  outline-offset: 3px;
+}
+.winning-peg {
+  filter: drop-shadow(0 0 14px #d8b05b);
+}
+.victory:not([hidden]) {
+  animation: note-arrives 0.5s ease-out;
+}
+#route-list {
+  padding-left: 0;
+  list-style: none;
+  font-size: 14px;
+}
+@keyframes note-arrives {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .victory:not([hidden]) {
+    animation: none;
+  }
+}
+html[data-motion="reduce"] .victory {
+  animation: none;
 }

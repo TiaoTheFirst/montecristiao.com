@@ -1,0 +1,484 @@
+/* Quiet painting marker; the prominent invitation belongs inside the folio. */
+.living-estate
+  #hotspots
+  .hotspot:is(
+    [data-object="seascape"],
+    [data-object="harbor"],
+    [data-object="arch"]
+  ) {
+  display: flex;
+  z-index: 2;
+}
+.living-estate
+  #hotspots
+  .hotspot:is(
+    [data-object="seascape"],
+    [data-object="harbor"],
+    [data-object="arch"]
+  )
+  i {
+  width: 8px;
+  height: 8px;
+  background: #d6c092;
+  box-shadow:
+    0 0 0 3px #dcc28e20,
+    0 0 10px #e1ba7744;
+}
+.living-estate
+  #hotspots
+  .hotspot:is(
+    [data-object="seascape"],
+    [data-object="harbor"],
+    [data-object="arch"]
+  )
+  span {
+  display: block;
+  opacity: 0;
+  top: 100%;
+  pointer-events: none;
+  padding: 4px 8px;
+  color: #fff1ce;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  border: 1px solid #cfb58155;
+  background: #16201bdf;
+  box-shadow: 0 2px 8px #0004;
+}
+.living-estate
+  #hotspots
+  .hotspot:is(
+    [data-object="seascape"],
+    [data-object="harbor"],
+    [data-object="arch"]
+  ):focus-visible
+  span {
+  opacity: 1;
+}
+@media (hover: hover) {
+  .living-estate
+    #hotspots
+    .hotspot:is(
+      [data-object="seascape"],
+      [data-object="harbor"],
+      [data-object="arch"]
+    ):hover
+    span {
+    opacity: 1;
+  }
+}
+.folio-body > [hidden],
+.harbor-host-portrait[hidden],
+.harbor-exchange [hidden] {
+  display: none !important;
+}
+#folio-dialog:is(
+  [data-folio="seascape"],
+  [data-folio="harbor"],
+  [data-folio="arch"]
+) {
+  border-color: #af966660;
+  background: #111c19;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-bar {
+  background: #101b18f5;
+  border-bottom-color: #ccb58820;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-heading
+  h2 {
+  margin-bottom: 16px;
+  letter-spacing: 0.06em;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-heading
+  .folio-kicker,
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-sign {
+  display: none;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-inscription {
+  margin-bottom: 22px;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-inscription {
+  color: #b9b8a8;
+  font-size: 16px;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-sign {
+  margin: 8px 0 24px;
+  font-size: 12px;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .gallery-surface {
+  border: 6px solid #77603d;
+  outline: 1px solid #c8a46b66;
+  outline-offset: 4px;
+  box-shadow:
+    0 0 0 9px #342d20,
+    0 24px 65px #0009;
+}
+.harbor-exchange {
+  padding: 24px 0 0;
+  border-top: 1px solid #c4ad783d;
+}
+.harbor-host {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+.harbor-host-portrait {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #be9e65;
+}
+.harbor-host .folio-kicker {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+}
+.harbor-exchange .folio-response {
+  min-height: 0;
+  margin-bottom: 20px;
+  color: #e8e0ce;
+}
+#folio-dialog .harbor-exchange .folio-action:first-child,
+#folio-dialog .harbor-memory-nav .folio-action:last-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 54px;
+  padding: 14px 22px;
+  background: linear-gradient(110deg, #dfcca4, #c1a373);
+  color: #20291f;
+  border: 1px solid #ecdbb5;
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  box-shadow: 0 6px 20px #0002;
+  font-size: 16px;
+}
+#folio-dialog .harbor-exchange .folio-action:first-child:hover,
+#folio-dialog .harbor-memory-nav .folio-action:last-child:hover {
+  background: #f0dbb4;
+  color: #101810;
+}
+#folio-dialog .harbor-exchange .folio-action + .folio-action {
+  border: 0;
+  color: #bdb7a5;
+  padding: 12px 0;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-links {
+  margin-top: 14px;
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-provenance {
+  margin: 12px 0 20px;
+}
+.harbor-observation {
+  border-top: 1px solid #c4ad782d;
+  padding-top: 18px;
+}
+.harbor-observation > summary {
+  cursor: pointer;
+  min-height: 44px;
+  color: #c5b795;
+  font-size: 14px;
+}
+.harbor-observation .gallery-tools {
+  margin-bottom: 20px;
+}
+.harbor-observation .gallery-next {
+  margin-block: 14px;
+}
+#folio-dialog[data-recollection] .folio-body {
+  display: block;
+}
+#folio-dialog[data-recollection] {
+  background: #171d17;
+}
+#folio-dialog[data-recollection] .folio-bar {
+  min-height: 58px;
+}
+#folio-dialog .harbor-close {
+  border: 0;
+  font-size: 25px;
+  padding: 6px;
+  min-width: 44px;
+  color: #c5b795;
+}
+.harbor-memory {
+  min-height: 100%;
+  background: #22251c;
+}
+.harbor-memory-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(330px, 1fr);
+}
+.harbor-memory-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 520px;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+.harbor-memory-copy {
+  padding: clamp(24px, 2.4vw, 36px);
+  align-self: stretch;
+  background: linear-gradient(120deg, #eee5d1, #e0d5be);
+  color: #30382b;
+  box-shadow: -10px 0 32px #0002;
+  position: relative;
+}
+.harbor-chapter {
+  margin: 0 0 14px;
+  color: #84724e;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+}
+.harbor-memory-copy h2 {
+  margin: 0 0 16px;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400;
+  color: #344132;
+  letter-spacing: 0.04em;
+}
+.harbor-memory-narration {
+  color: #746e5d;
+  line-height: 1.9;
+  font-size: 14px;
+  margin: 0 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #90826245;
+}
+.harbor-memory-lines p {
+  line-height: 1.9;
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.harbor-memory-lines p:last-child {
+  margin-bottom: 0;
+}
+.harbor-speaker {
+  display: block;
+  font-size: 11px;
+  color: #897444;
+  letter-spacing: 0.14em;
+  margin-bottom: 3px;
+}
+.harbor-memory-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 28px;
+  background: #121d19;
+}
+.harbor-memory-nav .folio-action:last-child {
+  margin-left: auto;
+  min-width: 180px;
+}
+#folio-dialog .harbor-memory-nav .folio-action:not(:last-child) {
+  border: 0;
+}
+.harbor-memory-progress {
+  font-size: 12px;
+  color: #a79b80;
+  letter-spacing: 0.15em;
+}
+.harbor-memory-feedback {
+  margin: 0;
+  padding: 0 22px;
+  color: #dbc7a1;
+}
+.harbor-memory-feedback:not(:empty) {
+  padding-block: 12px;
+}
+.harbor-memory-feedback button {
+  margin-left: 12px;
+}
+.folio-art-only .harbor-exchange {
+  display: none;
+}
+@media (max-width: 950px) {
+  .harbor-memory-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .harbor-memory-image {
+    height: auto;
+    min-height: 0;
+    object-fit: contain;
+  }
+  .harbor-memory-copy {
+    padding: 26px 30px;
+  }
+  .harbor-memory-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+  }
+}
+@media (max-width: 850px) {
+  #folio-dialog:is(
+      [data-folio="seascape"],
+      [data-folio="harbor"],
+      [data-folio="arch"]
+    )
+    .gallery-surface {
+    max-width: min(54vw, 210px);
+  }
+  #folio-dialog:is(
+      [data-folio="seascape"],
+      [data-folio="harbor"],
+      [data-folio="arch"]
+    )
+    .folio-canvas {
+    padding: 22px;
+    min-height: 0;
+  }
+  #folio-dialog:is(
+      [data-folio="seascape"],
+      [data-folio="harbor"],
+      [data-folio="arch"]
+    )
+    .folio-notes {
+    padding: 16px 24px 28px;
+  }
+  #folio-dialog:is(
+      [data-folio="seascape"],
+      [data-folio="harbor"],
+      [data-folio="arch"]
+    )
+    .folio-heading
+    h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  #folio-dialog:is(
+      [data-folio="seascape"],
+      [data-folio="harbor"],
+      [data-folio="arch"]
+    )
+    .folio-sign {
+    margin-bottom: 12px;
+  }
+  .harbor-exchange {
+    padding-top: 15px;
+  }
+  .harbor-host {
+    margin-bottom: 12px;
+  }
+  .harbor-host-portrait {
+    width: 34px;
+    height: 34px;
+  }
+  .harbor-exchange .folio-response {
+    margin-bottom: 14px;
+  }
+  #folio-dialog:is(
+      [data-folio="seascape"],
+      [data-folio="harbor"],
+      [data-folio="arch"]
+    ).folio-art-only
+    .gallery-surface {
+    max-width: 500px;
+  }
+}
+@media (max-width: 500px) {
+  .living-estate
+    #hotspots
+    .hotspot:is(
+      [data-object="seascape"],
+      [data-object="harbor"],
+      [data-object="arch"]
+    )
+    span {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  #folio-dialog[data-recollection] .folio-place {
+    display: none;
+  }
+  .harbor-memory-copy {
+    padding: 25px 24px;
+  }
+  .harbor-memory-nav {
+    gap: 12px;
+    padding: 12px 18px;
+  }
+  #folio-dialog .harbor-memory-nav .folio-action:last-child {
+    min-width: 0;
+    font-size: 14px;
+    min-height: 48px;
+    padding: 12px 15px;
+  }
+  .harbor-chapter {
+    margin-bottom: 15px;
+  }
+}
+#folio-dialog:is(
+    [data-folio="seascape"],
+    [data-folio="harbor"],
+    [data-folio="arch"]
+  )
+  .folio-canvas {
+  background: radial-gradient(ellipse at 50% 35%, #293025, #111c19 75%);
+}
+
+#folio-dialog[data-folio="seascape"] .folio-sign {
+  display: block;
+}
+@media (max-width: 700px) {
+  .living-estate #hotspots .hotspot[data-object="arch"] {
+    display: none;
+  }
+}

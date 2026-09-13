@@ -6,6 +6,10 @@
     <title>与伯爵玩些小游戏 · 蒙特克里斯条府</title>
     <link rel="icon" href="emblem.svg" />
     <link rel="stylesheet" href="seven-cards.css" />
+    <script src="architecture.js" defer></script>
+    <script src="manor.js" defer></script>
+    <script src="world.js" defer></script>
+    <script type="module" src="game-schedule.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -23,21 +27,47 @@
           </p>
         </div>
       </div>
+      <p id="game-schedule" class="page-note" aria-live="polite">
+        正在确认今日牌桌时段……
+      </p>
       <div class="hub-grid">
         <a class="hub-card" href="seven-cards.html"
           ><div class="hub-symbol" aria-hidden="true">Ⅰ · Ⅶ</div>
-          <p class="eyebrow">大客厅的纸牌桌 · 七轮较量</p>
+          <p class="eyebrow">大客厅的游戏桌 · 七轮较量</p>
           <h2>七张暗牌</h2>
           <p>最大的牌，留给哪一轮？<br />用同样的七张牌，与伯爵的牌风交手。</p>
           <span>查看伯爵此刻是否有空 →</span></a
         ><a class="hub-card" href="solitaire.html"
           ><div class="hub-symbol" aria-hidden="true">● · ○</div>
-          <p class="eyebrow">花园露台的棋桌 · 一人推演</p>
+          <p class="eyebrow">大客厅的游戏桌 · 一人推演</p>
           <h2>独粒棋</h2>
-          <p>取走一枚，再取走一枚。<br />最后，能不能只留下一枚？</p>
+          <p>
+            取走一枚，再取走一枚。<br />最后，能不能只留下一枚？每三天推荐一盘残局，解开后可收下棋谱卡。
+          </p>
           <span>摆开棋盘 →</span></a
         >
       </div>
+      <section class="page-note" aria-label="府中其他消遣">
+        <h2>离开棋桌，也有可玩的东西</h2>
+        <p>
+          <a href="index.html#music">小会客厅 · 复奏琴音 →</a>　<a
+            href="index.html#library"
+            >藏书室 · 归架小题 →</a
+          >
+        </p>
+        <p>
+          <a href="index.html#study">书房 · 航路规划 →</a>　<a
+            href="index.html#dining"
+            >餐厅 · 排席小题 →</a
+          >
+        </p>
+        <p>
+          <a href="index.html#foyer">穿堂 · 留一枚来访图记 →</a>　<a
+            href="index.html#garden"
+            >花园 · 拨水与借光 →</a
+          >
+        </p>
+      </section>
       <p class="page-note">
         休闲邀请遵守府中作息。<a href="household.html">也可以读读府邸近况 ↗</a>
       </p>

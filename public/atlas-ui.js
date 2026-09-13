@@ -59,6 +59,49 @@ window.ManorAtlas = (() => {
   }
   function init() {
     const host = document.querySelector("#floorplan");
+    const guide = el("details", "atlas-play-guide");
+    guide.open = false;
+    guide.append(el("summary", "", "此刻可以去做什么 · 10 处停留"));
+    const stops = el("nav", "");
+    stops.setAttribute("aria-label", "府中可玩的物件与去处");
+    for (const [id, activity] of Object.entries(
+      window.ManorRoomActivities || {},
+    )) {
+      if (!Manor.scenes[id]) continue;
+      const link = el("a", "", Manor.rooms[id][0] + " · " + activity.title);
+      link.href = "#" + id;
+      link.append(el("small", "", activity.map));
+      stops.append(link);
+    }
+    guide.append(
+      stops,
+      el(
+        "p",
+        "fine-print",
+        "走进房间，再点画面中的物件。未开放的门与通道仍按建筑关系保留。",
+      ),
+    );
+    const discovery = el("p", "atlas-discoveries", "");
+    const updateDiscoveries = () => {
+      const completed = window.ManorRoomPlay?.completed() || [];
+      discovery.textContent =
+        "本机游历记录：" +
+        (completed.length
+          ? completed
+              .map(
+                (id) =>
+                  Object.values(window.ManorRoomActivities).find(
+                    (a) => a.object === id,
+                  )?.title,
+              )
+              .filter(Boolean)
+              .join("、")
+          : "还没有留下新的图记。") +
+        "。";
+    };
+    updateDiscoveries();
+    guide.append(discovery);
+    window.addEventListener("manor:discovery", updateDiscoveries);
     host.className = "atlas-surface";
     host.replaceChildren();
     const toolbar = el("div", "atlas-tools");
@@ -80,6 +123,13 @@ window.ManorAtlas = (() => {
     directory.hidden = true;
     picker.append(select, directory);
     toolbar.append(fold, reset, picker, status);
+    const findPlay = el("button", "atlas-reset", "找些事情做");
+    findPlay.onclick = () => {
+      guide.open = true;
+      guide.scrollIntoView({ block: "start" });
+      guide.querySelector("summary").focus();
+    };
+    toolbar.append(findPlay);
     const zoomIn = el("button", "atlas-reset", "放大平面"),
       fit = el("button", "atlas-reset", "看全图");
     zoomIn.onclick = () => {
@@ -113,6 +163,8 @@ window.ManorAtlas = (() => {
       directory,
       zoomIn,
       fit,
+      guide,
+      updateDiscoveries,
     };
     fold.onclick = toggle;
     reset.onclick = () => engine?.reset();
@@ -691,6 +743,8 @@ window.ManorAtlas = (() => {
     if (ui.detailKey === key) return;
     ui.detailKey = key;
     pane.replaceChildren();
+    ui.updateDiscoveries();
+    pane.append(ui.guide);
     pane.dataset.room = selected;
     pane.dataset.mode = inspecting ? "preview" : "selected";
     pane.scrollTop = 0;

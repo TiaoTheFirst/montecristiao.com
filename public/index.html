@@ -40,12 +40,22 @@
     <script src="cast.js" defer></script>
     <script src="music.js" defer></script>
     <script src="living.js" defer></script>
+    <script src="gallery-data.js" defer></script>
+    <script src="gallery.js" defer></script>
+    <script src="harbor-memory-data.js" defer></script>
+    <script src="harbor-memory.js" defer></script>
+    <script src="gallery-scenes.js" defer></script>
+    <script src="gallery-program-data.js" defer></script>
+    <script src="gallery-program.js" defer></script>
     <script src="objects.js" defer></script>
     <script src="magic-journey.js" defer></script>
     <script src="magic-surface.js" defer></script>
     <script src="magic.js" defer></script>
     <link rel="stylesheet" href="first-visit.css" />
     <link rel="stylesheet" href="objects.css" />
+    <link rel="stylesheet" href="gallery.css" />
+    <link rel="stylesheet" href="harbor-memory.css" />
+    <link rel="stylesheet" href="gallery-scenes.css" />
     <link rel="stylesheet" href="painted.css" />
     <link rel="stylesheet" href="performance.css" />
     <link rel="stylesheet" href="atlas.css" />
@@ -59,7 +69,12 @@
     <link rel="stylesheet" href="diary.css" />
     <script src="diary.js" defer></script>
     <link rel="stylesheet" href="room-activities.css" />
-    <script type="module" src="room-activities.js"></script>
+    <link rel="stylesheet" href="peg-board.css" />
+    <link rel="stylesheet" href="scene-props.css" />
+    <script type="module" src="scene-props.mjs"></script>
+    <link rel="stylesheet" href="room-play.css" />
+    <link rel="stylesheet" href="estate-news.css" />
+    <script type="module" src="room-play.mjs"></script>
   </head>
   <body class="living-estate">
     <a class="skip" href="#room-title">跳到房间内容</a>
@@ -149,12 +164,6 @@
           <div id="object-list"></div>
         </div>
       </section>
-      <section
-        id="room-activities"
-        class="room-activities"
-        aria-label="在这里可以做的事"
-        hidden
-      ></section>
       <section class="visit-reading-entry" aria-label="小会客厅的来访对话">
         <div>
           <p class="eyebrow">来访对话 · 家庭分工</p>
@@ -359,28 +368,6 @@
         <p>本次看过的物件留在这里。刷新或离开页面后清空，不上传。</p>
         <ul id="journal-items" class="journal-items"></ul>
         <button id="clear-journal" class="text-button">清空札记</button>
-      </div>
-    </dialog>
-    <dialog
-      id="garden-sit"
-      class="garden-sit"
-      aria-labelledby="garden-puzzle-title"
-    >
-      <form method="dialog">
-        <button aria-label="回到花园">回到花园 ×</button>
-      </form>
-      <img id="garden-sit-image" alt="从露台望向水池与园径" />
-      <div class="garden-sit-content">
-        <p class="eyebrow">露台边的小坐</p>
-        <h2 id="garden-puzzle-title"></h2>
-        <p id="garden-puzzle-question"></p>
-        <div id="garden-puzzle-choices" class="garden-choices"></div>
-        <p id="garden-puzzle-result" role="status"></p>
-        <p class="fine-print">
-          园中小题每三天轮换一次。随时可以放下，不必答对才去摆棋。
-        </p>
-        <div id="garden-sit-links"></div>
-        <p id="garden-presence" class="fine-print"></p>
       </div>
     </dialog>
     <noscript
