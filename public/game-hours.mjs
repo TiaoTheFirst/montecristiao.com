@@ -1,4 +1,4 @@
-const leisure = new Set(["午后闲暇", "会客与看画", "晚间社交"]);
+const leisure = new Set(["午餐后小坐", "午后闲暇", "会客与看画", "晚间社交"]);
 // Pure itinerary lookup, including travel minutes. Never uses preview overrides.
 export function invitationWindows(date, manor) {
   const windows = [];
