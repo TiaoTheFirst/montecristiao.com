@@ -1,5 +1,5 @@
 /* Original spatial model. Classic script keeps the preview usable offline. */
-var createManor = (architecture) => {
+var createManor = (architecture, options = {}) => {
   const rooms = {
     gate: ["车道大门", "场地"],
     court: ["荣誉前院", "场地"],
@@ -84,16 +84,18 @@ var createManor = (architecture) => {
   const edges = architecture
     ? architecture.portals.map(({ a, b }) => [a, b])
     : legacyEdges;
-  const phases = [
-    { at: 0, targets: ["bedroom"], verb: "已经休息" },
-    { at: 420, targets: ["garden", "library"], verb: "晨间独处" },
+  const phases = options.phases || [
+    { at: 0, targets: ["study"], verb: "夜间读写" },
+    { at: 90, targets: ["bedroom"], verb: "已经休息" },
+    { at: 540, targets: ["garden", "library"], verb: "晨间独处" },
     { at: 600, targets: ["study"], verb: "阅读与写作" },
     { at: 780, targets: ["dining"], verb: "正在用餐" },
     { at: 900, targets: ["garden", "salon", "library"], verb: "午后闲暇" },
     { at: 1080, targets: ["gallery", "salon"], verb: "会客与看画" },
     { at: 1125, targets: ["dining"], verb: "正在用晚餐" },
-    { at: 1200, targets: ["outside", "salon"], verb: "晚间社交" },
-    { at: 1320, targets: ["bedroom"], verb: "已经休息" },
+    { at: 1200, targets: ["salon"], verb: "晚间社交" },
+    { at: 1320, targets: ["gallery"], verb: "会客与看画" },
+    { at: 1380, targets: ["salon"], verb: "晚间社交" },
   ];
   const hash = (s) => {
     let n = 2166136261;

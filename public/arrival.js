@@ -4,7 +4,7 @@
     story = ManorArrivalStory,
     $ = (s) => document.querySelector(s);
   const params = new URLSearchParams(location.search);
-  const target = S.destination(params.get("to"));
+  const target = S.destination(params.get("to") || "/?invite=welcome#court");
   let stage = "street",
     epoch = 0,
     busy = false,
@@ -126,7 +126,7 @@
       $("#arrival-note").textContent =
         "浏览器未允许保存进度；离开后可能再次出现。";
   }
-  function thresholdCopy() {
+  function thresholdCopy() { if (target.includes("invite=welcome")) return "主楼正门在前院对面。请柬上的初次会面还在等您，我带您进去。";
     const st = ManorWorld.snapshot().count;
     if (st.room === "bedroom")
       return "伯爵已经休息了。您可以先在前院看看，图册里标着开放的去处。";

@@ -708,7 +708,15 @@ function open(id) {
     ? "您已在这里留下一次发现，也可以再玩。"
     : "";
   q(".play-entry").replaceChildren(button("坐下来，试一试", start));
-  if (id === "ledger") readNews();
+  if (id === "invitation") {
+      q("#room-play-title").textContent = "随身的请柬";
+      q(".play-intro").textContent = "正面记着伯爵留下的邀请，背面还画着来路。可以继续一次赴约，也可以在背面试着拼起那条通向前院的路。";
+      q(".play-entry").prepend(button("展开伯爵留下的请柬", async () => {
+        await close();
+        location.href = "/invitations.html";
+      }));
+    }
+    if (id === "ledger") readNews();
   if (id === "place")
     q(".play-entry").append(
       button("查看此刻的用餐安排", async () => {

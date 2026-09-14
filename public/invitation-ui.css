@@ -1,0 +1,314 @@
+@import url("/typography.css");
+:root {
+  color-scheme: dark;
+  --paper: #e7ddc1;
+  --gold: #b99e67;
+  --ink: #101913;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font:
+    17px/1.8 Georgia,
+    "Noto Serif SC",
+    "Songti SC",
+    serif;
+}
+button,
+a,
+input {
+  touch-action: manipulation;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #b99e6766;
+  padding: 10px 20px;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #f1d29c;
+  outline-offset: 5px;
+}
+button:hover,
+#choices a:hover {
+  background: #b99e6717;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 4vw;
+  border-bottom: 1px solid #b99e6738;
+  font-size: 15px;
+}
+header button {
+  border: 0;
+  padding: 4px;
+}
+main {
+  max-width: 1480px;
+  margin: auto;
+}
+#story {
+  position: relative;
+}
+.scene-frame {
+  position: relative;
+  height: 48vh;
+  min-height: 280px;
+  max-height: 700px;
+  overflow: hidden;
+  background: #10160f;
+}
+.scene-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 44%;
+  display: block;
+  transition: filter 0.2s ease;
+}
+.scene-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    #101913 0%,
+    transparent 38%,
+    #10191333 100%
+  );
+}
+#time {
+  position: absolute;
+  left: 4vw;
+  top: 24px;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  background: #101913bb;
+  padding: 4px 12px;
+}
+.conversation {
+  position: relative;
+  max-width: 980px;
+  margin: -24px auto 0;
+  padding: 0 40px 20px;
+}
+h1 {
+  font-size: clamp(27px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 1.35;
+  margin: 6px 0 16px;
+}
+h1:focus {
+  outline: none;
+}
+.eyebrow {
+  color: var(--gold);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  margin: 0;
+}
+#speaker {
+  font-size: 14px;
+  color: var(--gold);
+  margin: 0 0 6px;
+}
+#text {
+  margin: 0;
+  min-height: 3.6em;
+  max-width: 780px;
+  white-space: pre-line;
+}
+#choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+#choices a {
+  display: inline-block;
+  border: 1px solid #b99e6766;
+  padding: 10px 20px;
+}
+#choices button:first-child,
+#choices a:first-child {
+  background: #d4bf91;
+  color: #152119;
+  border-color: #d4bf91;
+}
+.note,
+#error {
+  font-size: 13px;
+  color: #a7ae9c;
+  margin: 20px 4vw;
+}
+#error {
+  color: #f2bd9c;
+}
+#hub {
+  padding: 8vh 7vw;
+}
+#chapter-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 36px;
+}
+.invitation {
+  display: block;
+  text-align: left;
+  padding: 0 0 20px;
+  border: 0;
+  border-bottom: 1px solid #b99e6755;
+}
+.invitation img {
+  width: 100%;
+  aspect-ratio: 1.5;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 16px;
+}
+.invitation strong,
+.invitation small,
+.invitation span {
+  display: block;
+  margin: 4px 12px;
+}
+.invitation strong {
+  font-size: 23px;
+  font-weight: 400;
+}
+.invitation small {
+  font-size: 14px;
+  color: #b6bda9;
+}
+.invitation span {
+  font-size: 14px;
+  color: var(--gold);
+}
+#lamp {
+  margin-top: 20px;
+  display: grid;
+  max-width: 350px;
+  gap: 4px;
+}
+#lamp input {
+  width: 100%;
+  accent-color: var(--gold);
+}
+#lamp label {
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+#lamp small {
+  font-size: 12px;
+  color: #acb39f;
+}
+#detail-marker {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #edce8c;
+  box-shadow: 0 0 0 5px #e4bb6b22;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+#story[data-art="painting"] .scene-frame {
+  height: 58vh;
+  max-height: 700px;
+  background: #090e0b;
+}
+#story[data-art="painting"] #scene-image {
+  object-fit: contain;
+}
+#story[data-art="painting"] .scene-shade {
+  display: none;
+}
+.scene-veil {
+  position: absolute;
+  inset: 0;
+  background: #101913;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+}
+.scene-veil span {
+  font-size: 16px;
+  color: var(--gold);
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 650px) {
+  header {
+    font-size: 13px;
+    padding: 12px 18px;
+    gap: 10px;
+  }
+  header > span {
+    display: none;
+  }
+  .scene-frame {
+    height: 43vh;
+    min-height: 250px;
+  }
+  .conversation {
+    padding: 0 24px 12px;
+    margin-top: -8px;
+  }
+  #text {
+    font-size: 17px;
+  }
+  #choices {
+    display: grid;
+  }
+  #choices button,
+  #choices a {
+    text-align: left;
+    width: 100%;
+  }
+  #chapter-list {
+    grid-template-columns: 1fr;
+  }
+  #hub {
+    padding: 32px 24px;
+  }
+  #story[data-art="painting"] .scene-frame {
+    height: 44vh;
+  }
+  #time {
+    font-size: 12px;
+    top: 14px;
+  }
+  #detail-marker {
+    width: 28px;
+    height: 28px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+html[data-motion="reduce"] * {
+  transition: none !important;
+}

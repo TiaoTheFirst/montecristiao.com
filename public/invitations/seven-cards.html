@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-CN" data-game-access="closed">
-  <head>
+  <head><base href="/">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>七张暗牌 · 蒙特克里斯条府</title>
@@ -9,16 +9,16 @@
     <link rel="stylesheet" href="seven-table.css" />
     <script src="architecture.js" defer></script>
     <script src="manor.js" defer></script>
-    <script src="world.js" defer></script>
-    <script type="module" src="seven-cards.js"></script>
+    
+    <script type="module" src="invitation-seven-cards.js"></script>
     <script type="module" src="seven-table.js"></script>
-    <script type="module" src="game-schedule.js"></script>
+    
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="index.html#court"
+      <a class="brand" href="/invitations.html?chapter=cards"
         ><i>M</i><span>蒙特克里斯条府</span></a
-      ><a href="index.html#salon">收起纸牌，回到大客厅 ↗</a>
+      ><a href="/invitations.html?chapter=cards">收好牌局，回到请柬 ↗</a>
     </header>
     <main>
       <div class="heading">
@@ -42,11 +42,11 @@
           <h2 id="game-access-title">邀请，要等他有空。</h2>
           <p id="game-access-message" role="status">正在确认伯爵的行踪…</p>
           <p class="fine">
-            若这一局尚未结束，牌局会保留在当前标签页。下次有空时再续。
+            若这一局尚未结束，牌局会保留在当前浏览器。下次有空时再续。
           </p>
         </div>
-        <nav class="night-services" aria-label="此刻仍可做的事"><a href="/invitations.html?chapter=cards">展开请柬 · 赴那晚的牌桌之约 →</a>
-          <a href="index.html#salon">回大客厅 · 查看行踪 →</a
+        <nav class="night-services" aria-label="此刻仍可做的事">
+          <a href="/invitations.html?chapter=cards">回大客厅 · 查看行踪 →</a
           ><a id="after-hours-chess" href="solitaire.html?from=salon"
             >在客厅独自摆棋 →</a
           ><a href="reading/dinner-division.html">读一次来访对话 →</a
@@ -195,13 +195,13 @@
               <h2 id="outcome"></h2>
               <p id="outcome-detail"></p>
               <button id="review-open" class="secondary">回看一处转折</button
-              ><button id="again" class="primary">再来一局 →</button>
+              ><a class="primary" href="/invitations.html?chapter=cards">起身，听伯爵说两句 →</a><button id="again" class="primary" hidden>再来一局 →</button>
             </div>
           </aside>
         </div>
       </section>
       <p class="page-note" id="save-note">
-        对手由程序驱动，按府邸作息接受邀请；不代表作者真人在线。
+        对手由程序驱动；这次赴约按剧情时间继续，不代表作者真人在线。
       </p>
       <noscript
         ><p>
@@ -229,7 +229,7 @@
         伯爵会在你选牌前锁定暗牌；双方都不知道后续分值的出现顺序。“请教一局”的提示也不会透露他的暗牌。
       </p>
       <p class="muted">
-        当前为单人练习。刷新可续接当前标签页的牌局；关闭标签页后不保留。玩法借鉴
+        当前为单人练习。刷新可续接当前浏览器的牌局；关闭标签页后不保留。玩法借鉴
         Goofspiel 的同时竞价结构，采用七牌、平局留分及连续平局平分的本站规则。
       </p>
     </dialog>

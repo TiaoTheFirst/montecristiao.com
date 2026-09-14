@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>伯爵的请柬 · 蒙特克里斯条府</title>
+    <link rel="icon" href="/emblem.svg" />
+    <link rel="stylesheet" href="/invitation-ui.css" />
+    <script src="/motion.js" defer></script>
+    <script type="module" src="/invitation-ui.mjs"></script>
+  </head>
+  <body>
+    <header>
+      <a href="/?arrival=skip#court" id="leave">← 回府自由参观</a
+      ><span>蒙特克里斯条府</span><button id="invitations">收好请柬</button>
+    </header>
+    <main>
+      <section id="hub" hidden aria-labelledby="hub-title">
+        <p class="eyebrow">THE COUNT’S INVITATIONS</p>
+        <h1 id="hub-title" tabindex="-1">伯爵的请柬</h1>
+        <p>挑一份请柬，赴一场尚未结束的约。</p>
+        <div id="chapter-list"></div>
+        <p class="note">
+          赴约按故事里的时间进行，现实中何时打开都能继续。自由参观跟随府邸当前作息；沙龙活动另按公告时间举办。
+        </p>
+      </section>
+      <section id="story" aria-labelledby="title">
+        <div class="scene-frame">
+          <img id="scene-image" alt="" fetchpriority="high" />
+          <div class="scene-shade"></div>
+          <span id="time"></span
+          ><span id="detail-marker" hidden aria-hidden="true"></span>
+        </div>
+        <div class="conversation">
+          <div>
+            <p class="eyebrow" id="chapter-name"></p>
+            <h1 id="title" tabindex="-1"></h1>
+            <p id="speaker"></p>
+            <p id="text"></p>
+          </div>
+          <div id="lamp" hidden>
+            <label for="light">灯光 <span id="light-value">微亮</span></label
+            ><input
+              id="light"
+              type="range"
+              min="45"
+              max="110"
+              value="75"
+            /><small>移近灯光，比较画中的明暗。</small>
+          </div>
+          <p id="score" hidden></p>
+          <nav id="choices" aria-label="下一步"></nav>
+        </div>
+      </section>
+      <p id="error" role="alert"></p>
+      <button id="retry-scene" hidden>重试载入这一景</button>
+      <p id="saved" class="note" role="status">
+        进度只保存在当前浏览器，不计入账号关系。
+      </p>
+    </main>
+  </body>
+</html>
