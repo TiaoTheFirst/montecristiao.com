@@ -60,10 +60,10 @@ export function scene(id, progress, gameResult) {
       },
       closing: {
         image: salon,
-        title: "留下两份邀请",
+        title: "会面之后",
         speaker: "伯爵",
         text: "我晚上常在楼下。您若喜欢看画，我们可以等灯点起来再去；想玩牌，就来客厅找我。今天先随意看看，不必一次走遍所有房间。",
-        choices: [["finish", "收好请柬，结束这次会面"]],
+        choices: [["finish", "起身，去穿堂看看"]],
       },
     },
     lamps: {

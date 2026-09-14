@@ -115,15 +115,7 @@
         <div class="scene-topline">
           <button id="room-back" aria-label="返回上一间房">← 返回</button>
           <span id="location">场地 / 荣誉前院</span
-          ><button
-            id="clock-open"
-            data-dialog="clock"
-            aria-label="打开府邸时钟"
-          >
-            <span class="clock-face" aria-hidden="true">◷</span
-            ><span id="clock-label">府邸时间</span
-            ><span class="clock-edit">调整时间 ↗</span>
-          </button>
+          ><span id="clock-open" aria-label="府邸当前时间"><span class="clock-face" aria-hidden="true">◷</span> <span id="clock-label">府邸时间</span></span>
         </div>
         <div class="scene-copy">
           <p class="eyebrow" id="scene-en">COUR D’HONNEUR</p>
@@ -271,43 +263,6 @@
       <p class="fine-print">
         原创宅邸设计。淡色房间尚未开放；图册与立体模型共用房间、门与楼梯的位置。
       </p>
-    </dialog>
-    <dialog
-      id="clock-dialog"
-      class="small-dialog"
-      aria-labelledby="clock-title"
-    >
-      <div class="dialog-heading">
-        <div>
-          <p class="eyebrow">L’HORLOGE DE LA MAISON</p>
-          <h2 id="clock-title">府邸时钟</h2>
-        </div>
-        <button data-close aria-label="关闭府邸时钟">关闭 ×</button>
-      </div>
-      <div class="dialog-body">
-        <p>
-          府里有自己的作息。伯爵会沿走廊换房间，也会外出。您可以去找他，或留在喜欢的地方。
-        </p>
-        <p id="clock-status" class="clock-status"></p>
-        <div class="clock-presets" role="group" aria-label="预览时段">
-          <button type="button" data-preview-minute="360">清晨 06:00</button>
-          <button type="button" data-preview-minute="570">上午 09:30</button>
-          <button type="button" data-preview-minute="810">午餐 13:30</button>
-          <button type="button" data-preview-minute="960">午后 16:00</button>
-          <button type="button" data-preview-minute="1140">夜晚 19:00</button>
-          <button type="button" data-preview-minute="1380">深夜 23:00</button>
-        </div>
-        <form id="preview-clock-form" class="clock-custom">
-          <label for="preview-clock-time">指定时间</label>
-          <input id="preview-clock-time" type="time" required value="09:30" />
-          <button type="submit" class="solid">看看这个时刻 →</button>
-        </form>
-        <button id="live-clock" class="solid">回到当前时间 →</button>
-        <p class="fine-print">
-          当前时间按 UTC+8
-          校准。预览会停在所选时刻，换房间时保留；刷新页面或点击“回到当前时间”即可恢复。只改变您眼前的府邸，不影响其他访客。这是角色日程，不表示真人在线。
-        </p>
-      </div>
     </dialog>
     <dialog
       id="object-dialog"

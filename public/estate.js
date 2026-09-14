@@ -220,7 +220,6 @@
   }
   const ownedDialogs = new Set([
     "map-dialog",
-    "clock-dialog",
     "count-dialog",
     "journal-dialog",
     "object-dialog",
@@ -243,7 +242,6 @@
         : "ground";
       renderMap();
     }
-    if (name === "clock") renderClockDialog();
     if (name === "count") renderCountDialog();
     if (name === "journal") renderJournal();
     await Promise.all(
@@ -478,7 +476,6 @@
     const st = Manor.state(clock.date, clock.minute),
       text = rooms[st.room][0] + " · " + st.text;
     q("#clock-label").textContent =
-      (ManorWorld.snapshot().preview ? "预览 · " : "") +
       Manor.time(clock.minute) +
       " · " +
       (Manor.light(clock.minute) === "day" ? "日间" : "夜访");
@@ -490,7 +487,6 @@
       st.unknown || st.moving || st.room !== current;
     q("#presence-verb").textContent = st.text;
     sceneImage();
-    if (q("#clock-dialog").open) renderClockDialog();
     if (q("#count-dialog").open) renderCountDialog();
     const signature = [
       st.room,
@@ -503,24 +499,6 @@
     if (q("#map-dialog").open && signature !== renderedCount) renderMap();
     renderedCount = signature;
     window.dispatchEvent(new CustomEvent("manor:state"));
-  }
-  function renderClockDialog() {
-    const st = Manor.state(clock.date, clock.minute);
-    if (st.unknown) {
-      q("#clock-status").textContent = "尚未校时，人物互动暂停。房间仍可参观。";
-      return;
-    }
-    q("#clock-status").textContent =
-      (ManorWorld.snapshot().preview
-        ? "正在预览 " + Manor.time(clock.minute)
-        : ManorWorld.snapshot().ready
-          ? "府邸当前时间"
-          : "尚未校时，人物互动暂停") +
-      (st.unknown ? " · " : " · 伯爵在") +
-      rooms[st.room][0] +
-      "，" +
-      st.text +
-      "。";
   }
   function renderCountDialog() {
     const st = Manor.state(clock.date, clock.minute);
@@ -839,25 +817,6 @@
     if (to) location.hash = to;
   };
   q("#map-home").onclick = () => open("map");
-  q("#live-clock").onclick = () => {
-    ManorWorld.resumeLive();
-    closePanel(q("#clock-dialog"));
-  };
-  function previewTime(minute) {
-    ManorWorld.setPreview(minute);
-    q("#preview-clock-time").value = Manor.time(minute);
-    closePanel(q("#clock-dialog"));
-  }
-  document.querySelectorAll("[data-preview-minute]").forEach((button) => {
-    button.onclick = () => previewTime(Number(button.dataset.previewMinute));
-  });
-  q("#preview-clock-form").onsubmit = (event) => {
-    event.preventDefault();
-    const value = q("#preview-clock-time").value;
-    if (!/^\d{2}:\d{2}$/.test(value)) return;
-    const [hour, minute] = value.split(":").map(Number);
-    if (hour < 24 && minute < 60) previewTime(hour * 60 + minute);
-  };
   q("#clear-journal").onclick = () => {
     journal.clear();
     q("#journal-count").textContent = "0";

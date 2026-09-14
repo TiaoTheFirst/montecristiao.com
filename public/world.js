@@ -1,10 +1,9 @@
-/* Live time follows the server; preview time is local to this page. */
+/* Public free-roam time follows the server. Manual time controls exist only in preview. */
 var ManorWorld = (() => {
   let value = null,
     received = 0,
     pending = null,
     failed = false,
-    preview = null,
     clockRevision = 0;
   const original = {
     state: Manor.state,
@@ -22,7 +21,6 @@ var ManorWorld = (() => {
   const age = () => performance.now() - received;
   const fresh = () => !!value && age() < 90000;
   function clock() {
-    if (preview) return { ...preview };
     if (!value) return Manor.now(); // Background lighting only, never a fabricated character.
     const d = new Date(value.timestamp + Math.min(age(), 90000) + 8 * 3600000);
     return {
@@ -31,20 +29,7 @@ var ManorWorld = (() => {
     };
   }
   const count = () =>
-    preview || fresh() ? original.state(clock().date, clock().minute) : empty();
-  function setPreview(minute) {
-    if (!Number.isInteger(minute) || minute < 0 || minute > 1439)
-      throw new RangeError("INVALID_PREVIEW_TIME");
-    preview = { date: clock().date, minute };
-    clockRevision++;
-    window.dispatchEvent(new CustomEvent("manor:world"));
-  }
-  function resumeLive() {
-    preview = null;
-    clockRevision++;
-    window.dispatchEvent(new CustomEvent("manor:world"));
-    return sync();
-  }
+    fresh() ? original.state(clock().date, clock().minute) : empty();
   const meal = () => {
     const st = count();
     return !st.unknown && st.room === "dining" && !st.moving;
@@ -93,19 +78,14 @@ var ManorWorld = (() => {
     clock: clock(),
     count: count(),
     meal: meal(),
-    ready: !!preview || fresh(),
-    degraded: !preview && failed,
-    preview: !!preview,
+    ready: fresh(),
+    degraded: failed,
+    preview: false,
     clockRevision,
-    timestamp: preview
-      ? Date.parse(preview.date + "T00:00:00+08:00") + preview.minute * 60000
-      : value
+    timestamp: value
         ? value.timestamp + age()
         : null,
-    encounterUntil: preview
-      ? Date.parse(preview.date + "T00:00:00+08:00") +
-        (preview.minute + 10) * 60000
-      : value?.encounterUntil || 0,
+    encounterUntil: value?.encounterUntil || 0,
   });
   document.addEventListener("visibilitychange", () => {
     if (!document.hidden) sync();
@@ -115,5 +95,5 @@ var ManorWorld = (() => {
     if (!document.hidden) sync();
   }, 30000);
   sync();
-  return { snapshot, sync, clock, setPreview, resumeLive };
+  return { snapshot, sync, clock };
 })();

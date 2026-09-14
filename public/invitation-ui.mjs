@@ -15,7 +15,8 @@ const saved = store(storage);
 let state = finishGame(saved.read(), saved.game()),
   active = null,
   view = null,
-  navigation = 0;
+  navigation = 0,
+  departing = false;
 function persist() {
   const ok = saved.write(state);
   $("saved").textContent = ok
@@ -70,6 +71,7 @@ const motion = ManorMotion.create({
     // Persist only after the new scene has loaded, so a failed transition is retryable.
     state = job.state;
     active = job.id;
+    $("invitations").hidden = active === "welcome";
     view = job.view;
     persist();
     address(active);
@@ -107,13 +109,14 @@ const motion = ManorMotion.create({
     for (const [action, label] of view.choices) {
       const button = node("button", label);
       button.onclick = () => {
-        if (motion.busy) return;
+        if (motion.busy || departing) return;
         if (active === "cards" && action === "sit" && !persist()) return;
         const next = advance(state, active, action);
         if (chapter(next, active).done) {
           state = next;
           persist();
-          showHub();
+          if (active === "welcome") leaveForFoyer();
+          else showHub();
         } else show(active, next);
       };
       $("choices").append(button);
@@ -147,6 +150,7 @@ const motion = ManorMotion.create({
 });
 function show(id, next = state) {
   if (!chapters[id]) return showHub();
+  if (id === "welcome" && chapter(next, id).done) return leaveForFoyer();
   navigation++;
   $("story").hidden = false;
   $("hub").hidden = true;
@@ -169,8 +173,10 @@ async function showHub() {
   address(null);
   $("story").hidden = true;
   $("hub").hidden = false;
+  $("invitations").hidden = false;
   $("chapter-list").replaceChildren();
   for (const [id, entry] of Object.entries(chapters)) {
+    if (id === "welcome") continue;
     const progress = chapter(state, id),
       button = node("button", "", "invitation"),
       img = node("img");
@@ -200,6 +206,13 @@ function light() {
   $("scene-image").style.filter = `brightness(${value / 100})`;
   $("light-value").textContent =
     value < 65 ? "灯光压低" : value > 90 ? "灯光移近" : "微亮";
+}
+async function leaveForFoyer() {
+  if (departing) return;
+  departing = true;
+  ++navigation;
+  await ManorMotion.animate(document.querySelector("main"), [{ opacity: 1 }, { opacity: 0 }], 160);
+  location.replace("/?arrival=skip#foyer");
 }
 $("light").addEventListener("input", light);
 $("scene-image").addEventListener("load", marker);

@@ -90,6 +90,7 @@ var createManor = (architecture, options = {}) => {
     { at: 540, targets: ["garden", "library"], verb: "晨间独处" },
     { at: 600, targets: ["study"], verb: "阅读与写作" },
     { at: 780, targets: ["dining"], verb: "正在用餐" },
+    { at: 840, targets: ["salon"], verb: "午餐后小坐" },
     { at: 900, targets: ["garden", "salon", "library"], verb: "午后闲暇" },
     { at: 1080, targets: ["gallery", "salon"], verb: "会客与看画" },
     { at: 1125, targets: ["dining"], verb: "正在用晚餐" },

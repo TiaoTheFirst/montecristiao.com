@@ -1573,3 +1573,6 @@ html[data-motion="reduce"]::view-transition-new(root) { animation: none; }
     scroll-behavior: auto !important;
   }
 }
+
+/* The public clock is a read-only scene label. */
+.scene-topline > #clock-open { display: flex; align-items: center; gap: 8px; border: 0; white-space: nowrap; cursor: default; }
