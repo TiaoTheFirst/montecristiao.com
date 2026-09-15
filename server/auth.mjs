@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { emailOTP } from "better-auth/plugins";
+import { APIError } from "better-auth/api";
 
 export function createAuth(env, sendMail) {
   if (!env.BETTER_AUTH_SECRET || env.BETTER_AUTH_SECRET.length < 32)
@@ -42,9 +43,18 @@ export function createAuth(env, sendMail) {
         resendStrategy: "rotate",
         changeEmail: { enabled: true, verifyCurrentEmail: true },
         async sendVerificationOTP({ email, otp, type }) {
-          await sendMail({ email, otp, type });
+          try { await sendMail({ email, otp, type }); }
+          catch (e) {
+            const code = ['MAIL_PROVIDER_AUTH','MAIL_PROVIDER_REJECTED','MAIL_TRANSPORT_FAILED','MAIL_DELIVERY_FAILED','MAIL_BUDGET_EXHAUSTED','MAIL_BUDGET_UNAVAILABLE'].includes(e.message) ? e.message : 'MAIL_DELIVERY_FAILED';
+            throw new APIError('SERVICE_UNAVAILABLE', { code, message: '暂未能发送验证码，请稍后重试。' });
+          }
         },
       }),
+      // Better Auth 1.7.3 catches mail failures in its default background helper.
+      // OTP delivery must be awaited and failure must reach the HTTP caller.
+      { id: 'required-mail-delivery', init() { return { context: {
+        async runInBackgroundOrAwait(promise) { await promise; },
+      } }; } },
     ],
     logger: { disabled: true },
   });

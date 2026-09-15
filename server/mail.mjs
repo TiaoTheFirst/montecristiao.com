@@ -39,9 +39,12 @@ export async function sendVerificationMail(env, {email, otp, type}, fetcher = fe
   try {
     response = await fetcher('https://api.resend.com/emails', {
       method:'POST', redirect:'error', signal:AbortSignal.timeout(10000),
-      headers:{Authorization:`Bearer ${env.RESEND_API_KEY}`, 'Content-Type':'application/json'},
+      headers:{Authorization:`Bearer ${env.RESEND_API_KEY.trim()}`, 'Content-Type':'application/json'},
       body:JSON.stringify(message),
     });
-    if (!response.ok || !(await response.json())?.id) throw new Error('MAIL_DELIVERY_FAILED');
-  } catch { throw new Error('MAIL_DELIVERY_FAILED'); }
+  } catch { throw new Error('MAIL_TRANSPORT_FAILED'); }
+  if ([401,403].includes(response.status)) throw new Error('MAIL_PROVIDER_AUTH');
+  if (!response.ok) throw new Error('MAIL_PROVIDER_REJECTED');
+  try { if (!(await response.json())?.id) throw new Error(); }
+  catch { throw new Error('MAIL_DELIVERY_FAILED'); }
 }

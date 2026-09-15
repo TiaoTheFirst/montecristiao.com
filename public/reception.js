@@ -32,6 +32,13 @@
       ? new BroadcastChannel("manor-account")
       : null;
   const errors = {
+    MAIL_PROVIDER_AUTH: "发信服务配置异常，尚未确认发出验证码。我们需要修复后才能继续。",
+    MAIL_PROVIDER_REJECTED: "邮件服务暂时拒绝了请求，请稍后重试。",
+    MAIL_TRANSPORT_FAILED: "尚未收到邮件服务的发送确认，请稍后重试。",
+    MAIL_DELIVERY_FAILED: "尚未确认发出验证码，请稍后重试。",
+    MAIL_BUDGET_EXHAUSTED: "今天的邮件发送额度已用完，请稍后再来。",
+    MAIL_BUDGET_UNAVAILABLE: "邮件服务暂时不可用，请稍后重试。",
+
     TEST_EMAIL_ONLY: "请填写有效邮箱。",
     NAME_INVALID: "称呼请填写 1 至 40 个字符。",
     WAIT_BEFORE_RESEND: "请稍等片刻再发送，避免重复邮件。",
