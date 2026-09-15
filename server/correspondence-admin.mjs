@@ -1,3 +1,4 @@
+import { manorAdmin } from "./manor-admin.mjs";
 import { isOwner } from "./service-state.mjs";
 import { applyReplyAction } from "./letter-workflow.mjs";
 
@@ -7,6 +8,14 @@ export async function adminRoute(req, env, session, { json, body }) {
   if (!isOwner(env, session)) return fail(403, "OWNER_ONLY");
   if (req.headers.get("x-manor-account") !== session.user.id)
     return fail(409, "ACCOUNT_CHANGED");
+  if (
+    /^\/api\/admin\/(overview|accounts|operations|content)(\/|$)/.test(
+      url.pathname,
+    )
+  ) {
+    const result = await manorAdmin(req, env, session, { json, body });
+    if (result) return result;
+  }
   if (url.pathname === "/api/admin/session" && req.method === "GET")
     return json({ owner: true });
   if (url.pathname === "/api/admin/letters" && req.method === "GET") {
@@ -21,6 +30,11 @@ export async function adminRoute(req, env, session, { json, body }) {
       .all();
     return json({
       letters: rows.results.slice(0, limit),
+      total: (
+        await env.DB.prepare(
+          "SELECT count(*) n FROM letters WHERE status='submitted'",
+        ).first()
+      ).n,
       nextOffset: rows.results.length > limit ? offset + limit : null,
     });
   }

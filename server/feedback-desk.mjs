@@ -4,10 +4,15 @@ const states = ["received", "reviewing", "planned", "done", "declined"];
 export async function feedbackDesk(req, env, session, { json, body }) {
   const url = new URL(req.url),
     fail = (status, error) => json({ error }, status);
-  const production = productionReady(env) && url.origin === env.APP_ORIGIN && env.FEEDBACK_OPEN === "true";
-  const local = env.APP_MODE === "local-test" && env.FEEDBACK_DESK_OPEN === "true" && ["127.0.0.1", "localhost"].includes(url.hostname);
-  if (!production && !local)
-    return fail(503, "SERVICE_NOT_OPEN");
+  const production =
+    productionReady(env) &&
+    url.origin === env.APP_ORIGIN &&
+    env.FEEDBACK_OPEN === "true";
+  const local =
+    env.APP_MODE === "local-test" &&
+    env.FEEDBACK_DESK_OPEN === "true" &&
+    ["127.0.0.1", "localhost"].includes(url.hostname);
+  if (!production && !local) return fail(503, "SERVICE_NOT_OPEN");
   if (!isOwner(env, session)) return fail(403, "OWNER_ONLY");
   if (req.headers.get("x-manor-account") !== session.user.id)
     return fail(409, "ACCOUNT_CHANGED");
@@ -51,6 +56,11 @@ export async function feedbackDesk(req, env, session, { json, body }) {
     ).all();
     return json({
       feedback: rows.results.slice(0, 40),
+      total: (
+        await env.DB.prepare(`SELECT count(*) n FROM feedback WHERE ${filter}`)
+          .bind(...params)
+          .first()
+      ).n,
       nextOffset: rows.results.length > 40 ? offset + 40 : null,
       counts: counts.results,
     });

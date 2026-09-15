@@ -11,3 +11,8 @@
 
 /feedback*
   X-Robots-Tag: noindex, nofollow
+
+/manor-admin*
+  X-Robots-Tag: noindex, nofollow
+/admin-assets/*
+  X-Robots-Tag: noindex, nofollow

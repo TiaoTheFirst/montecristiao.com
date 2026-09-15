@@ -59,6 +59,16 @@ export default {
     // No correspondence is auto-deleted. Remove only expired credentials and short-lived request records.
     const now = Date.now();
     await env.DB.batch([
+      ...(env.OPS_ENABLED === "true"
+        ? [
+            env.DB.prepare(
+              "DELETE FROM operational_events WHERE created_at < ?",
+            ).bind(now - 7 * 86400000),
+            env.DB.prepare("DELETE FROM admin_audit WHERE created_at < ?").bind(
+              now - 30 * 86400000,
+            ),
+          ]
+        : []),
       env.DB.prepare("DELETE FROM verification WHERE expiresAt < ?").bind(now),
       env.DB.prepare("DELETE FROM session WHERE expiresAt < ?").bind(now),
       env.DB.prepare("DELETE FROM rateLimit WHERE lastRequest < ?").bind(
@@ -70,11 +80,19 @@ export default {
       env.DB.prepare("DELETE FROM privacy_deletions WHERE deleted_at < ?").bind(
         now - 8 * 86400000,
       ),
-      ...(env.FEEDBACK_OPEN === "true" ? [
-        env.DB.prepare("DELETE FROM feedback WHERE created_at < ?").bind(now - 180 * 86400000),
-        env.DB.prepare("DELETE FROM feedback_limits WHERE window_start < ?").bind(now - 2 * 3600000),
-        env.DB.prepare("DELETE FROM privacy_feedback_deletions WHERE deleted_at < ?").bind(now - 8 * 86400000),
-      ] : []),
+      ...(env.FEEDBACK_OPEN === "true"
+        ? [
+            env.DB.prepare("DELETE FROM feedback WHERE created_at < ?").bind(
+              now - 180 * 86400000,
+            ),
+            env.DB.prepare(
+              "DELETE FROM feedback_limits WHERE window_start < ?",
+            ).bind(now - 2 * 3600000),
+            env.DB.prepare(
+              "DELETE FROM privacy_feedback_deletions WHERE deleted_at < ?",
+            ).bind(now - 8 * 86400000),
+          ]
+        : []),
     ]);
   },
 };

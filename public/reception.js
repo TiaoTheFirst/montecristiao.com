@@ -36,7 +36,7 @@
     MAIL_PROVIDER_REJECTED: "邮件服务暂时拒绝了请求，请稍后重试。",
     MAIL_TRANSPORT_FAILED: "尚未收到邮件服务的发送确认，请稍后重试。",
     MAIL_DELIVERY_FAILED: "尚未确认发出验证码，请稍后重试。",
-    MAIL_BUDGET_EXHAUSTED: "今天的邮件发送额度已用完，请稍后再来。",
+    MAIL_BUDGET_EXHAUSTED: "邮件发送额度暂时已用完，请稍后再来。",
     MAIL_BUDGET_UNAVAILABLE: "邮件服务暂时不可用，请稍后重试。",
 
     TEST_EMAIL_ONLY: "请填写有效邮箱。",
@@ -608,4 +608,4 @@
   refresh();
 })();
 
-(()=>{let stamp=0;document.addEventListener('manor:account',async()=>{const n=++stamp;document.querySelectorAll('[data-owner-desk]').forEach(e=>e.remove());const uid=Reception.user?.id;if(!uid)return;try{await Reception.api('/api/admin/session',undefined,'GET',uid);if(n!==stamp||Reception.user?.id!==uid)return;const a=document.createElement('a');a.href='/correspondence-admin';a.dataset.ownerDesk='true';a.textContent='伯爵的回信案 →';const feedback=document.createElement('a');feedback.href='/feedback-desk';feedback.dataset.ownerDesk='true';feedback.textContent='来访便笺处理案 →';document.querySelector('[data-pane="settings"] .reception-actions')?.append(feedback);document.querySelector('[data-pane="settings"] .reception-actions')?.append(a);}catch{}});})();
+(()=>{let stamp=0;document.addEventListener('manor:account',async()=>{const n=++stamp;document.querySelectorAll('[data-owner-desk]').forEach(e=>e.remove());const uid=Reception.user?.id;if(!uid)return;try{await Reception.api('/api/admin/session',undefined,'GET',uid);if(n!==stamp||Reception.user?.id!==uid)return;const a=document.createElement('a');a.href='/manor-admin';a.dataset.ownerDesk='true';a.textContent='府务后台 →';const feedback=document.createElement('a');feedback.href='/feedback-desk';feedback.dataset.ownerDesk='true';feedback.textContent='来访便笺处理案 →';document.querySelector('[data-pane="settings"] .reception-actions')?.append(feedback);document.querySelector('[data-pane="settings"] .reception-actions')?.append(a);}catch{}});})();

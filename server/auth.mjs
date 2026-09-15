@@ -46,7 +46,7 @@ export function createAuth(env, sendMail) {
           try { await sendMail({ email, otp, type }); }
           catch (e) {
             const code = ['MAIL_PROVIDER_AUTH','MAIL_PROVIDER_REJECTED','MAIL_TRANSPORT_FAILED','MAIL_DELIVERY_FAILED','MAIL_BUDGET_EXHAUSTED','MAIL_BUDGET_UNAVAILABLE'].includes(e.message) ? e.message : 'MAIL_DELIVERY_FAILED';
-            throw new APIError('SERVICE_UNAVAILABLE', { code, message: '暂未能发送验证码，请稍后重试。' });
+            throw new APIError('SERVICE_UNAVAILABLE', { code, message: '暂未能发送验证码，请稍后重试。', ...(e.reference ? {reference:e.reference} : {}) });
           }
         },
       }),

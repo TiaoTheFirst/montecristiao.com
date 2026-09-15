@@ -1,3 +1,4 @@
+import { recordOperation } from "./operations.mjs";
 import { createAuth } from "./auth.mjs";
 import { sendVerificationMail } from "./mail.mjs";
 import { dailyEdition } from "./editorial.mjs";
@@ -50,7 +51,21 @@ function authFor(env) {
   if (!sessions.has(env))
     sessions.set(
       env,
-      createAuth(env, (message) => sendVerificationMail(env, message)),
+      createAuth(env, async (message) => {
+        const started = Date.now();
+        try {
+          await sendVerificationMail(env, message);
+          await recordOperation(env, "mail", "MAIL_ACCEPTED", started);
+        } catch (error) {
+          error.reference = await recordOperation(
+            env,
+            "mail",
+            error.message,
+            started,
+          );
+          throw error;
+        }
+      }),
     );
   return sessions.get(env);
 }
@@ -107,7 +122,13 @@ export default {
       )
     )
       return fail(503, "SERVICE_NOT_OPEN");
-    if (production && /^\/api\/(?:feedback(?:\/|$)|review\/feedback(?:\/|$))/.test(url.pathname) && env.FEEDBACK_OPEN !== "true")
+    if (
+      production &&
+      /^\/api\/(?:feedback(?:\/|$)|review\/feedback(?:\/|$))/.test(
+        url.pathname,
+      ) &&
+      env.FEEDBACK_OPEN !== "true"
+    )
       return fail(503, "SERVICE_NOT_OPEN");
     if (
       !["GET", "HEAD"].includes(req.method) &&
@@ -472,7 +493,12 @@ export default {
       if (e.message === "BODY_TOO_LARGE") return fail(413, "BODY_TOO_LARGE");
       if (e.message === "JSON_REQUIRED" || e instanceof SyntaxError)
         return fail(400, "JSON_REQUIRED");
-      return fail(500, "TEMPORARILY_UNAVAILABLE");
+      const reference = await recordOperation(
+        env,
+        "server",
+        "TEMPORARILY_UNAVAILABLE",
+      );
+      return json({ error: "TEMPORARILY_UNAVAILABLE", reference }, 500);
     }
   },
 };
