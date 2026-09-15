@@ -11,7 +11,7 @@
     <script src="solitaire.js" type="module"></script>
     <script src="motion.js" defer></script>
     <script src="solitaire-scene.js" type="module"></script>
-  </head>
+  <link rel="stylesheet" href="reception.css"><link rel="stylesheet" href="feedback.css"><script src="motion.js" defer></script><script src="reception.js" defer></script><script src="feedback.js" defer></script></head>
   <body>
     <header>
       <a class="brand" href="index.html#court">M <span>蒙特克里斯条府</span></a
@@ -79,7 +79,7 @@
             <blockquote id="victory-note"></blockquote>
             <p class="meta">伯爵预先留下的短笺。收下纪念无需等待他在场。</p>
             <div class="game-actions">
-              <button id="download-note">收下棋谱卡</button
+              <button type="button" data-feedback="footer">反馈这局体验</button><button id="download-note">收下棋谱卡</button
               ><button id="review-route">回看这一局</button
               ><a href="index.html#salon">放回棋盘，回客厅 →</a>
             </div>
@@ -128,5 +128,5 @@
       </div>
     </main>
     <footer>一人即可开始 · 无需登录</footer>
-  </body>
+  <p class="page-note"><button type="button" data-feedback="footer">反馈问题／建议</button></p></body>
 </html>

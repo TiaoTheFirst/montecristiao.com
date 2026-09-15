@@ -25,7 +25,8 @@
     "MAIL_ENABLED": "true",
     "MAIL_FROM": "noreply@mail.montecristiao.com",
     "MAIL_DAILY_LIMIT": "90",
-    "MAIL_MONTHLY_LIMIT": "2700"
+    "MAIL_MONTHLY_LIMIT": "2700",
+    "FEEDBACK_OPEN": "true"
   },
   "d1_databases": [
     {

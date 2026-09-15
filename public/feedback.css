@@ -1,4 +1,5 @@
 .feedback-surface {
+  box-sizing: border-box;
   --fb-paper: #f0e8d5;
   --fb-ink: #233b30;
   --fb-muted: #665f50;
@@ -18,8 +19,8 @@ dialog.feedback-surface {
   overscroll-behavior: contain;
 }
 .feedback-surface::backdrop {
-  background: #07110ed6;
-  backdrop-filter: blur(5px);
+  background: #07110e88;
+  backdrop-filter: blur(2px);
 }
 .feedback-surface[open] {
   animation: feedback-unfold 0.32s ease-out;

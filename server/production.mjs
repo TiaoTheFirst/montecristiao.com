@@ -33,7 +33,7 @@ export default {
           mail: ready ? "resend" : "closed",
           accounts: ready,
           letters: ready,
-          feedback: false,
+          feedback: ready && env.FEEDBACK_OPEN === "true",
           salon: false,
         },
         200,
@@ -70,6 +70,11 @@ export default {
       env.DB.prepare("DELETE FROM privacy_deletions WHERE deleted_at < ?").bind(
         now - 8 * 86400000,
       ),
+      ...(env.FEEDBACK_OPEN === "true" ? [
+        env.DB.prepare("DELETE FROM feedback WHERE created_at < ?").bind(now - 180 * 86400000),
+        env.DB.prepare("DELETE FROM feedback_limits WHERE window_start < ?").bind(now - 2 * 3600000),
+        env.DB.prepare("DELETE FROM privacy_feedback_deletions WHERE deleted_at < ?").bind(now - 8 * 86400000),
+      ] : []),
     ]);
   },
 };

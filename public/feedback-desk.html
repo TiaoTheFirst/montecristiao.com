@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>来访便笺处理案 · 蒙特克里斯条府</title>
+    <link rel="stylesheet" href="estate.css" />
+    <link rel="stylesheet" href="reception.css" />
+    <link rel="stylesheet" href="feedback-desk.css" />
+    <script src="motion.js" defer></script>
+    <script src="reception.js" defer></script>
+    <script src="feedback-desk.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到处理案</a>
+    <header>
+      <a href="/correspondence-admin">伯爵的回信案</a
+      ><a href="/feedback" target="_blank" rel="noopener"
+        >打开来访便笺 ↗</a
+      >
+    <nav aria-label="名片与账号"></nav></header>
+    <main id="main">
+      <p class="eyebrow">BILLETS DE VISITE</p>
+      <h1>来访便笺处理案</h1>
+      <p class="intro">把遇到的问题、采取的改动与核验结果留在同一张便笺上。</p>
+      <p class="notice">
+        仅府主可查看。处理说明及核验文字会显示给递交者；这里没有私人内部备注栏。
+      </p>
+      <p id="status" role="status" aria-live="polite">正在核对府主名片……</p>
+      <div id="counts" aria-label="各状态数量"></div>
+      <form id="filters">
+        <label
+          >处理状态<select name="status">
+            <option value="">全部状态</option>
+            <option value="received">已收到</option>
+            <option value="reviewing">查看中</option>
+            <option value="planned">已列入计划</option>
+            <option value="done">已处理</option>
+            <option value="declined">暂不采纳</option>
+          </select></label
+        ><label
+          >分类<select name="category">
+            <option value="">全部分类</option>
+            <option value="general">暂不分类</option>
+            <option value="usability">使用不便</option>
+            <option value="content">内容疑问</option>
+            <option value="story">故事建议</option>
+            <option value="account">账号故障</option>
+          </select></label
+        ><label
+          >房间<select name="room">
+            <option value="">全部房间</option>
+            <option value="salon">大客厅</option>
+            <option value="gallery">画廊</option>
+            <option value="garden">花园</option>
+            <option value="study">书房</option>
+            <option value="foyer">穿堂</option>
+            <option value="court">前院</option>
+            <option value="dining">餐厅</option>
+            <option value="letter">通信小室</option>
+            <option value="library">藏书室</option>
+            <option value="music">小会客厅</option>
+            <option value="terrace">露台</option>
+            <option value="westpath">西侧小径</option>
+            <option value="eastpath">东侧小径</option>
+            <option value="orangery">橘园</option>
+            <option value="pavilion">凉亭</option>
+          </select></label
+        ><label
+          >查找原文<input
+            name="q"
+            type="search"
+            maxlength="100"
+            placeholder="例如：返回入口" /></label
+        ><button type="submit">筛选 / 刷新</button>
+      </form>
+      <div class="layout">
+        <aside aria-label="便笺列表">
+          <div id="list"></div>
+          <button id="more" hidden>再取一叠</button>
+        </aside>
+        <article id="sheet">
+          <h2>从左侧取一张便笺</h2>
+          <p>只有府主名片可以处理。</p>
+        </article>
+      </div>
+    </main>
+    <dialog id="confirm" aria-labelledby="confirm-title">
+      <h2 id="confirm-title">核对将交给访客的说明</h2>
+      <div id="confirmation"></div>
+      <p>确认后立即写入处理经过。请核对便笺、状态和措辞。</p>
+      <div class="actions">
+        <button id="cancel">返回修改</button
+        ><button id="publish">确认留下处理说明</button>
+      </div>
+    </dialog>
+  </body>
+</html>

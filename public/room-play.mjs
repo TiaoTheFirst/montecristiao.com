@@ -165,6 +165,7 @@ function win(message) {
     ),
     button("再试一次", start),
     button("收好，回到房间", () => close()),
+    button("反馈这次体验", () => window.ManorFeedback?.open("direct")),
   );
   window.dispatchEvent(new CustomEvent("manor:discovery"));
   q(".play-finish strong").tabIndex = -1;

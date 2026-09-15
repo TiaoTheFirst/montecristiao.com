@@ -8,3 +8,6 @@
   X-Robots-Tag: noindex, nofollow
 /correspondence-admin*
   X-Robots-Tag: noindex, nofollow
+
+/feedback*
+  X-Robots-Tag: noindex, nofollow

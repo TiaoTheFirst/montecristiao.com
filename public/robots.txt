@@ -4,3 +4,4 @@ Disallow: /api/
 Disallow: /arrival
 Disallow: /letters
 Disallow: /correspondence-admin
+Disallow: /feedback-desk

@@ -117,7 +117,7 @@
   <section data-pane="services" hidden><div class="service-menu"><button data-action="register">名片与账号<small>登记、称呼与登录</small></button><a href="${base}letters.html">我的通信<small>来信、回信与草稿</small></a><a href="${base}index.html#study">去书房<small>看看案前的手稿</small></a><a href="${base}index.html#garden">到花园走走<small>经客厅与露台</small></a></div><p>伯爵外出时，这些地方仍然开放。</p></section>
   <section data-pane="settings" hidden><form id="settings-form" class="settings-fields"><label>称呼<input id="profile-name" maxlength="40" required autocomplete="nickname"></label><label>喜欢的阅读位置<select id="reading-place"><option value="">不记录偏好</option><option value="library">藏书室</option><option value="study">书房</option><option value="garden">花园</option></select></label><label>场景动态效果<select id="motion-choice"><option value="system">跟随设备设置</option><option value="reduce">减少动态效果</option></select></label><button class="primary" type="submit">保存名片</button></form><div class="reception-actions"><button class="secondary" data-action="change-email">更换邮箱</button><button class="secondary" data-action="export">导出资料</button><button class="secondary" data-action="logout">退出登录</button><button class="secondary" data-action="revoke">退出其他设备</button><button class="secondary danger-link" data-action="delete-start">删除账号</button></div></section>
   <section data-pane="change" hidden><p>先验证原邮箱，再验证新邮箱。两次确认完成后，通信仍属于同一账号。</p><form id="email-change-form"><label for="new-email">新邮箱</label><input id="new-email" type="email" autocomplete="email" placeholder="新的常用邮箱" required><button class="secondary" type="button" data-action="old-code">向原邮箱发送验证码</button><label for="old-otp">原邮箱验证码</label><input id="old-otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required><button class="primary" type="submit">验证原邮箱，向新邮箱发信</button></form><form id="email-confirm-form" hidden><label for="new-otp">新邮箱验证码</label><input id="new-otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" required><button class="primary" type="submit">确认更换邮箱</button></form></section>
-  <section data-pane="delete" hidden><p>这会删除账号及其来信、回信和偏好。退出登录不会删除这些内容。</p><form id="delete-form"><label for="delete-confirm">输入“删除账号”确认</label><input id="delete-confirm" required autocomplete="off"><div class="reception-actions"><button class="primary" type="submit">确认删除</button><button class="secondary" type="button" data-action="register">取消</button></div></form><p class="fine-print">为保护通信，需要五分钟内的登录验证。提示过期时，请退出后重新登录。</p></section>
+  <section data-pane="delete" hidden><p>这会删除账号及其来信、回信、反馈便笺和偏好。退出登录不会删除这些内容。</p><form id="delete-form"><label for="delete-confirm">输入“删除账号”确认</label><input id="delete-confirm" required autocomplete="off"><div class="reception-actions"><button class="primary" type="submit">确认删除</button><button class="secondary" type="button" data-action="register">取消</button></div></form><p class="fine-print">为保护通信，需要五分钟内的登录验证。提示过期时，请退出后重新登录。</p></section>
   <p id="reception-message" class="reception-message" role="status" aria-live="polite"></p></div></div>`;
   document.body.append(dialog);
   const panel = window.ManorMotion?.createPanel(dialog);
@@ -129,7 +129,7 @@
   }
 
   dialog.querySelector('[data-pane="delete"] > p').textContent =
-    "这会删除账号及其来信、回信和偏好。退出登录不会删除这些内容。";
+    "这会删除账号及其来信、回信、反馈便笺和偏好。退出登录不会删除这些内容。";
   if (
     typeof ManorPaintings === "object" &&
     ManorPaintings["butler-approach-day"]
@@ -169,7 +169,7 @@
         entry: mode === "register" ? "留一张名片" : "取回您的名片",
         code: "确认通信地址",
         welcome: "名片已经收妥",
-        services: "您想去哪里？",
+        services: "可以留张便笺，也可以请管家指路。反馈问题无需登记。",
         settings: "整理您的名片",
         change: "更换通信地址",
         delete: "删除账号",
@@ -203,7 +203,7 @@
       if (ticket !== epoch) return;
       if (!result?.user) {
         clear();
-        if (dialog.open) show("entry");
+        if (dialog.open && pane !== "services") show("entry");
         return;
       }
       session = result;
@@ -503,7 +503,7 @@
   channel?.addEventListener("message", (e) => {
     if (!e.data?.userId || e.data.userId !== session?.user?.id) {
       clear();
-      if (dialog.open) show("entry");
+      if (dialog.open && pane !== "services") show("entry");
     }
     refresh();
   });
@@ -601,4 +601,4 @@
   refresh();
 })();
 
-(()=>{let stamp=0;document.addEventListener('manor:account',async()=>{const n=++stamp;document.querySelectorAll('[data-owner-desk]').forEach(e=>e.remove());const uid=Reception.user?.id;if(!uid)return;try{await Reception.api('/api/admin/session',undefined,'GET',uid);if(n!==stamp||Reception.user?.id!==uid)return;const a=document.createElement('a');a.href='/correspondence-admin';a.dataset.ownerDesk='true';a.textContent='伯爵的回信案 →';document.querySelector('[data-pane="settings"] .reception-actions')?.append(a);}catch{}});})();
+(()=>{let stamp=0;document.addEventListener('manor:account',async()=>{const n=++stamp;document.querySelectorAll('[data-owner-desk]').forEach(e=>e.remove());const uid=Reception.user?.id;if(!uid)return;try{await Reception.api('/api/admin/session',undefined,'GET',uid);if(n!==stamp||Reception.user?.id!==uid)return;const a=document.createElement('a');a.href='/correspondence-admin';a.dataset.ownerDesk='true';a.textContent='伯爵的回信案 →';const feedback=document.createElement('a');feedback.href='/feedback-desk';feedback.dataset.ownerDesk='true';feedback.textContent='来访便笺处理案 →';document.querySelector('[data-pane="settings"] .reception-actions')?.append(feedback);document.querySelector('[data-pane="settings"] .reception-actions')?.append(a);}catch{}});})();

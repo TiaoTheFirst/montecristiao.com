@@ -303,7 +303,7 @@
       const feedback = document.createElement("button");
       feedback.className = "feedback-prompt";
       feedback.textContent =
-        active === "count" ? "谈谈这次来访" : "我想留一张意见便笺";
+        active === "count" ? "谈谈这次来访" : "反馈问题／建议";
       feedback.onclick = () =>
         window.dispatchEvent(
           new CustomEvent("manor:feedback", {

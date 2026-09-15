@@ -16,6 +16,12 @@ const rooms = new Set([
   "library",
   "study",
   "letter",
+  "music",
+  "terrace",
+  "westpath",
+  "eastpath",
+  "orangery",
+  "pavilion",
 ]);
 const pages = new Set([
   "",
@@ -30,6 +36,10 @@ const pages = new Set([
   "/reading/reply.html",
   "/reading/introduction.html",
   "/reading/friendship.html",
+  "/games.html",
+  "/solitaire.html",
+  "/seven-cards.html",
+  "/household.html",
 ]);
 const idPattern =
   /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
@@ -72,6 +82,9 @@ const receipt = (row) => ({
 export async function feedbackRoute(req, env, session, { json, body }) {
   const path = new URL(req.url).pathname;
   const uid = session?.user.id || null;
+  const expected = req.headers.get("x-manor-account");
+  if ((uid && expected !== uid) || (!uid && expected))
+    return fail(json, 409, "ACCOUNT_CHANGED");
   if (path === "/api/feedback" && req.method === "POST") {
     const b = await body(req);
     const allowed = [
@@ -88,7 +101,7 @@ export async function feedbackRoute(req, env, session, { json, body }) {
     if (Object.keys(b).some((k) => !allowed.includes(k)))
       return fail(json, 400, "FIELD_NOT_ALLOWED");
     if (b.website) return fail(json, 400, "FEEDBACK_INVALID");
-    if (b.consent !== "feedback-local-v1")
+    if (b.consent !== (env.APP_MODE === "production" ? "feedback-v1" : "feedback-local-v1"))
       return fail(json, 400, "FEEDBACK_CONSENT");
     if (
       !idPattern.test(b.requestId || "") ||
@@ -180,7 +193,9 @@ export async function feedbackRoute(req, env, session, { json, body }) {
       .all();
     return json({ feedback: results });
   }
-  const match = path.match(/^\/api\/feedback\/([a-f0-9-]{36})(?:\/(read))?$/);
+  const match = path.match(
+    /^\/api\/feedback\/([a-f0-9-]{36})(?:\/(read|history))?$/,
+  );
   if (!match) return fail(json, 404, "NOT_FOUND");
   const row = await env.DB.prepare(
     "SELECT * FROM feedback WHERE id=? AND user_id=?",
@@ -188,6 +203,9 @@ export async function feedbackRoute(req, env, session, { json, body }) {
     .bind(match[1], uid)
     .first();
   if (!row) return fail(json, 404, "NOT_FOUND");
+  if (req.method === "GET" && match[2] === "history") {
+    return json({ history: await feedbackHistory(env.DB, row) });
+  }
   if (req.method === "POST" && match[2] === "read") {
     const b = await body(req);
     if (
@@ -213,7 +231,21 @@ export async function feedbackRoute(req, env, session, { json, body }) {
   return fail(json, 405, "METHOD_NOT_ALLOWED");
 }
 
-// Operator-only function: intentionally not exposed by any HTTP route.
+export async function feedbackHistory(db, row) {
+  const events = await db
+    .prepare(
+      "SELECT status,note,revision,created_at FROM feedback_events WHERE feedback_id=? ORDER BY revision",
+    )
+    .bind(row.id)
+    .all();
+  // The durable receipt supplies revision zero, including records predating this UI.
+  return [
+    { status: "received", note: "", revision: 0, created_at: row.created_at },
+    ...events.results,
+  ];
+}
+
+// Operator update shared by the local CLI and the guarded internal review desk.
 export async function updateFeedback(db, { id, status, note, revision }) {
   if (
     !idPattern.test(id || "") ||
@@ -221,6 +253,7 @@ export async function updateFeedback(db, { id, status, note, revision }) {
     typeof note !== "string" ||
     !note.trim() ||
     note.length > 2000 ||
+    /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/u.test(note) ||
     !Number.isInteger(revision)
   )
     throw new Error("INVALID_UPDATE");

@@ -13,7 +13,7 @@
     <script type="module" src="seven-cards.js"></script>
     <script type="module" src="seven-table.js"></script>
     <script type="module" src="game-schedule.js"></script>
-  </head>
+  <link rel="stylesheet" href="reception.css"><link rel="stylesheet" href="feedback.css"><script src="motion.js" defer></script><script src="reception.js" defer></script><script src="feedback.js" defer></script></head>
   <body>
     <header class="site-header">
       <a class="brand" href="index.html#court"
@@ -194,7 +194,7 @@
             <div id="summary" hidden>
               <h2 id="outcome"></h2>
               <p id="outcome-detail"></p>
-              <button id="review-open" class="secondary">回看一处转折</button
+              <button type="button" data-feedback="footer">反馈这局体验</button><button id="review-open" class="secondary">回看一处转折</button
               ><button id="again" class="primary">再来一局 →</button>
             </div>
           </aside>
@@ -260,5 +260,5 @@
         <button class="secondary" style="margin-top: 12px">继续这一局</button>
       </form>
     </dialog>
-  </body>
+  <p class="page-note"><button type="button" data-feedback="footer">反馈问题／建议</button></p></body>
 </html>

@@ -9,6 +9,18 @@ const node = (tag, text, className) => {
 
 export function renderEstateNews(host, { go, stamp }) {
   const pages = newsPages();
+  const desk = node("section", undefined, "news-desk");
+  desk.setAttribute("aria-label", "管家案台");
+  const note = node("button", undefined, "news-feedback-note");
+  note.type = "button";
+  note.dataset.feedback = "direct";
+  note.setAttribute("aria-label", "来访便笺：反馈问题或建议");
+  note.append(
+    node("span", "致 管 家", "note-address"),
+    node("strong", "来访便笺"),
+    node("span", "反馈问题或建议 →", "note-action"),
+  );
+  desk.append(note);
   const folio = node("section", undefined, "estate-news-paper");
   folio.setAttribute("aria-label", "府中近事");
   folio.append(
@@ -61,23 +73,10 @@ export function renderEstateNews(host, { go, stamp }) {
   mark.type = "button";
   mark.onclick = stamp;
   folio.append(mark);
-  host.replaceChildren(folio);
+  desk.append(folio);
+  host.replaceChildren(desk);
   read(0);
 }
 
-// A quiet, discoverable entrance; no automatic modal, badge inflation or new storage.
-const entrance = node(
-  "button",
-  `府中近事 · ${newsPages()[0].date.slice(5).replace("-", ".")}  →`,
-  "estate-news-entrance",
-);
-entrance.type = "button";
-entrance.hidden = true;
-entrance.onclick = () => window.ManorRoomPlay?.open("ledger");
-document.querySelector("#room-line")?.after(entrance);
-function syncEntrance() {
-  entrance.hidden = window.ManorView?.snapshot().room !== "foyer";
-}
-for (const event of ["manor:painted", "manor:committed", "manor:state"])
-  window.addEventListener(event, syncEntrance);
-syncEntrance();
+// The scene's ledger hotspot and room-dock action open this folio.
+// Keep edition dates inside the paper, rather than adding a second scene CTA.

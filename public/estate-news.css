@@ -1,24 +1,78 @@
-.estate-news-entrance {
-  display: block;
-  margin-top: 18px;
-  min-height: 44px;
-  padding: 8px 0;
-  color: #ead4a2;
-  background: none;
-  border: 0;
-  border-bottom: 1px solid #b3996566;
-  font: inherit;
-  font-size: 16px;
-  letter-spacing: 0.08em;
+/* Keep the foyer caption below the painting, clear of the ledger on the desk. */
+.living-estate .stage[data-room="foyer"] {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+}
+.living-estate .stage[data-room="foyer"] .scene-frame {
+  position: relative;
+  inset: auto;
+  flex: none;
+  height: min(calc(100svh - 152px), 56.28vw);
+  min-height: 400px;
+  z-index: 0;
+}
+.living-estate .stage[data-room="foyer"] .scene-copy {
+  position: static;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 32px;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  padding: 22px 160px 22px 32px;
+  background: #131e17;
+  text-shadow: none;
+}
+.living-estate .stage[data-room="foyer"] .scene-copy .eyebrow {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 10px;
+  margin: 0 0 5px;
+}
+.living-estate .stage[data-room="foyer"] .scene-copy h1 {
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 28px;
+  margin: 0;
+}
+.living-estate .stage[data-room="foyer"] .scene-copy > p:not(.eyebrow) {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  font-size: 14px;
+  color: #bdb79f;
+  margin: 0;
+}
+.news-desk {
+  display: flow-root;
+  padding: clamp(12px, 2vw, 24px);
+  background: linear-gradient(105deg, #362a1d, #483522 52%, #30251c);
+  border: 1px solid #756244;
+}
+.room-play .news-feedback-note {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: min(100%, 250px);
+  margin: 0 4px 22px auto;
+  padding: 18px 22px;
+  background: linear-gradient(145deg, #f1e8d1, #dfcda9);
+  color: #443b2b;
+  border: 1px solid #b8a47c;
+  box-shadow: 2px 5px 0 #c4af8666, 0 9px 18px #0004;
+  transform: rotate(1deg);
+  text-align: left;
   cursor: pointer;
-  pointer-events: auto;
 }
-.estate-news-entrance[hidden] {
-  display: none;
-}
-.estate-news-entrance:hover {
-  border-color: #ead4a2;
-}
+.news-feedback-note .note-address { font-size: 10px; letter-spacing: .18em; }
+.news-feedback-note strong { font-size: 20px; font-weight: 500; }
+.news-feedback-note .note-action { font-size: 12px; border-top: 1px solid #a4936d66; padding-top: 9px; width: 100%; }
+.room-play .news-feedback-note:hover { background: #f5ecd7; }
+.news-feedback-note:focus-visible { outline: 2px solid #ead2a0; outline-offset: 6px; }
 .estate-news-paper {
   padding: clamp(18px, 3vw, 32px);
   background: #e5d7b9;
@@ -115,15 +169,22 @@
   width: 100%;
   padding-top: 15px;
 }
-.estate-news-paper :focus-visible,
-.estate-news-entrance:focus-visible {
+.estate-news-paper :focus-visible {
   outline: 2px solid #9b7b32;
   outline-offset: 4px;
 }
 @media (max-width: 700px) {
-  .estate-news-entrance {
-    margin-top: 8px;
-    font-size: 14px;
+  .living-estate .stage[data-room="foyer"] .scene-frame {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+  .living-estate .stage[data-room="foyer"] .scene-copy {
+    display: block;
+    padding: 18px 20px;
+  }
+  .living-estate .stage[data-room="foyer"] .scene-copy h1 {
+    margin-bottom: 8px;
   }
   .room-play:has(.estate-news-paper) .play-photo {
     min-height: 155px;

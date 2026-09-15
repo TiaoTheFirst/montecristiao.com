@@ -8,6 +8,7 @@ import { workflowFor, letterHistory } from "./letter-workflow.mjs";
 import { relationshipRoute, exportRelationship } from "./relationship.mjs";
 import { productionReady, validEmail, isOwner } from "./service-state.mjs";
 import { adminRoute } from "./correspondence-admin.mjs";
+import { feedbackDesk } from "./feedback-desk.mjs";
 
 const sessions = new WeakMap();
 const json = (data, status = 200) =>
@@ -101,10 +102,12 @@ export default {
       return fail(503, "SERVICE_NOT_OPEN");
     if (
       production &&
-      !/^\/api\/(?:auth\/|letters(?:\/|$)|admin\/|me\/(?:preferences|export|arrival|correspondence)$)/.test(
+      !/^\/api\/(?:auth\/|letters(?:\/|$)|admin\/|feedback(?:\/|$)|review\/feedback(?:\/|$)|me\/(?:preferences|export|arrival|correspondence)$)/.test(
         url.pathname,
       )
     )
+      return fail(503, "SERVICE_NOT_OPEN");
+    if (production && /^\/api\/(?:feedback(?:\/|$)|review\/feedback(?:\/|$))/.test(url.pathname) && env.FEEDBACK_OPEN !== "true")
       return fail(503, "SERVICE_NOT_OPEN");
     if (
       !["GET", "HEAD"].includes(req.method) &&
@@ -232,6 +235,8 @@ export default {
         return await feedbackRoute(req, env, session, { json, body });
       if (!session) return fail(401, "LOGIN_REQUIRED");
       const uid = session.user.id;
+      if (url.pathname.startsWith("/api/review/feedback"))
+        return await feedbackDesk(req, env, session, { json, body });
       if (url.pathname.startsWith("/api/admin/"))
         return await adminRoute(req, env, session, { json, body });
       if (
