@@ -38,7 +38,8 @@ export async function sendVerificationMail(env, {email, otp, type}, fetcher = fe
   let response;
   try {
     response = await fetcher('https://api.resend.com/emails', {
-      method:'POST', redirect:'error', signal:AbortSignal.timeout(10000),
+      // workerd supports manual/follow only. Reject 3xx below without forwarding credentials.
+      method:'POST', redirect:'manual', signal:AbortSignal.timeout(10000),
       headers:{Authorization:`Bearer ${env.RESEND_API_KEY.trim()}`, 'Content-Type':'application/json'},
       body:JSON.stringify(message),
     });
