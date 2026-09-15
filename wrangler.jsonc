@@ -27,7 +27,8 @@
     "MAIL_DAILY_LIMIT": "90",
     "MAIL_MONTHLY_LIMIT": "2700",
     "FEEDBACK_OPEN": "true",
-    "OPS_ENABLED": "true"
+    "OPS_ENABLED": "true",
+    "ADMIN_ACCESS_MODE": "pending"
   },
   "d1_databases": [
     {

@@ -1,4 +1,5 @@
-import { isOwner, productionReady } from "./service-state.mjs";
+import { productionReady } from "./service-state.mjs";
+import { adminSecurity } from "./admin-security.mjs";
 import { updateFeedback, feedbackHistory } from "./feedback.mjs";
 const states = ["received", "reviewing", "planned", "done", "declined"];
 export async function feedbackDesk(req, env, session, { json, body }) {
@@ -13,9 +14,8 @@ export async function feedbackDesk(req, env, session, { json, body }) {
     env.FEEDBACK_DESK_OPEN === "true" &&
     ["127.0.0.1", "localhost"].includes(url.hostname);
   if (!production && !local) return fail(503, "SERVICE_NOT_OPEN");
-  if (!isOwner(env, session)) return fail(403, "OWNER_ONLY");
-  if (req.headers.get("x-manor-account") !== session.user.id)
-    return fail(409, "ACCOUNT_CHANGED");
+  const denied = await adminSecurity(req, env, session);
+  if (denied) return fail(denied.status, denied.error);
   if (url.pathname === "/api/review/feedback" && req.method === "GET") {
     const status = url.searchParams.get("status") || "",
       category = url.searchParams.get("category") || "",

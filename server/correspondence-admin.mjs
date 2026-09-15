@@ -1,13 +1,12 @@
 import { manorAdmin } from "./manor-admin.mjs";
-import { isOwner } from "./service-state.mjs";
+import { adminSecurity, ADMIN_SESSION_MS } from "./admin-security.mjs";
 import { applyReplyAction } from "./letter-workflow.mjs";
 
 export async function adminRoute(req, env, session, { json, body }) {
   const url = new URL(req.url),
     fail = (s, error) => json({ error }, s);
-  if (!isOwner(env, session)) return fail(403, "OWNER_ONLY");
-  if (req.headers.get("x-manor-account") !== session.user.id)
-    return fail(409, "ACCOUNT_CHANGED");
+  const denied = await adminSecurity(req, env, session);
+  if (denied) return fail(denied.status, denied.error);
   if (
     /^\/api\/admin\/(overview|accounts|operations|content)(\/|$)/.test(
       url.pathname,
@@ -17,7 +16,7 @@ export async function adminRoute(req, env, session, { json, body }) {
     if (result) return result;
   }
   if (url.pathname === "/api/admin/session" && req.method === "GET")
-    return json({ owner: true });
+    return json({ owner: true, security: { access: env.ADMIN_ACCESS_MODE, expiresAt: new Date(session.session.createdAt).getTime() + ADMIN_SESSION_MS } });
   if (url.pathname === "/api/admin/letters" && req.method === "GET") {
     const limit = 40,
       offset = Number(url.searchParams.get("offset") || 0);
